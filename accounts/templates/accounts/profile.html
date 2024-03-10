@@ -1,0 +1,26 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Entries{% endblock %}
+
+{% block content %}
+<a href="{% url 'update_profile' user.pk %}">
+    <section class="entry">
+        <h2 class="entry-title">Profile</h2>
+        <p class="entry-created">View and update personal information</p>
+    </section>
+</a>
+
+<a href="{% url 'account_change_password' %}">
+    <section class="entry">
+        <h2 class="entry-title">Password</h2>
+        <p class="entry-created">Change your password</p>
+    </section>
+</a>
+
+<a href="{% url 'account_logout' %}">
+    <section class="entry">
+        <h2 class="entry-title">Logout</h2>
+        <p class="entry-created">Sign out of Journal</p>
+    </section>
+</a>
+{% endblock content %}

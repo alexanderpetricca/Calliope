@@ -1,0 +1,35 @@
+{% extends '_accounts_base.html' %}
+{% load static %}
+{% block title %}Verification Sent{% endblock %}
+{% block content %}
+
+<div id="splash-main-container" class="container mt-3 mb-5">
+    <div class="row h-100">
+        <div class="col-lg-6" id="splash-info-col">
+            <h2 class="splash-header mb-5">Donec at semper orci. Duis at nibh sed nibh mattis condimentum nec eu tortor.</h2>
+            <p class="splash-blurb">
+                Sed sed iaculis est. Aenean molestie neque ac turpis iaculis, vitae varius orci ullamcorper. Vestibulum 
+                pretium tortor in mi tincidunt tempor. In non suscipit nisl. 
+            </p>
+            <p class="splash-blurb">
+                Donec vitae orci et ipsum pharetra laoreet non at justo. Suspendisse non semper orci, ut interdum leo. 
+                Aliquam mattis eros erat. Maecenas aliquet quam felis. Donec varius pellentesque dolor quis posuere.
+            </p>
+        </div>
+
+        <div class="col-lg-6" id="splash-form-col">
+            <div id="account-form">
+                <h3 class="entry-title mb-5">Verification Sent</h3>
+                <div class="form-field-wrapper mb-2">
+                    <p>Please check your inbox for a verification email</p>
+                </div>
+                <div class="form-group mt-4">
+                    <a href="{% url 'account_login' %}" class="btn btn-block btn-primary">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

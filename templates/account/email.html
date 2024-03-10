@@ -1,0 +1,125 @@
+{% load static %}
+
+{% load i18n %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cardo&family=Montserrat&display=swap" rel="stylesheet">
+
+    <title>Journal | Manage Email Addresses</title>
+</head>
+
+<body>
+
+    <div class="container mt-3 mb-5">
+
+        <div class="row">
+            <div class="col">
+
+                <div class="d-flex justify-content-between align-items-center me-5 me-md-0">
+                    <!-- Journal Logo -->
+                    <div class="ps-3 my-5 border-start border-dark border-2 d-inline">
+                        <a href="{% url 'entry_list' %}">
+                            <h4 class="lead site-logo">Journal</h4>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+
+                <div class="p-4 ps-4 ps-lg-5 my-5 border-start border-dark border-2">
+
+                    <h2 class="entry-title mb-4">Manage Email Addresses</h2>
+                    {% if user.emailaddress_set.all %}
+                    <p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
+
+                    <form action="{% url 'account_email' %}" class="email_list" method="post">
+                    {% csrf_token %}
+                    <fieldset class="blockLabels">
+
+                    {% for emailaddress in user.emailaddress_set.all %}
+                    <div class="ctrlHolder">
+                        <label for="email_radio_{{forloop.counter}}" class="{% if emailaddress.primary %}primary_email{%endif%}">
+
+                        <input id="email_radio_{{forloop.counter}}" type="radio" name="email" {% if emailaddress.primary or user.emailaddress_set.count == 1 %}checked="checked"{%endif %} value="{{emailaddress.email}}"/>
+
+                    {{ emailaddress.email }}
+                        {% if emailaddress.verified %}
+                        <span class="verified">{% trans "Verified" %}</span>
+                        {% else %}
+                        <span class="unverified">{% trans "Unverified" %}</span>
+                        {% endif %}
+                        {% if emailaddress.primary %}<span class="primary">{% trans "Primary" %}</span>{% endif %}
+                    </label>
+                    </div>
+                    {% endfor %}
+
+                    <div class="buttonHolder mt-3">
+                        <button class="btn btn-dark btn-sm mb-2 mb-lg-0" type="submit" name="action_primary" >{% trans 'Make Primary' %}</button>
+                        <button class="btn btn-dark btn-sm mb-2 mb-lg-0" type="submit" name="action_send" >{% trans 'Re-send Verification' %}</button>
+                        <button class="btn btn-dark btn-sm mb-2 mb-lg-0" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+                    </div>
+
+                    </fieldset>
+                    </form>
+
+                    {% else %}
+                    <p><strong>{% trans 'Warning:'%}</strong> {% trans "You currently do not have any e-mail address set up. You should add an e-mail address so you can receive notifications or reset your password." %}</p>
+
+                    {% endif %}
+
+                    {% if can_add_email %}
+                        <h2 class="entry-title mt-5 mb-4">Add E-mail Address</h2>
+                        <div class="col-lg-6">
+                            <form method="post" action="{% url 'account_email' %}" class="add_email">
+                                {% csrf_token %}
+                                {{ form }}
+                                <button name="action_add" type="submit" class="btn btn-dark btn-sm">{% trans "Add E-mail" %}</button>
+                            </form>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+<script type="text/javascript">
+(function() {
+  var message = "{% trans 'Do you really want to remove the selected e-mail address?' %}";
+  var actions = document.getElementsByName('action_remove');
+  if (actions.length) {
+    actions[0].addEventListener("click", function(e) {
+      if (! confirm(message)) {
+        e.preventDefault();
+      }
+    });
+  }
+})();
+</script>
