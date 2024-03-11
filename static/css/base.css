@@ -29,6 +29,7 @@ body {
 a {
     color: #dedede;
     text-decoration: none;
+    cursor: pointer;
     transition: 750ms;
 }
 
@@ -232,5 +233,5 @@ textarea:focus {
 #entry-list .entry {
     margin-bottom: 40px;
     padding: 20px 0;
-    border-bottom: 1px solid #dedede;
+    border-bottom: 1px solid #737373;
 }

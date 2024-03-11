@@ -165,7 +165,7 @@ OPEN_FOR_SIGNUP = env("OPEN_FOR_SIGNUP")
 
 # User Authentication
 AUTH_USER_MODEL = 'accounts.CustomUser'
-LOGIN_REDIRECT_URL = 'entries:entry_list'
+LOGIN_REDIRECT_URL = 'entries:home'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -182,7 +182,7 @@ ACCOUNT_SESSION_REMEMBER = True
 SOCIALACCOUNT_AUTO_SIGNUP = False
 ACCOUNT_ADAPTER = 'accounts.adapter.AccountAdapter'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_LOGOUT_REDIRECT = 'entries:entry_list'
+ACCOUNT_LOGOUT_REDIRECT = 'entries:home'
 
 #Debug Toolbar
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())

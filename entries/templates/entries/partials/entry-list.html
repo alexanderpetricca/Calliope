@@ -1,20 +1,17 @@
-{% extends '_base.html' %}
-{% load static %}
-{% block title %}Entries | Journal{% endblock %}
-{% block content %}
 <div class="row">
     <div class="col-lg-6 mx-auto">
+        
         {% if not journal_entries %}
-        <div class="entry">
+        <section class="entry">
             <a href="{% url 'entries:entry_new' %}" class="btn btn-secondary">
                 Create Entry
             </a>
-        </div>
+        </section>
         {% endif %}
 
         <section id="entry-list">
             {% for entry in journal_entries %}  
-            <a href="{% url 'entries:entry_detail' entry.pk %}">
+            <a hx-get="{% url 'entries:entry_detail' entry.pk %}" hx-target="#page-content" hx-swap="innerhtml">
                 <div class="entry" id="id_{{ entry.id }}">
                     <p class="entry-created">{{ entry.created }}</p>
                 </div>   
@@ -39,4 +36,3 @@
         </section>
     </div>
 </div>
-{% endblock content %}

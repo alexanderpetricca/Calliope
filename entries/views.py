@@ -13,6 +13,19 @@ from . import forms
 
 
 @login_required
+def homeView(request):
+    user_entries = Entry.objects.filter(author=request.user, deleted=False)
+
+    paginator = Paginator(user_entries, 12)
+    page = request.GET.get('page')
+    user_entries = paginator.get_page(page)
+
+    context = {
+        'journal_entries': user_entries,
+    }
+    return render(request, 'entries/home.html', context)
+
+@login_required
 def entryListView(request):
     
     user_entries = Entry.objects.filter(author=request.user, deleted=False)
@@ -24,8 +37,7 @@ def entryListView(request):
     context = {
         'journal_entries': user_entries,
     }
-
-    return render(request, 'entries/entry-list.html', context)
+    return render(request, 'entries/partials/entry-list.html', context)
 
 
 @login_required
@@ -36,7 +48,7 @@ def entryDetailView(request, pk):
         context = {
             'entry': entry,
         }
-        return render(request, 'entries/entry-detail.html', context)
+        return render(request, 'entries/partials/entry-detail.html', context)
     else:
         raise PermissionDenied()
 
@@ -58,7 +70,7 @@ def entryCreateView(request):
         'form': form
     }
 
-    return render(request, 'entries/entry-create.html', context)
+    return render(request, 'entries/partials/entry-create.html', context)
 
 
 @login_required

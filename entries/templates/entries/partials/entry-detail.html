@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-lg-6 mx-auto">
+        <article class="entry">
+            <p>{{ entry.body|linebreaks }}</p>
+            <p class="text-small mt-5">{{ entry.created }}</p>
+        </article>
+        <div class="btn-group">
+            <a hx-get="{% url 'entries:entry_list' %}" hx-target="#page-content" hx-swap="innerhtml" class="btn btn-secondary">
+                Back
+                <div class="stroke"></div>
+            </a>
+        </div>
+    </div>
+</div>
