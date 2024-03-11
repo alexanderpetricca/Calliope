@@ -2,7 +2,7 @@
 
 ## Description
 
-Journal is a personal journalling platform built using Django, Bootstrap and Docker.
+Calliope is a personal journalling platform built using Django & HTMX.
 
 ## Table of Contents
 
@@ -37,7 +37,7 @@ Journal Entry Page
 
 MIT License
 
-Copyright (c) 2022 Alexander Petricca
+Copyright (c) 2024 Alexander Petricca
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
