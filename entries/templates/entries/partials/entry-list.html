@@ -1,38 +1,40 @@
-<div class="row">
-    <div class="col-lg-6 mx-auto">
-        
-        {% if not journal_entries %}
-        <section class="entry">
-            <a href="{% url 'entries:entry_new' %}" class="btn btn-secondary">
-                Create Entry
-            </a>
-        </section>
-        {% endif %}
+<section id="page-content">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            
+            {% if not journal_entries %}
+            <section class="entry">
+                <a href="{% url 'entries:entry_new' %}" class="btn btn-secondary">
+                    Create Entry
+                </a>
+            </section>
+            {% endif %}
 
-        <section id="entry-list">
-            {% for entry in journal_entries %}  
-            <a hx-get="{% url 'entries:entry_detail' entry.pk %}" hx-target="#page-content" hx-swap="innerhtml">
-                <div class="entry" id="id_{{ entry.id }}">
-                    <p class="entry-created">{{ entry.created }}</p>
-                </div>   
-            </a>
-            {% endfor %}
+            <section id="entry-list">
+                {% for entry in journal_entries %}  
+                <a hx-get="{% url 'entries:entry_detail' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml">
+                    <div class="entry" id="id_{{ entry.id }}">
+                        <p class="entry-created">{{ entry.created }}</p>
+                    </div>   
+                </a>
+                {% endfor %}
 
-            <!-- Pagination -->
-            <div class="row mt-4">
-                <div class="col text-center">
-                    {% if journal_entries.has_previous %}
-                    <a href="?page={{ journal_entries.previous_page_number }}" class="pagination-control">
-                        Previous
-                    </a>
-                    {% endif %}
-                    {% if journal_entries.has_next %}
-                    <a href="?page={{ journal_entries.next_page_number }}" class="pagination-control">
-                        Next
-                    </a>
-                    {% endif %}
+                <!-- Pagination -->
+                <div class="row mt-4">
+                    <div class="col text-center">
+                        {% if journal_entries.has_previous %}
+                        <a href="?page={{ journal_entries.previous_page_number }}" class="pagination-control">
+                            Previous
+                        </a>
+                        {% endif %}
+                        {% if journal_entries.has_next %}
+                        <a href="?page={{ journal_entries.next_page_number }}" class="pagination-control">
+                            Next
+                        </a>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </div>
-</div>
+</section>

@@ -24,6 +24,7 @@ body {
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
+    overflow-y: scroll;
 }
 
 a {
@@ -227,6 +228,21 @@ textarea:focus {
     box-shadow: none;
     transition: 750ms;
 }
+
+/* Page Content */
+
+#page-content {
+    animation: fadeInAnimation 0.5s ease-out forwards;
+}
+
+@keyframes fadeInAnimation {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 
 /* Entry List */
 
