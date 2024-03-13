@@ -1,26 +1,23 @@
-{% extends '_base.html' %}
-{% load static %}
-{% block title %}Entries{% endblock %}
+<section id="page-content">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <a hx-get="{% url 'update_profile' user.pk %}" hx-target="#page-content" hx-swap="outerhtml">
+                <div class="entry" id="id_update_password">
+                    <p class="entry-created">Update Profile</p>
+                </div> 
+            </a>
 
-{% block content %}
-<a href="{% url 'update_profile' user.pk %}">
-    <section class="entry">
-        <h2 class="entry-title">Profile</h2>
-        <p class="entry-created">View and update personal information</p>
-    </section>
-</a>
+            <a hx-get="{% url 'account_change_password' %}" hx-target="#page-content" hx-swap="outerhtml">
+                <div class="entry" id="id_update_password">
+                    <p class="entry-created">Change your password</p>
+                </div> 
+            </a>
 
-<a href="{% url 'account_change_password' %}">
-    <section class="entry">
-        <h2 class="entry-title">Password</h2>
-        <p class="entry-created">Change your password</p>
-    </section>
-</a>
-
-<a href="{% url 'account_logout' %}">
-    <section class="entry">
-        <h2 class="entry-title">Logout</h2>
-        <p class="entry-created">Sign out of Journal</p>
-    </section>
-</a>
-{% endblock content %}
+            <a hx-get="{% url 'account_logout' %}" hx-target="#page-content" hx-swap="outerhtml">
+                <div class="entry" id="id_update_password">
+                    <p class="entry-created">Logout</p>
+                </div> 
+            </a>
+        </div>
+    </div>
+</section>

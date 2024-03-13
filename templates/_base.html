@@ -36,7 +36,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'view_profile' %}">
+                            <a hx-get="{% url 'view_profile' %}" hx-target="#page-content" hx-swap="outerhtml">
                                 Profile
                             </a>
                         </li>

@@ -1,0 +1,24 @@
+<section id="page-content">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <form method="post" id="entry-create-form">
+                {% csrf_token %}
+                <div class="form-field-wrapper">
+                    {{ form.body }}
+                    {{ form.body.errors }}
+                </div>
+                
+                <div class="btn-group">
+                    <a hx-get="{% url 'entries:entry_list' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
+                        Back
+                        <div class="stroke"></div>
+                    </a>
+                    <button type="submit" hx-post="{% url 'entries:entry_new' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
+                        Create
+                        <div class="stroke"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

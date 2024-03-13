@@ -37,7 +37,7 @@ def entryListView(request):
     context = {
         'journal_entries': user_entries,
     }
-    return render(request, 'entries/partials/entry-list.html', context)
+    return render(request, 'entries/entry-list.html', context)
 
 
 @login_required
@@ -48,7 +48,7 @@ def entryDetailView(request, pk):
         context = {
             'entry': entry,
         }
-        return render(request, 'entries/partials/entry-detail.html', context)
+        return render(request, 'entries/entry-detail.html', context)
     else:
         raise PermissionDenied()
 
@@ -70,7 +70,7 @@ def entryCreateView(request):
         'form': form
     }
 
-    return render(request, 'entries/partials/entry-create.html', context)
+    return render(request, 'entries/entry-create.html', context)
 
 
 @login_required

@@ -20,8 +20,8 @@
                 {% endfor %}
 
                 <!-- Pagination -->
-                <div class="row mt-4">
-                    <div class="col text-center">
+                <div class="row">
+                    <div class="col-lg-6 mx-auto">
                         {% if journal_entries.has_previous %}
                         <a href="?page={{ journal_entries.previous_page_number }}" class="pagination-control">
                             Previous
