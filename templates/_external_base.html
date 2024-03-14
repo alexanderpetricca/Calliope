@@ -5,13 +5,10 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
-
         <!-- Custom CSS -->
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
-
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +21,7 @@
             <!-- Main Brand & Nav -->
             <nav id=main-nav>
                 <div id="brand-wrapper">
-                    <a href="{% url 'account_login' %}">
+                    <a href="{% url 'pages:landing' %}">
                         <h1 id="main-header">Calliope</h1>
                     </a>
                     <div id="brand-logo"></div>
@@ -35,12 +32,12 @@
                             </a>
                         </li>
                         <li>
-                            <a hx-get="{% url 'pages:features' %}" hx-target="#page-content" hx-swap="outerhtml">
+                            <a href="{% url 'pages:features' %}">
                                 Features
                             </a>
                         </li>
                         <li>
-                            <a hx-get="{% url 'pages:pricing' %}" hx-target="#page-content" hx-swap="outerhtml">
+                            <a href="{% url 'pages:pricing' %}">
                                 Pricing
                             </a>
                         </li>

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-6 mx-auto">
             
-            {% if not journal_entries %}
+            {% if not entry_list %}
             <section class="entry">
                 <a href="{% url 'entries:entry_new' %}" class="btn btn-secondary">
                     Create Entry
@@ -11,7 +11,7 @@
             {% endif %}
 
             <section id="entry-list">
-                {% for entry in journal_entries %}  
+                {% for entry in entry_list %}  
                 <a hx-get="{% url 'entries:entry_detail' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml">
                     <div class="entry" id="id_{{ entry.id }}">
                         <p class="entry-created">{{ entry.created }}</p>
@@ -21,17 +21,28 @@
 
                 <!-- Pagination -->
                 <div class="row">
-                    <div class="col-lg-6 mx-auto">
-                        {% if journal_entries.has_previous %}
-                        <a href="?page={{ journal_entries.previous_page_number }}" class="pagination-control">
-                            Previous
+                    <div class="col-lg-6 mx-auto pagination-wrapper">
+                        
+                        {% if entry_list.has_previous %}
+                        <a href="?page={{ entry_list.previous_page_number }}" class="pagination-control">
+                            Prev
+                        </a>
+                        {% else %}
+                        <a class="pagination-control disabled" aria-disabled="true">
+                            Prev
                         </a>
                         {% endif %}
-                        {% if journal_entries.has_next %}
-                        <a href="?page={{ journal_entries.next_page_number }}" class="pagination-control">
+
+                        {% if entry_list.has_next %}
+                        <a href="?page={{ entry_list.next_page_number }}" class="pagination-control">
+                            Next
+                        </a>
+                        {% else %}
+                        <a class="pagination-control disabled" aria-disabled="true">
                             Next
                         </a>
                         {% endif %}
+
                     </div>
                 </div>
             </section>

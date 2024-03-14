@@ -13,29 +13,30 @@ from . import forms
 
 
 @login_required
-def homeView(request):
+def appHomeView(request):
     user_entries = Entry.objects.filter(author=request.user, deleted=False)
 
-    paginator = Paginator(user_entries, 12)
+    paginator = Paginator(user_entries, 6)
     page = request.GET.get('page')
     user_entries = paginator.get_page(page)
 
     context = {
-        'journal_entries': user_entries,
+        'entry_list': user_entries,
     }
     return render(request, 'entries/home.html', context)
+
 
 @login_required
 def entryListView(request):
     
     user_entries = Entry.objects.filter(author=request.user, deleted=False)
 
-    paginator = Paginator(user_entries, 12)
+    paginator = Paginator(user_entries, 6)
     page = request.GET.get('page')
     user_entries = paginator.get_page(page)
 
     context = {
-        'journal_entries': user_entries,
+        'entry_list': user_entries,
     }
     return render(request, 'entries/entry-list.html', context)
 

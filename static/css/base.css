@@ -57,6 +57,28 @@ p {
     text-align: center;
 }
 
+/* Pagination */
+
+.pagination-wrapper {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.pagination-control {
+    font-size: 12px;
+    color: #737373;
+    padding: 0 20px;
+}
+
+.pagination-control.disabled {
+    opacity: 50%;
+}
+
+.pagination-control.disabled:hover {
+    color: #737373;
+    transition: none;
+}
+
 /* Header & Brand */
 
 #main-nav {
@@ -212,7 +234,7 @@ input:focus {
 textarea {
     width: 100%;
     margin-bottom: 40px;
-    padding: 15px 10px 15px 0;
+    padding: 15px 10px 30px 0;
     font-size: 14px;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
@@ -223,6 +245,7 @@ textarea {
     border: none;
     border-bottom: 1px solid #dedede;
     resize: none;
+    overflow:hidden;
     transition: 750ms;
 }
 

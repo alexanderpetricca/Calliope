@@ -1,6 +1,8 @@
 import os, socket
 from pathlib import Path
 
+from django.urls import reverse_lazy
+
 from environs import Env
 
 
@@ -151,6 +153,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 # Security
 SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=False)
 SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)
@@ -160,18 +163,21 @@ SESSION_COOKIE_SECURE = env.bool("DJANGO_SESSION_COOKIE_SECURE", default=True)
 CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)
 CSRF_TRUSTED_ORIGINS = [env('CSRF_TRUSTED_ORIGINS')]
 
+
 # Signup Active / Inactive
 OPEN_FOR_SIGNUP = env("OPEN_FOR_SIGNUP")
 
+
 # User Authentication
 AUTH_USER_MODEL = 'accounts.CustomUser'
-LOGIN_REDIRECT_URL = 'entries:home'
+LOGIN_REDIRECT_URL = 'entries:app_home'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 # Django Alluth
 ACCOUNT_USERNAME_REQUIRED = False
@@ -180,9 +186,11 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_SESSION_REMEMBER = True
 SOCIALACCOUNT_AUTO_SIGNUP = False
-ACCOUNT_ADAPTER = 'accounts.adapter.AccountAdapter'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_LOGOUT_REDIRECT = 'accounts:login'
+
+ACCOUNT_LOGOUT_REDIRECT = 'pages:landing'
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = 'entries:app_home'
+
 
 #Debug Toolbar
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())

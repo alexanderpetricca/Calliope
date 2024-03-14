@@ -1,11 +1,22 @@
 /**
- * Resizes a text areas height to the textareas scrollheights value, as the user
- * enters text. Intended for use with oninput. 
- * @param {textarea} - the text area element to be resized. 
-*/
+ * Initializes auto resizing for a text area.
+ * @param {HTMLElement} textarea - The text area element to be initialized.
+ */
+function initializeAutoResize(textarea) {
+    function autoResize() {
+        textarea.style.height = 'auto';
+        textarea.style.height = textarea.scrollHeight + 'px';
+    }
 
-function autoResize(textarea) {
-    textarea.style.height = 'auto';
-    textarea.style.height = textarea.scrollHeight + 'px'; // Set to scroll height
-    textarea.addEventListener("input", OnInput, false);
+    textarea.addEventListener("input", autoResize, false);
+
+    // Immediately adjust the height in case of pre-filled content
+    autoResize();
 }
+
+
+document.body.addEventListener('htmx:afterSwap', function(event) {
+    // Select all text areas on the page and apply autoresize.
+    const textAreas = event.target.querySelectorAll('textarea');
+    textAreas.forEach(initializeAutoResize);
+});

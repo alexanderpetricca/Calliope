@@ -1,5 +1,4 @@
 from django import forms
-from django.utils import timezone
 
 from .models import Entry
 
@@ -17,7 +16,6 @@ class EntryCreateForm(forms.ModelForm):
             attrs={
                 'placeholder': "Thoughts, Feelings & Ideas", 
                 'rows': "3",
-                'oninput': "autoResize(this)",
             }
         )
 

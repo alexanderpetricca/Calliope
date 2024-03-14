@@ -4,7 +4,7 @@ from . import views
 
 app_name = "entries"
 urlpatterns = [
-    path('', views.homeView, name='home'),
+    path('', views.appHomeView, name='app_home'),
 ]
 
 htmx_patterns = [
