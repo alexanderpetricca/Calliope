@@ -182,7 +182,7 @@ ACCOUNT_SESSION_REMEMBER = True
 SOCIALACCOUNT_AUTO_SIGNUP = False
 ACCOUNT_ADAPTER = 'accounts.adapter.AccountAdapter'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_LOGOUT_REDIRECT = 'entries:home'
+ACCOUNT_LOGOUT_REDIRECT = 'accounts:login'
 
 #Debug Toolbar
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())

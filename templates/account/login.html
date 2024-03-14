@@ -1,40 +1,42 @@
-{% extends '_accounts_base.html' %}
+{% extends '_external_base.html' %}
 {% load static %}
-{% block title %}Login{% endblock %}
+{% block title %}Verification Required{% endblock %}
 {% block content %}
-
-<div class="row">
-    <div class="col-lg-6 mx-auto">
-        <form id="id-account-form" method="post">
-            {% csrf_token %}
-            <div class="form-field-wrapper">
-                {{ form.login }}
-                {{ form.login.errors }}
-            </div>
-            <div class="form-field-wrapper">
-                {{ form.password }}
-            </div>
-            {% if form.errors %}
-            <div class="form-errors-list">
-                {{ form.non_field_errors }}
-            </div>
-            {% endif %}
-            <div>
-                <a href="{% url 'account_reset_password' %}" class="text-small">Forgotten Password</a>
-            </div>
-            
-            <div class="btn-group">
-                <button type="submit" class="btn btn-primary">
-                    Login
-                    <div class="stroke"></div>
-                </button>
-                <a href="{% url 'account_signup' %}" class="btn btn-secondary">
-                    Signup
-                    <div class="stroke"></div>
-                </a>
-            </div>
-        </form>
+<section id="page-content">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+            <form id="id-account-form" method="post">
+                {% csrf_token %}
+                <div class="form-field-wrapper">
+                    {{ form.login }}
+                    {{ form.login.errors }}
+                </div>
+                <div class="form-field-wrapper">
+                    {{ form.password }}
+                </div>
+                {% if form.errors %}
+                <div class="form-errors-list">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+                <div>
+                    <a hx-get="{% url 'account_reset_password' %}" hx-target="#page-content" hx-swap="outerhtml" class="text-small">
+                        Forgotten Password
+                    </a>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">
+                        Login
+                        <div class="stroke"></div>
+                    </button>
+                    <a hx-get="{% url 'account_signup' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
+                        Signup
+                        <div class="stroke"></div>
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
+</section>
 {% endblock content %}

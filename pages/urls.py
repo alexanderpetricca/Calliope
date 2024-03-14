@@ -3,4 +3,7 @@ from . import views
 
 
 app_name = "pages"
-urlpatterns = []
+urlpatterns = [
+    path('', views.featuresView, name='features'),
+    path('pricing', views.pricingView, name='pricing'),
+]

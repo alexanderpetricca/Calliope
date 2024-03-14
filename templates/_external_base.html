@@ -24,21 +24,23 @@
             <!-- Main Brand & Nav -->
             <nav id=main-nav>
                 <div id="brand-wrapper">
-                    <h1 id="main-header">Calliope</h1>
+                    <a href="{% url 'account_login' %}">
+                        <h1 id="main-header">Calliope</h1>
+                    </a>
                     <div id="brand-logo"></div>
                     <ul id="header-menu">
                         <li>
-                            <a href="{% url 'entries:entry_list' %}">
+                            <a href="{% url 'account_login' %}">
                                 Log-In
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a hx-get="{% url 'pages:features' %}" hx-target="#page-content" hx-swap="outerhtml">
                                 Features
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a hx-get="{% url 'pages:pricing' %}" hx-target="#page-content" hx-swap="outerhtml">
                                 Pricing
                             </a>
                         </li>
@@ -48,6 +50,7 @@
             {% block content %}
             {% endblock content %}
         </div>
+        <script src="{% static 'js/htmx.min.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
         {% block scripts %}
         {% endblock scripts %}

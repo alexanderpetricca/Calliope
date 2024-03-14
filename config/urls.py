@@ -19,7 +19,7 @@ urlpatterns = [
     # Apps
     path('accounts/', include('accounts.urls')),
     path('', include('entries.urls', namespace='entries')),
-    path('pages/', include('pages.urls', namespace='pages')),
+    path('pages', include('pages.urls', namespace='pages')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if DEBUG == True:
