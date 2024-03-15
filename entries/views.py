@@ -10,6 +10,7 @@ from django.contrib import messages
 
 from .models import Entry
 from . import forms
+from core.decorators import require_htmx
 
 
 @login_required
@@ -27,6 +28,7 @@ def appHomeView(request):
 
 
 @login_required
+@require_htmx
 def entryListView(request):
     
     user_entries = Entry.objects.filter(author=request.user, deleted=False)
@@ -42,6 +44,7 @@ def entryListView(request):
 
 
 @login_required
+@require_htmx
 def entryDetailView(request, pk):
     entry = get_object_or_404(Entry, pk=pk)
 
@@ -55,6 +58,7 @@ def entryDetailView(request, pk):
 
 
 @login_required
+@require_htmx
 def entryCreateView(request):
 
     form = forms.EntryCreateForm()
@@ -65,7 +69,7 @@ def entryCreateView(request):
         if form.is_valid():
             new_entry = form.save()
 
-            return HttpResponseRedirect(reverse('entries:entry_detail', args=[new_entry.id]))
+            return HttpResponseRedirect(reverse('entries_entry_detail', args=[new_entry.id]))
 
     context = {
         'form': form
@@ -75,6 +79,7 @@ def entryCreateView(request):
 
 
 @login_required
+@require_htmx
 def entryUpdateView(request, pk):
     
     entry = get_object_or_404(Entry, pk=pk)
@@ -88,7 +93,7 @@ def entryUpdateView(request, pk):
                 
             if form.is_valid():
                 form.save()
-                return HttpResponseRedirect(reverse('entries:entry_detail', args=[entry.id]))
+                return HttpResponseRedirect(reverse('entries_entry_detail', args=[entry.id]))
 
         context = {
             'form': form, 
@@ -108,7 +113,7 @@ def entryDeleteView(request, pk):
     if request.method == "POST" and entry.author == request.user:
         entry.softDelete()
         messages.add_message(request, messages.SUCCESS, 'Entry Deleted')
-        return HttpResponseRedirect(reverse('entries:entry_list'))
+        return HttpResponseRedirect(reverse('entries_entry_list'))
 
     else:
         raise PermissionDenied()
@@ -122,4 +127,4 @@ def toggleBookmarkView(request, pk):
     if request.method == 'POST':
         entry.bookmark()
 
-    return HttpResponseRedirect(reverse('entries:entry_detail', args=[entry.id]))
+    return HttpResponseRedirect(reverse('entries_entry_detail', args=[entry.id]))

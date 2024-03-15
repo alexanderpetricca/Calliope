@@ -26,6 +26,7 @@ class CustomUserTests(TestCase):
         self.add_customuser = Permission.objects.get(codename='add_customuser')
         self.view_customuser = Permission.objects.get(codename='view_customuser')
 
+
     # Tests user creation
     def test_create_user(self):
         self.assertEqual(self.user.username, 'TestUser')

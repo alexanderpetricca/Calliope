@@ -1,0 +1,280 @@
+/* Style Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+* {
+    margin: 0;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+}
+
+
+/* Global */
+:root {
+    color-scheme: dark;
+}
+
+body {
+    background: #242424;
+    color: #dedede;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    overflow-y: scroll;
+}
+
+a {
+    color: #dedede;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 750ms;
+}
+
+a:hover {
+    color: #ffd900;
+}
+
+#main-container {
+    width: 100%;
+    padding: 100px 20px;
+}
+
+/* Typography */
+
+p {
+    margin-bottom: 1.5rem;
+}
+
+.text-small {
+    font-size: 0.75rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Pagination */
+
+.pagination-wrapper {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.pagination-control {
+    font-size: 12px;
+    color: #737373;
+    padding: 0 20px;
+}
+
+.pagination-control.disabled {
+    opacity: 50%;
+}
+
+.pagination-control.disabled:hover {
+    color: #737373;
+    transition: none;
+}
+
+/* Header & Brand */
+
+#main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#brand-wrapper {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+h1#main-header {
+    font-size: 20px;
+}
+
+#brand-logo {
+    background-color: #ffd900;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transition: 750ms;
+    margin-top: 20px;
+}
+
+#header-menu {
+    opacity: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    list-style: none;
+    margin: 30px 0;
+    padding: 0;
+    transition: 750ms;
+}
+
+#header-menu li {
+    padding: 0;
+    transition: 750ms;
+}
+
+#brand-wrapper:hover #brand-logo {
+    opacity: 0;
+    transition: 500ms;
+}
+
+#brand-wrapper:hover #header-menu {
+    opacity: 100;
+    transition: 500ms;
+}
+
+#brand-wrapper:hover #header-menu li {
+    margin: 0 20px;
+    transition: 750ms;
+}
+
+/* Buttons */
+
+.btn-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 90px 0;
+}
+
+.btn {
+    width: 160px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    font-size: 12px;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    margin: 10px 0;
+    padding: 0;
+    color: #dedede;
+    transition: 1000ms;
+}
+
+.btn .stroke {
+    border-top: 1px solid #dedede;
+    height: 1px;
+    width: 100%;
+    transition: 1000ms;
+}
+
+.btn:hover {
+    color: #ffd900;
+    transition: 1000ms;
+}
+
+.btn:hover .stroke {
+    border-top: 1px solid #ffd900;
+    transition: 1000ms;
+}
+
+.btn-secondary {
+    flex-direction: row-reverse;
+    color: #737373;
+}
+
+.btn-primary .stroke {
+    margin-left: 10px;
+}
+
+.btn-secondary .stroke {
+    margin-right: 10px;
+    border-top: 1px solid #737373;
+}
+
+/* Inputs */
+.form-group, .form-field-wrapper {
+    width: 100%;
+}
+
+input {
+    width: 100%;
+    height: 20px;
+    padding: 20px 0 20px 0;
+    margin-bottom: 40px;
+    font-size: 14px;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    color: #dedede;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #dedede;
+    transition: 750ms;
+}
+
+input:focus {
+    border-bottom: 1px solid #ffd900;
+    outline: none;
+    box-shadow: none;
+    transition: 750ms;
+}
+
+textarea {
+    width: 100%;
+    margin-bottom: 40px;
+    padding: 15px 10px 30px 0;
+    font-size: 14px;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    color: #dedede;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #dedede;
+    resize: none;
+    overflow:hidden;
+    transition: 750ms;
+}
+
+textarea:focus {
+    border-bottom: 1px solid #ffd900;
+    outline: none;
+    box-shadow: none;
+    transition: 750ms;
+}
+
+/* Page Content */
+
+#page-content {
+    animation: fadeInAnimation 0.5s ease-out forwards;
+}
+
+@keyframes fadeInAnimation {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+/* Entry List */
+
+.entry {
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #737373;
+}

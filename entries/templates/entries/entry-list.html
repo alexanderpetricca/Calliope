@@ -4,7 +4,7 @@
             
             {% if not entry_list %}
             <section class="entry">
-                <a href="{% url 'entries:entry_new' %}" class="btn btn-secondary">
+                <a href="{% url 'entries_entry_new' %}" class="btn btn-secondary">
                     Create Entry
                 </a>
             </section>
@@ -12,7 +12,7 @@
 
             <section id="entry-list">
                 {% for entry in entry_list %}  
-                <a hx-get="{% url 'entries:entry_detail' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml">
+                <a hx-get="{% url 'entries_entry_detail' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml">
                     <div class="entry" id="id_{{ entry.id }}">
                         <p class="entry-created">{{ entry.created }}</p>
                     </div>   

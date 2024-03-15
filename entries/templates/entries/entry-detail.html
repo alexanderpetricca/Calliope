@@ -6,11 +6,11 @@
                 <p class="text-small">{{ entry.created }}</p>
             </article>
             <div class="btn-group">
-                <a hx-get="{% url 'entries:entry_list' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
+                <a hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
                     Back
                     <div class="stroke"></div>
                 </a>
-                <a hx-get="{% url 'entries:entry_update' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
+                <a hx-get="{% url 'entries_entry_update' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
                     Update
                     <div class="stroke"></div>
                 </a>

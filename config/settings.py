@@ -170,7 +170,7 @@ OPEN_FOR_SIGNUP = env("OPEN_FOR_SIGNUP")
 
 # User Authentication
 AUTH_USER_MODEL = 'accounts.CustomUser'
-LOGIN_REDIRECT_URL = 'entries:app_home'
+LOGIN_REDIRECT_URL = 'entries_app_home'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -189,7 +189,7 @@ SOCIALACCOUNT_AUTO_SIGNUP = False
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 ACCOUNT_LOGOUT_REDIRECT = 'pages:landing'
-ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = 'entries:app_home'
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = 'entries_app_home'
 
 
 #Debug Toolbar

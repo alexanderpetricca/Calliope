@@ -20,18 +20,18 @@
             <!-- Main Brand & Nav -->
             <nav id=main-nav>
                 <div id="brand-wrapper">
-                    <a href="{% url 'entries:app_home' %}">
+                    <a href="{% url 'entries_app_home' %}">
                         <h1 id="main-header">Calliope</h1>
                     </a>
                     <div id="brand-logo"></div>
                     <ul id="header-menu">
                         <li>
-                            <a hx-get="{% url 'entries:entry_list' %}" hx-target="#page-content" hx-swap="outerhtml">
+                            <a hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml">
                                 Read
                             </a>
                         </li>
                         <li>
-                            <a hx-get="{% url 'entries:entry_new' %}" hx-target="#page-content" hx-swap="outerhtml">
+                            <a hx-get="{% url 'entries_entry_new' %}" hx-target="#page-content" hx-swap="outerhtml">
                                 Write
                             </a>
                         </li>

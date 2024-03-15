@@ -17,9 +17,9 @@ urlpatterns = [
     path(env("ADMIN_URL"), admin.site.urls),
 
     # Apps
-    path('', include('pages.urls', namespace='pages')),
+    path('', include('pages.urls')),
     path('accounts/', include('accounts.urls')),
-    path('app', include('entries.urls', namespace='entries')),
+    path('app', include('entries.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if DEBUG == True:
