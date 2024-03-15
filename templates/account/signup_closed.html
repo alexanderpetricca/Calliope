@@ -1,8 +1,12 @@
+{% extends '_external_base.html' %}
+{% load static %}
+{% block title %}Signup Closed{% endblock title %}
+{% block content %}
 <section id="page-content">
     <div class="row">
         <div class="col-lg-6 mx-auto">
             <div class="col-lg-6 mx-auto">
-                <p class="text-center">Signup for this site is currently closed</p>
+                <p class="text-center">Signup for this site is currently closed.</p>
             </div>
             <div class="btn-group">
                 <a href="{% url 'account_login' %}" class="btn btn-secondary">
@@ -12,3 +16,4 @@
         </div>
     </div>
 </section>
+{% endblock content %}
