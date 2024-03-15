@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from django.forms import ModelForm
+from django import forms
 
 from .models import CustomUser
 
@@ -24,8 +24,12 @@ class CustomUserAdminChangeForm(UserChangeForm):
 
 # Front End Forms
 
-class CustomUserChangeForm(ModelForm):
+class CustomUserChangeForm(forms.ModelForm):
     """Form used to allow user to update their details in the frontend"""
+
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email Address'}))
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
 
     class Meta:
         model = CustomUser

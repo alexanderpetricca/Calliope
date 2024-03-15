@@ -3,13 +3,13 @@
         <div class="col-lg-6 mx-auto">
             
             {% if not entry_list %}
-            <section class="entry">
-                <a href="{% url 'entries_entry_new' %}" class="btn btn-secondary">
+            <div class="entry">
+                <a hx-get="{% url 'entries_entry_new' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
                     Create Entry
+                    <div class="stroke"></div>
                 </a>
-            </section>
-            {% endif %}
-
+            </div>
+            {% else %}
             <section id="entry-list">
                 {% for entry in entry_list %}  
                 <a hx-get="{% url 'entries_entry_detail' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml">
@@ -46,6 +46,7 @@
                     </div>
                 </div>
             </section>
+            {% endif %}
         </div>
     </div>
 </section>

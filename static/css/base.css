@@ -116,6 +116,7 @@ h1#main-header {
     flex-direction: row;
     justify-content: center;
     list-style: none;
+    font-size: 12px;
     margin: 30px 0;
     padding: 0;
     transition: 750ms;
@@ -165,6 +166,7 @@ h1#main-header {
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
+    white-space: nowrap;
     margin: 10px 0;
     padding: 0;
     color: #dedede;

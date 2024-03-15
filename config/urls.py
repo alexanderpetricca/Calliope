@@ -21,7 +21,7 @@ urlpatterns = [
     
     # Local Apps
     path('', include('pages.urls')),
-    path('app', include('entries.urls')),
+    path('app/', include('entries.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if DEBUG == True:
