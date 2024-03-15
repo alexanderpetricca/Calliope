@@ -11,6 +11,7 @@ class PagesTests(TestCase):
         response = self.client.get(reverse('pages_landing'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed('pages/landing.html')
+        self.assertContains(response, 'Calliope | Welcome')
 
     
     def testFeaturePageView(self):
@@ -19,7 +20,8 @@ class PagesTests(TestCase):
         self.client.logout()
         response = self.client.get(reverse('pages_features'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed('pages/features.html')
+        self.assertTemplateUsed('pages/feature-list.html')
+        self.assertContains(response, 'Calliope | Features')
 
 
     def testPricingPageView(self):
@@ -29,3 +31,4 @@ class PagesTests(TestCase):
         response = self.client.get(reverse('pages_pricing'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed('pages/pricing.html')
+        self.assertContains(response, 'Calliope | Pricing')

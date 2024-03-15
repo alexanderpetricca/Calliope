@@ -1,16 +1,13 @@
-from django.shortcuts import render
+from django.views.generic import TemplateView
 
 
-def landingPageView(request):
-
-    return render(request, 'pages/landing.html')
-
-
-def featuresView(request):
-
-    return render(request, 'pages/features.html')
+class LandingPageView(TemplateView):
+    template_name = 'pages/landing.html'
 
 
-def pricingView(request):
+class FeaturesPageView(TemplateView):
+    template_name = 'pages/feature-list.html'
 
-    return render(request, 'pages/pricing.html')
+
+class PricingPageView(TemplateView):
+    template_name = 'pages/pricing.html'

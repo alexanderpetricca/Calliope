@@ -1,8 +1,6 @@
 import os, socket
 from pathlib import Path
 
-from django.urls import reverse_lazy
-
 from environs import Env
 
 
