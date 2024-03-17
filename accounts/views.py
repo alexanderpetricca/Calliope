@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, update_session_auth_hash
 
 from . import forms
 
@@ -41,6 +41,29 @@ def customLogoutPageView(request):
 
 
 @login_required
+def customPasswordChangeView(request):
+    
+    form = forms.CustomPasswordChangeForm(request.user)
+
+    if request.method == 'POST':
+        form = forms.CustomPasswordChangeForm(request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            return redirect(reverse('password_change_done'))
+        
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'registration/password_change.html', context)
+
+
+def customPasswordChangeDoneView(request):
+    return render(request, "registration/password_change_done.html")
+
+
+@login_required
 def userProfileView(request):
     """Renders the profile management page."""
     return render(request, 'accounts/profile.html')
@@ -52,7 +75,6 @@ def updateUserProfileView(request):
     form = forms.CustomUserChangeForm(instance=request.user)
 
     if request.method == 'POST':
-
         form = forms.CustomUserChangeForm(request.POST)
 
         if form.is_valid():

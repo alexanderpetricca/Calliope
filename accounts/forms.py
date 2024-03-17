@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.contrib.auth import forms as auth_forms
 from django import forms
 
 from .models import CustomUser
@@ -6,7 +6,7 @@ from .models import CustomUser
 
 # Admin Forms
 
-class CustomUserAdminCreateForm(UserCreationForm):
+class CustomUserAdminCreateForm(auth_forms.UserCreationForm):
     """Form used to create a user in the admin backend"""
 
     class Meta:
@@ -14,7 +14,7 @@ class CustomUserAdminCreateForm(UserCreationForm):
         fields = ('__all__')
 
 
-class CustomUserAdminChangeForm(UserChangeForm):
+class CustomUserAdminChangeForm(auth_forms.UserChangeForm):
     """Form used to update a user in the admin backend"""
 
     class Meta:
@@ -22,9 +22,9 @@ class CustomUserAdminChangeForm(UserChangeForm):
         fields = ('__all__')
 
 
-# Frontend Forms
+# Custom Registration Forms
         
-class CustomLoginForm(AuthenticationForm):
+class CustomLoginForm(auth_forms.AuthenticationForm):
 
     def __init__(self, *args, **kwargs):
         super(CustomLoginForm, self).__init__(*args, **kwargs)
@@ -32,7 +32,16 @@ class CustomLoginForm(AuthenticationForm):
         self.fields['password'].widget.attrs['placeholder'] = 'Password'
 
 
-class CustomSignupForm(UserCreationForm):
+class CustomPasswordChangeForm(auth_forms.PasswordChangeForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(CustomPasswordChangeForm, self).__init__(*args, **kwargs)
+        self.fields['old_password'].widget.attrs['placeholder'] = 'Old Password'
+        self.fields['new_password1'].widget.attrs['placeholder'] = 'New Password'
+        self.fields['new_password2'].widget.attrs['placeholder'] = 'New Password (again)'
+
+
+class CustomSignupForm(auth_forms.UserCreationForm):
 
     first_name = forms.CharField(
         max_length=30, 

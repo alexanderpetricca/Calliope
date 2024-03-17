@@ -8,8 +8,11 @@ urlpatterns = [
     path('login/', views.customLoginPageView, name='login'),
     path('logout/', views.customLogoutPageView, name='logout'),
     
+    path('password_change/', views.customPasswordChangeView, name='password_change'),
+    path('password_change/done/', views.customPasswordChangeDoneView, name='password_change_done'),
+    
     path('profile/', views.userProfileView, name='view_profile'),
-    path('update-profile/<str:pk>/',views.updateUserProfileView, name='update_profile'),
+    path('update-profile/',views.updateUserProfileView, name='update_profile'),
 
     # Password and Account Management
     # path('password/change-done/', views.PasswordChangeDoneView.as_view(),name='change_password_done'),

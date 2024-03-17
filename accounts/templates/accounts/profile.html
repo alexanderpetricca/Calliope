@@ -1,12 +1,12 @@
 <section id="page-content">
     <div class="row">
         <div class="col-lg-6 mx-auto">
-            <a hx-get="{% url 'update_profile' user.pk %}" hx-target="#page-content" hx-swap="outerhtml">
+            <a hx-get="{% url 'update_profile' %}" hx-target="#page-content" hx-swap="outerhtml">
                 <div class="entry" id="id_update_password">
                     <p class="entry-created">Update profile</p>
                 </div> 
             </a>
-            <a hx-get="" hx-target="#page-content" hx-swap="outerhtml">
+            <a hx-get="{% url 'password_change' %}" hx-target="#page-content" hx-swap="outerhtml">
                 <div class="entry" id="id_update_password">
                     <p class="entry-created">Change password</p>
                 </div> 
