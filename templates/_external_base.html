@@ -16,7 +16,7 @@
 
         <title>Calliope | {% block title %}{% endblock %}</title>
     </head>
-    <body>
+    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         <div class="container" id="main-container">
             <!-- Main Brand & Nav -->
             <nav id=main-nav>
@@ -27,7 +27,7 @@
                     <div id="brand-logo"></div>
                     <ul id="header-menu">
                         <li>
-                            <a href="{% url 'account_login' %}">
+                            <a href="{% url 'login' %}">
                                 Log-In
                             </a>
                         </li>

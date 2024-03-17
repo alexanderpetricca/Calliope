@@ -7,12 +7,14 @@
         <div class="col-lg-6 mx-auto">
             <form id="id-account-form" method="post">
                 {% csrf_token %}
+
                 <div class="form-field-wrapper">
-                    {{ form.login }}
-                    {{ form.login.errors }}
+                    {{ form.username }}
+                    {{ form.username.errors }}
                 </div>
                 <div class="form-field-wrapper">
                     {{ form.password }}
+                    {{ form.password.errors }}
                 </div>
                 {% if form.errors %}
                 <div class="form-errors-list">
@@ -20,7 +22,7 @@
                 </div>
                 {% endif %}
                 <div>
-                    <a href="{% url 'account_reset_password' %}" class="text-small">
+                    <a href="" class="text-small">
                         Forgotten Password
                     </a>
                 </div>
@@ -30,7 +32,7 @@
                         Login
                         <div class="stroke"></div>
                     </button>
-                    <a href="{% url 'account_signup' %}" class="btn btn-secondary">
+                    <a href="" class="btn btn-secondary">
                         Signup
                         <div class="stroke"></div>
                     </a>

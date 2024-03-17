@@ -1,47 +1,65 @@
-from django.views.generic import TemplateView, UpdateView
-from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, logout
 
-from .models import CustomUser
-from .forms import CustomUserChangeForm
-
-from allauth.account.views import PasswordChangeView
+from . import forms
 
 
-class CustomPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
+def customLoginPageView(request):
     """
-    Overriding Allauth view to allow redirect.
+    Uses a custom login form that inherits the default Authentication form to give more creative control. Renders
+    the login form on GET, and on POST processes the form and attempts to log the user in.
     """
-
-    def get_success_url(self):
-        """
-        Return the URL to redirect to after processing a valid form.
-
-        Using this instead of just defining the success_url attribute
-        because our url has a dynamic element.
-        """
     
-        return reverse_lazy('change_password_done')
+    form = forms.CustomLoginForm(request)
+
+    if request.user.is_authenticated:
+        return redirect(reverse('entries_app_home'))
+
+    if request.method == 'POST':
+        form = forms.CustomLoginForm(request, data=request.POST)
+
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect(request.GET['next'] if 'next' in request.GET else reverse('entries_app_home'))
+        
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'registration/login.html', context)
 
 
-class PasswordChangeDoneView(LoginRequiredMixin, TemplateView):
-    template_name = 'account/password_change_done.html'
+@login_required
+def customLogoutPageView(request):
+    """Logs the user out."""
+
+    logout(request)
+    return redirect(reverse('login'))
 
 
-class UserProfileView(LoginRequiredMixin, TemplateView):
-    template_name = "accounts/profile.html"
+@login_required
+def userProfileView(request):
+    """Renders the profile management page."""
+    return render(request, 'accounts/profile.html')
 
 
-class UpdateUserProfileView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = CustomUser
-    template_name = 'accounts/updateprofile.html'
-    form_class = CustomUserChangeForm
-    success_url = reverse_lazy('view_profile')
+@login_required
+def updateUserProfileView(request):
 
+    form = forms.CustomUserChangeForm(instance=request.user)
 
-    def test_func(self):
-        user = self.get_object()
-        if self.request.user == user:
-            return True
-        else:
-            return False
+    if request.method == 'POST':
+
+        form = forms.CustomUserChangeForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'accounts/updateprofile.html', context)

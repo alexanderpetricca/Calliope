@@ -7,10 +7,16 @@
         <div class="col-lg-6 mx-auto">
             <form method="post" id="signup-form">
                 {% csrf_token %}
-                {{ form.email }}
-                {{ form.password1 }}
-                {{ form.password2 }}
-                <div class="btn-group">
+                <div class="form-group">
+                    {{ form.email }}
+                    {{ form.first_name }}
+                    {{ form.last_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.password1 }}
+                    {{ form.password2 }}
+                </div>
+                    <div class="btn-group">
                     <button type="submit" class="btn btn-primary">
                         Signup
                         <div class="stroke"></div>

@@ -1,7 +1,7 @@
 <section id="page-content">
     <div class="row">
         <div class="col-lg-6 mx-auto">
-            <form method="post" action="{% url 'account_logout' %}">
+            <form method="post" action="{% url 'accounts_logout' %}">
                 {% csrf_token %}
                 <p class="text-center">Confirm Logout</p>
                 <div class="btn-group">

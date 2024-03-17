@@ -4,16 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "==4.2.8"
-gunicorn = "==21.2.0"
+django = "==5.0.3"
 whitenoise = "*"
-psycopg2-binary = "*"
 environs = {extras = ["django"], version = "*"}
-django-allauth = "*"
+gunicorn = "*"
+psycopg2-binary = "*"
 django-extensions = "*"
 django-debug-toolbar = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.11"

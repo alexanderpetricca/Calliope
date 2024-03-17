@@ -29,8 +29,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third Party
-    'allauth',
-    'allauth.account',
     'debug_toolbar',
     
     # Local
@@ -50,7 +48,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -162,32 +159,12 @@ CSRF_COOKIE_SECURE = env.bool("DJANGO_CSRF_COOKIE_SECURE", default=True)
 CSRF_TRUSTED_ORIGINS = [env('CSRF_TRUSTED_ORIGINS')]
 
 
-# Signup Active / Inactive
-OPEN_FOR_SIGNUP = env("OPEN_FOR_SIGNUP")
-
-
 # User Authentication
 AUTH_USER_MODEL = 'accounts.CustomUser'
-LOGIN_REDIRECT_URL = 'entries_app_home'
-
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
 )
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-
-# Django Alluth
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_SESSION_REMEMBER = True
-SOCIALACCOUNT_AUTO_SIGNUP = False
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-
-ACCOUNT_LOGOUT_REDIRECT = 'pages_landing'
-ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = 'entries_app_home'
 
 
 #Debug Toolbar

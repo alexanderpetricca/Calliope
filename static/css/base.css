@@ -40,7 +40,7 @@ a:hover {
 
 #main-container {
     width: 100%;
-    padding: 100px 20px;
+    padding: 75px 20px;
 }
 
 /* Typography */
@@ -51,6 +51,10 @@ p {
 
 .text-small {
     font-size: 0.75rem;
+}
+
+.text-accented {
+    color: #ffd900;
 }
 
 .text-center {
@@ -204,9 +208,13 @@ h1#main-header {
     border-top: 1px solid #737373;
 }
 
-/* Inputs */
+/* Forms */
 .form-group, .form-field-wrapper {
     width: 100%;
+}
+
+.form-group {
+    margin-bottom: 35px;
 }
 
 input {
