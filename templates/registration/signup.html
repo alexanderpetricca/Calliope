@@ -7,8 +7,9 @@
         <div class="col-lg-6 mx-auto">
             <form method="post" id="signup-form">
                 {% csrf_token %}
+
                 <div class="form-group">
-                    {{ form.email }}
+                    {{ form.username }}
                     {{ form.first_name }}
                     {{ form.last_name }}
                 </div>
@@ -21,7 +22,7 @@
                         Signup
                         <div class="stroke"></div>
                     </button>
-                    <a href="{% url 'account_login' %}" class="btn btn-secondary">
+                    <a href="{% url 'login' %}" class="btn btn-secondary">
                         Back
                         <div class="stroke"></div>
                     </a>

@@ -28,7 +28,6 @@ def customLoginPageView(request):
     context = {
         'form': form,
     }
-
     return render(request, 'registration/login.html', context)
 
 
@@ -38,6 +37,25 @@ def customLogoutPageView(request):
 
     logout(request)
     return redirect(reverse('login'))
+
+
+def customSignupView(request):
+    
+    form = forms.CustomSignupForm()
+
+    if request.method == 'POST':
+
+        form = forms.CustomSignupForm(request.POST)
+
+        if form.is_valid():
+            user = form.save(request)
+            login(request, user)
+            return redirect(reverse('login'))
+        
+    context = {
+        'form': form
+    }
+    return render(request, 'registration/signup.html', context)
 
 
 @login_required
@@ -55,7 +73,6 @@ def customPasswordChangeView(request):
     context = {
         'form': form,
     }
-
     return render(request, 'registration/password_change.html', context)
 
 
@@ -83,5 +100,4 @@ def updateUserProfileView(request):
     context = {
         'form': form,
     }
-
     return render(request, 'accounts/updateprofile.html', context)

@@ -22,7 +22,7 @@ class CustomUserAdminChangeForm(auth_forms.UserChangeForm):
         fields = ('__all__')
 
 
-# Custom Registration Forms
+# Custom Auth Forms
         
 class CustomLoginForm(auth_forms.AuthenticationForm):
 
@@ -30,15 +30,6 @@ class CustomLoginForm(auth_forms.AuthenticationForm):
         super(CustomLoginForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['placeholder'] = 'Email'
         self.fields['password'].widget.attrs['placeholder'] = 'Password'
-
-
-class CustomPasswordChangeForm(auth_forms.PasswordChangeForm):
-    
-    def __init__(self, *args, **kwargs):
-        super(CustomPasswordChangeForm, self).__init__(*args, **kwargs)
-        self.fields['old_password'].widget.attrs['placeholder'] = 'Old Password'
-        self.fields['new_password1'].widget.attrs['placeholder'] = 'New Password'
-        self.fields['new_password2'].widget.attrs['placeholder'] = 'New Password (again)'
 
 
 class CustomSignupForm(auth_forms.UserCreationForm):
@@ -55,24 +46,43 @@ class CustomSignupForm(auth_forms.UserCreationForm):
         widget=forms.TextInput(attrs={'placeholder': 'Last Name'}),
     )
 
-    def signup(self, request, user):
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.save()
-        return user
+
+    class Meta:
+        model = CustomUser
+        fields = (
+            'username', 
+            'first_name', 
+            'last_name'
+        )
+
+
+    def __init__(self, *args, **kwargs):
+        super(CustomSignupForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['placeholder'] = 'Email'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Password'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Password (again)'
+
+
+class CustomPasswordChangeForm(auth_forms.PasswordChangeForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(CustomPasswordChangeForm, self).__init__(*args, **kwargs)
+        self.fields['old_password'].widget.attrs['placeholder'] = 'Old Password'
+        self.fields['new_password1'].widget.attrs['placeholder'] = 'New Password'
+        self.fields['new_password2'].widget.attrs['placeholder'] = 'New Password (again)'
 
 
 class CustomUserChangeForm(forms.ModelForm):
     """Form used to allow user to update their details in the frontend"""
 
-    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email Address'}))
+    username = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email Address'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
 
     class Meta:
         model = CustomUser
         fields = (
-            'email',
+            'username',
             'first_name', 
             'last_name',
         )
