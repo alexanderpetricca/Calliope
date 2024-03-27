@@ -21,6 +21,7 @@ body {
     color: #dedede;
     font-family: "Montserrat", sans-serif;
     font-size: 14px;
+    line-height: 22px;
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
@@ -69,7 +70,7 @@ p {
 }
 
 .pagination-control {
-    font-size: 12px;
+    font-size: 13px;
     color: #737373;
     padding: 0 20px;
 }
@@ -120,7 +121,7 @@ h1#main-header {
     flex-direction: row;
     justify-content: center;
     list-style: none;
-    font-size: 12px;
+    font-size: 13px;
     margin: 30px 0;
     padding: 0;
     transition: 750ms;
@@ -166,7 +167,7 @@ h1#main-header {
     border: none;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
-    font-size: 12px;
+    font-size: 13px;
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;

@@ -3,7 +3,7 @@
         <div class="col-lg-6 mx-auto">
             <article class="entry">
                 <p>{{ entry.body|linebreaks }}</p>
-                <p class="text-small">{{ entry.created }}</p>
+                <p>{{ entry.created }}</p>
             </article>
             <div class="btn-group">
                 <a hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
