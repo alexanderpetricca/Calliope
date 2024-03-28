@@ -58,6 +58,25 @@ def customSignupView(request):
     return render(request, 'registration/signup.html', context)
 
 
+# def customPasswordResetView(request):
+#     form = forms.CustomPasswordResetForm()
+
+#     if request.method == 'POST':
+
+#         form = forms.CustomPasswordResetForm(request.POST)
+
+#         if form.is_valid():
+#             # Send confirm email
+#             return redirect(reverse('login'))
+        
+#     context = {
+#         'form': form,
+#     }
+
+#     return render(request, 'registration/password-reset.html', context)
+
+
+
 @login_required
 def customPasswordChangeView(request):
     

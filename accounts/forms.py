@@ -63,6 +63,19 @@ class CustomSignupForm(auth_forms.UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Password (again)'
 
 
+class CustomPasswordResetForm(auth_forms.PasswordResetForm):
+
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
+
+
+class CustomSetPasswordForm(auth_forms.SetPasswordForm):
+
+    def __init__(self, *args, **kwargs):
+        super(CustomSetPasswordForm, self).__init__(*args, **kwargs)
+        self.fields['new_password1'].widget = forms.PasswordInput(attrs={'placeholder': 'New Password'})
+        self.fields['new_password2'].widget = forms.PasswordInput(attrs={'placeholder': 'Confirm New Password'})
+
+
 class CustomPasswordChangeForm(auth_forms.PasswordChangeForm):
     
     def __init__(self, *args, **kwargs):

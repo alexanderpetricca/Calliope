@@ -15,9 +15,11 @@ DEBUG = env.bool("DJANGO_DEBUG", default=False)
 urlpatterns = [
     path(env("ADMIN_URL"), admin.site.urls),
     path('accounts/', include('accounts.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', include('pages.urls')),
     path('app/', include('entries.urls')),
 ]
+
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
