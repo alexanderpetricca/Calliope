@@ -28,11 +28,11 @@ This project is currently in development as a side project.
 
 Homepage
 
-![Homepage](assets/images/calliope-home.jpg)
+![Listing Page](assets/images/listing-page.jpg)
 
 Journal Entry Page
 
-![Entry Page](assets/images/calliope-create.jpg)
+![Entry Page](assets/images/new-entry-page.jpg)
 
 
 ## License
