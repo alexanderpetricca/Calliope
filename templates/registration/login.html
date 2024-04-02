@@ -22,7 +22,7 @@
                 </div>
                 {% endif %}
                 <div>
-                    <a href="{% url 'password_reset' %}" class="text-small">
+                    <a hx-get="{% url 'password_reset' %}" class="text-small" hx-target="#page-content" hx-swap="outerhtml">
                         Forgotten Password
                     </a>
                 </div>
