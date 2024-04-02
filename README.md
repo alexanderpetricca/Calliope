@@ -1,12 +1,14 @@
-# Journal
+# Calliope
+### Description
 
-## Description
+Calliope is a personal journalling platform built using Django & HTMX. The intent of this project is to experiment with Django HTMX to create a modern application without a utilising a front end framework, and also to dispel some of the Django 'magic' and develop a deeper understanding of the framework.
 
-Calliope is a personal journalling platform built using Django & HTMX.
+This project is currently in development as a side project.
 
 ## Table of Contents
 
 - [Installation](#installation)
+- [Screenshots](#screenshots)
 - [License](#license)
 
 ## Installation
@@ -16,7 +18,7 @@ Calliope is a personal journalling platform built using Django & HTMX.
     - "SECRET_KEY= < django secret key >
     - "DJANGO_DEBUG=True
     - "ADMIN_URL= < your chosen admin url >
-3. `$ docker-compose up`
+3. `$ docker-compose up --build`
 4. `$ docker-compose exec web python manage.py migrate`
 5. `$ docker-compose exec web python manage.py runserver`
 6. Navigate to local host [localhost](http://127.0.0.1:8000/) in your browser
@@ -26,11 +28,11 @@ Calliope is a personal journalling platform built using Django & HTMX.
 
 Homepage
 
-![Homepage](assets/images/JournalHome.jpg)
+![Homepage](assets/images/calliope-home.jpg)
 
 Journal Entry Page
 
-![Journal Entry Page](assets/images/JournalPost.jpg)
+![Entry Page](assets/images/calliope-create.jpg)
 
 
 ## License
@@ -58,18 +60,3 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ---
-
-
-## Features
-
-- Signup
-- Journal entry CRUD functionality
-- Bookmark / favourite entry
-- Search entries
-- Update user profile information
-- Password reset / forgotten password
-
-
-## Tests
-
-`$ docker-compose exec web python manage.py test`
