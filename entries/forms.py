@@ -31,7 +31,6 @@ class EntryCreateForm(forms.ModelForm):
         instance = super().save(commit=False)
         if self.user:
             instance.author = self.user
-            # instance.updated = timezone.now()        
         if commit:
             instance.save()
                     

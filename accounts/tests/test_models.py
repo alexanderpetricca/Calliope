@@ -47,5 +47,5 @@ class CustomUserModelTests(TestCase):
 
     #Tests the string return method
     def test_string_representation(self):
-        self.assertEqual(str(self.user), "testuser@email.com")
-        self.assertEqual(str(self.admin_user), "superadmin@email.com")
+        self.assertEqual(str(self.user), str(self.user.id))
+        self.assertEqual(str(self.admin_user), str(self.admin_user.id))
