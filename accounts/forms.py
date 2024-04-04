@@ -88,14 +88,14 @@ class CustomPasswordChangeForm(auth_forms.PasswordChangeForm):
 class CustomUserChangeForm(forms.ModelForm):
     """Form used to allow user to update their details in the frontend"""
 
-    username = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email Address'}))
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email Address'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
 
     class Meta:
         model = CustomUser
         fields = (
-            'username',
+            'email',
             'first_name', 
             'last_name',
         )

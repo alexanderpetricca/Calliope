@@ -11,7 +11,6 @@ htmx_patterns = [
     path('entry/<str:pk>/', views.entryDetailView, name='entries_entry_detail'),
     path('new/', views.entryCreateView, name='entries_entry_new'),
     path('update/<str:pk>/', views.entryUpdateView, name='entries_entry_update'),
-    # !! Delete URL
 ]
 
 urlpatterns += htmx_patterns
