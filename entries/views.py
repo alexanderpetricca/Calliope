@@ -33,6 +33,11 @@ def entryListView(request):
     
     user_entries = Entry.objects.filter(author=request.user, deleted=False)
 
+    search_term = request.GET.get('search')
+    
+    if search_term:
+        user_entries = user_entries.filter(body__icontains=search_term)
+
     paginator = Paginator(user_entries, 6)
     page = request.GET.get('page')
     user_entries = paginator.get_page(page)

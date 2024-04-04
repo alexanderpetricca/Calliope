@@ -1,13 +1,26 @@
 <section id="page-content">
     <div class="row">
         <div class="col-lg-6 mx-auto">
+
+            <form method="get" id="entrySearchForm" hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml">
+                <div class="form-group text-small">
+                    {% if request.GET.search %}
+                    Showing {{ entry_list.paginator.count }} result{{ entry_list.paginator.count|pluralize }} for '{{ request.GET.search }}'
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <div class="form-field-wrapper">
+                        <input id="entriesSearch" type="search" placeholder="Search" name="search" value="{{ request.GET.search }}">
+                    </div>
+                </div>
+            </form>
             
-            <div class="entry">
+            <!-- <div class="entry">
                 <a hx-get="{% url 'entries_entry_new' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
                     Create Entry
                     <div class="stroke"></div>
                 </a>
-            </div>
+            </div> -->
             <section id="entry-list">
                 {% for entry in entry_list %}  
                 <a hx-get="{% url 'entries_entry_detail' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml">

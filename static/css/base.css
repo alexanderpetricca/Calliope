@@ -209,6 +209,10 @@ h1#main-header {
     border-top: 1px solid #737373;
 }
 
+.btn-hidden {
+    display: none;
+}
+
 /* Forms */
 .form-group, .form-field-wrapper {
     width: 100%;
@@ -233,6 +237,10 @@ input {
     border: none;
     border-bottom: 1px solid #dedede;
     transition: 750ms;
+}
+
+input[type=search] {
+    border-bottom: 1px solid #737373;
 }
 
 input:focus {
