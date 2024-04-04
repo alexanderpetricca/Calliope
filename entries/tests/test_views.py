@@ -36,9 +36,9 @@ class ArtworkDesignViewTests(TestCase):
         
         response = self.client.get(reverse('entries_app_home'))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, f"{reverse('login')}?next=/app/")
+        self.assertRedirects(response, f"{reverse('login')}?next=/")
         
-        response = self.client.get(f"{reverse('login')}?next=/app/")
+        response = self.client.get(f"{reverse('login')}?next=/")
         self.assertTemplateUsed(response, 'registration/login.html')
         self.assertContains(response, 'Calliope | Login')
 
