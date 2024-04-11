@@ -1,8 +1,12 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
 <section id="page-content">
     <div class="row">
         <div class="col-lg-6 mx-auto">
 
-            <form method="get" id="entrySearchForm" hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml">
+            <form method="get" id="entrySearchForm" href="{% url 'entries_entry_list' %}">
                 <div class="form-group">
                     <div class="form-field-wrapper">
                         <input id="entriesSearch" type="search" placeholder="Search" name="search" value="{{ request.GET.search }}">
@@ -12,7 +16,7 @@
 
             <section id="entry-list">
                 {% for entry in entry_list %}  
-                <a hx-get="{% url 'entries_entry_detail' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml">
+                <a href="{% url 'entries_entry' entry.pk %}">
                     <div class="entry" id="id_{{ entry.id }}">
                         <p class="entry-created">{{ entry.created }}</p>
                     </div>   
@@ -22,7 +26,6 @@
                 <!-- Pagination -->
                 <div class="row">
                     <div class="col-lg-6 mx-auto pagination-wrapper">
-                        
                         {% if entry_list.has_previous %}
                         <a href="?page={{ entry_list.previous_page_number }}" class="pagination-control">
                             Prev
@@ -42,10 +45,10 @@
                             Next
                         </a>
                         {% endif %}
-
                     </div>
                 </div>
             </section>
         </div>
     </div>
 </section>
+{% endblock content %}

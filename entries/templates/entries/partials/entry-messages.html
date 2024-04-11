@@ -1,0 +1,9 @@
+<ul id="entry-message-list">
+    {% for message in entry.messages.all %}
+    <li class="entry-message message-fade-in">
+        {{ message.body }}
+    </li>
+    {% if message.system_reply %}
+    {% endif %}
+    {% endfor %}
+</ul>

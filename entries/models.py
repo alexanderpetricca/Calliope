@@ -9,16 +9,16 @@ class Entry(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(
+    owner = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,
         null=True,
         blank=True,
     )
 
-    body = models.TextField(null=True, blank=True)
-    favourite = models.BooleanField(default=False)
+    messages = models.ManyToManyField('EntryMessage')
 
+    favourite = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
     deleted_datetime = models.DateTimeField(null=True, blank=True)
 
@@ -30,7 +30,7 @@ class Entry(models.Model):
 
 
     def __str__(self):
-        return f'{self.author}-{self.created}'
+        return f'{self.owner}-{self.created}'
 
 
     def softDelete(self):
@@ -52,6 +52,21 @@ class Entry(models.Model):
 
     def get_absolute_url(self):
         return reverse('entries_entry_detail', args=[str(self.id)])
+    
+
+
+class EntryMessage(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, primary_key=True)
+    created = models.DateTimeField(auto_now_add=True)
+    body = models.TextField(max_length=1000)
+    system_reply = models.BooleanField(default=False)
+
+
+    class Meta:
+        ordering = ['created',]
+
+    def __str__(self):
+        return str(self.id)
     
 
 

@@ -1,41 +1,23 @@
 from django import forms
 
-from .models import Entry
+from .models import EntryMessage
 
 
-class EntryCreateForm(forms.ModelForm):
-    """Form used to create a new journal entry"""
+class EntryMessageCreateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)
-        super(EntryCreateForm, self).__init__(*args, **kwargs)
+        self.entry = kwargs.pop('entry', None)
+        super(EntryMessageCreateForm, self).__init__(*args, **kwargs)
         
         body = self.fields['body']
         body.required = True
         body.widget = forms.Textarea(
             attrs={
                 'placeholder': "Thoughts, Feelings & Ideas", 
-                'rows': "3",
+                'rows': "1",
             }
         )
 
-
     class Meta:
-        model = Entry
-        fields = (
-            'body',
-        )
-
-        
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        if self.user:
-            instance.author = self.user
-        if commit:
-            instance.save()
-                    
-        return instance
-
-
-class EntryUpdateForm(EntryCreateForm):
-    """Form used to update a journal entry"""
+        model = EntryMessage
+        fields = ('body',)   

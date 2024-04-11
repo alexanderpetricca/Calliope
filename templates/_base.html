@@ -26,12 +26,12 @@
                     <div id="brand-logo"></div>
                     <ul id="header-menu">
                         <li>
-                            <a hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml">
+                            <a href="{% url 'entries_entry_list' %}">
                                 Read
                             </a>
                         </li>
                         <li>
-                            <a hx-get="{% url 'entries_entry_new' %}" hx-target="#page-content" hx-swap="outerhtml">
+                            <a href="{% url 'entries_create' %}">
                                 Write
                             </a>
                         </li>

@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+{% load static %}
+{% block title %}Write Entry{% endblock %}
+{% block content %}
+<section id="page-content">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+
+            {% include 'entries/partials/entry-messages.html' %}
+
+            <form method="post" id="entry_msg_create_form" hx-post="{% url 'entries_entry' entry.pk %}" hx-target="#entry-message-list" hx-swap="beforeend">
+                {% csrf_token %}
+                <div class="form-field-wrapper">
+                    {{ form.body }}
+                    {{ form.body.errors }}
+                </div>
+                <input type="hidden" name="entry_id" value="{{ entry.id }}"/>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock content %}

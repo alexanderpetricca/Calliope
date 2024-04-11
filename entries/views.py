@@ -1,42 +1,26 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render, redirect, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
 
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import Http404
 from django.core.paginator import Paginator
-from django.core.exceptions import PermissionDenied
-from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 
-from .models import Entry
+from .models import Entry, EntryMessage
 from . import forms
-from core.decorators import require_htmx
+from .ai import calliopeAI
 
 
 @login_required
-def appHomeView(request):
-    user_entries = Entry.objects.filter(author=request.user, deleted=False)
-
-    paginator = Paginator(user_entries, 6)
-    page = request.GET.get('page')
-    user_entries = paginator.get_page(page)
-
-    context = {
-        'entry_list': user_entries,
-    }
-    return render(request, 'entries/home.html', context)
-
-
-@login_required
-@require_htmx
 def entryListView(request):
     
-    user_entries = Entry.objects.filter(author=request.user, deleted=False)
+    user_entries = Entry.objects.filter(owner=request.user, deleted=False)
 
     search_term = request.GET.get('search')
     
     if search_term:
-        user_entries = user_entries.filter(body__icontains=search_term)
+        user_entries = user_entries.filter(messages__body__icontains=search_term)
 
     paginator = Paginator(user_entries, 6)
     page = request.GET.get('page')
@@ -49,87 +33,77 @@ def entryListView(request):
 
 
 @login_required
-@require_htmx
-def entryDetailView(request, pk):
-    entry = get_object_or_404(Entry, pk=pk)
-
-    if entry.author == request.user:
-        context = {
-            'entry': entry,
-        }
-        return render(request, 'entries/entry-detail.html', context)
-    else:
-        raise PermissionDenied()
-
-
-@login_required
-@require_htmx
 def entryCreateView(request):
 
-    form = forms.EntryCreateForm()
+    entry = Entry.objects.create(
+        owner = request.user
+    )
 
-    if request.method == 'POST':
-        form = forms.EntryCreateForm(request.POST, user=request.user)
-        
-        if form.is_valid():
-            new_entry = form.save()
-
-            return HttpResponseRedirect(reverse('entries_entry_detail', args=[new_entry.id]))
-
-    context = {
-        'form': form
-    }
-
-    return render(request, 'entries/entry-create.html', context)
+    return redirect(reverse('entries_entry', kwargs={'pk': entry.id}))
 
 
 @login_required
-@require_htmx
-def entryUpdateView(request, pk):
+def entryView(request, pk):
     
-    entry = get_object_or_404(Entry, pk=pk)
+    entry = get_object_or_404(Entry, id=pk, owner=request.user)
+    form = forms.EntryMessageCreateForm(entry=entry.pk)
 
-    if entry.author == request.user:
+    if request.method == 'POST':
+        form = forms.EntryMessageCreateForm(request.POST, entry=entry.pk)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.save()
+            entry.messages.add(message)
 
-        form = forms.EntryUpdateForm(instance=entry)
-
-        if request.method == 'POST':
-            form = forms.EntryUpdateForm(request.POST, instance=entry)
-                
-            if form.is_valid():
-                form.save()
-                return HttpResponseRedirect(reverse('entries_entry_detail', args=[entry.id]))
-
-        context = {
-            'form': form, 
-            'entry': entry 
+            context = {
+                'message': message,
             }
 
-        return render(request, 'entries/entry-update.html', context)
-    
-    else:
-        raise PermissionDenied()
+            return render(request, 'entries/partials/entry-message.html', context)
 
 
-def entryDeleteView(request, pk):
+    context = {
+        'form': form,
+        'entry': entry,
+    }
 
-    entry = get_object_or_404(Entry, pk=pk)
+    return render(request, 'entries/entry.html', context)
 
-    if request.method == "POST" and entry.author == request.user:
-        entry.softDelete()
-        messages.add_message(request, messages.SUCCESS, 'Entry Deleted')
-        return HttpResponseRedirect(reverse('entries_entry_list'))
-
-    else:
-        raise PermissionDenied()
-    
 
 @login_required
-def toggleBookmarkView(request, pk):
-    
-    entry = Entry.objects.get(id=pk)
+def entryMessageReplyView(request):
 
     if request.method == 'POST':
-        entry.bookmark()
 
-    return HttpResponseRedirect(reverse('entries_entry_detail', args=[entry.id]))
+        entry_id = request.POST.get('entry_id')
+
+        try:
+            entry = Entry.objects.get(id=entry_id, owner=request.user)
+        except ObjectDoesNotExist:
+            raise Http404
+        
+        # Process the messages and send to calliopeAI function
+        messages = [
+            {
+                "role": "assistant" if message.system_reply else "user",
+                "content": message.body
+            }
+            for message in entry.messages.all()
+        ]
+
+        response = calliopeAI(messages)
+        message_reply = EntryMessage.objects.create(
+            body = response,
+            system_reply = True,
+        )
+        entry.messages.add(message_reply)
+        
+        context = {
+            'message': message_reply
+        }
+
+        return render(request, 'entries/partials/reply-message.html', context)
+    
+    else:
+        return PermissionDenied
+

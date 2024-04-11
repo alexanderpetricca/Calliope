@@ -3,14 +3,14 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.appHomeView, name='entries_app_home'),
+    path('', views.entryListView, name='entries_app_home'),
+    path('entry-list/', views.entryListView, name='entries_entry_list'),
+    
+    path('entry-create/', views.entryCreateView, name='entries_create'),
+    path('entry/<str:pk>/', views.entryView, name='entries_entry'),
+    path('entry-message-reply/', views.entryMessageReplyView, name='entries_message_reply'),
 ]
 
-htmx_patterns = [
-    path('entry-list/', views.entryListView, name='entries_entry_list'),
-    path('entry/<str:pk>/', views.entryDetailView, name='entries_entry_detail'),
-    path('new/', views.entryCreateView, name='entries_entry_new'),
-    path('update/<str:pk>/', views.entryUpdateView, name='entries_entry_update'),
-]
+htmx_patterns = []
 
 urlpatterns += htmx_patterns

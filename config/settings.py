@@ -181,3 +181,7 @@ if DEBUG == False:
 #Debug Toolbar
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
+
+
+# Open AI Key
+OPENAI_KEY = env("OPENAI_KEY")
