@@ -1,9 +1,7 @@
 <ul id="entry-message-list">
     {% for message in entry.messages.all %}
-    <li class="entry-message message-fade-in">
+    <li class="entry-message message-fade-in {% if message.system_reply %}calliope-response{% endif %}">
         {{ message.body }}
     </li>
-    {% if message.system_reply %}
-    {% endif %}
     {% endfor %}
 </ul>

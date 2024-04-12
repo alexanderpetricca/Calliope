@@ -18,8 +18,6 @@ def calliopeAI(current_messages):
     messages = [{"role": "system", "content": f"{role}"},]
     messages += current_messages
 
-    print(messages)
-
     completion = client.chat.completions.create(
     model="gpt-3.5-turbo",
     messages=messages,

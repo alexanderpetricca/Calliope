@@ -14,7 +14,6 @@
                 <div class="btn-group">
                     <button type="submit" class="btn btn-primary">
                         Confirm
-                        <div class="stroke"></div>
                     </button>
                 </div>
             </form>            
@@ -24,11 +23,9 @@
             <div class="btn-group">
                 <a href="{{ email_url }}" class="btn btn-primary">
                     Reconfirm
-                    <div class="stroke"></div>
                 </a>
                 <a href="{% url 'account_login' %}" class="btn btn-secondary">
                     Back
-                    <div class="stroke"></div>
                 </a>
             </div>
             {% endif %}

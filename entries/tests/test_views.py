@@ -5,13 +5,13 @@ from django.urls import reverse
 from entries.models import Entry
 
 
-class ArtworkDesignViewTests(TestCase):
+class EntryViewTests(TestCase):
     
     @classmethod
-    def setUpTestData(self):
+    def setUpTestData(cls):
 
         # Create Test User        
-        self.user = get_user_model().objects.create_user(
+        cls.user = get_user_model().objects.create_user(
             username = "TestUser",
             email = "testuser@email.com",
             first_name = "Test",
@@ -19,10 +19,9 @@ class ArtworkDesignViewTests(TestCase):
             password = "testpass123",
         )
         
-        # Create Entry Job
-        self.artworkjob = Entry.objects.create(
-            author = self.user,
-            body = 'This is some test content.',
+        # Create Entry
+        cls.entry = Entry.objects.create(
+            owner = cls.user,
         )
 
 

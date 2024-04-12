@@ -17,31 +17,16 @@ class EntryFormTests(TestCase):
         )
 
 
-    def testEntryCreateJobForm(self):
+    def testEntryMessageCreateForm(self):
         """
-        Tests entry create form functionality.
+        Tests entry message create form functionality.
         """
         
         form_data = {
             'body': 'This is some test content.',
         }
         
-        form = forms.EntryCreateForm(data=form_data, files=form_data)
+        form = forms.EntryMessageCreateForm(data=form_data, files=form_data)
         
         self.assertTrue(form.is_valid())
         self.assertEqual(form.cleaned_data['body'], 'This is some test content.')
-
-
-    def testEntryUpdateJobForm(self):
-        """
-        Tests entry update form functionality.
-        """
-        
-        form_data = {
-            'body': 'This is some updated test content.',
-        }
-        
-        form = forms.EntryUpdateForm(data=form_data, files=form_data)
-        
-        self.assertTrue(form.is_valid())
-        self.assertEqual(form.cleaned_data['body'], 'This is some updated test content.')

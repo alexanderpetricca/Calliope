@@ -6,7 +6,6 @@ from .models import EntryMessage
 class EntryMessageCreateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
-        self.entry = kwargs.pop('entry', None)
         super(EntryMessageCreateForm, self).__init__(*args, **kwargs)
         
         body = self.fields['body']
@@ -20,4 +19,4 @@ class EntryMessageCreateForm(forms.ModelForm):
 
     class Meta:
         model = EntryMessage
-        fields = ('body',)   
+        fields = ('body',)

@@ -10,9 +10,26 @@ from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from .models import Entry, EntryMessage
 from . import forms
 from .ai import calliopeAI
+from core.decorators import require_htmx
 
 
 @login_required
+def appHomeView(request):
+    user_entries = Entry.objects.filter(owner=request.user, deleted=False)
+
+    paginator = Paginator(user_entries, 6)
+    page = request.GET.get('page')
+    user_entries = paginator.get_page(page)
+
+    context = {
+        'entry_list': user_entries,
+    }
+    return render(request, 'entries/home.html', context)
+
+
+
+@login_required
+@require_htmx
 def entryListView(request):
     
     user_entries = Entry.objects.filter(owner=request.user, deleted=False)
@@ -20,7 +37,7 @@ def entryListView(request):
     search_term = request.GET.get('search')
     
     if search_term:
-        user_entries = user_entries.filter(messages__body__icontains=search_term)
+        user_entries = user_entries.filter(messages__body__icontains=search_term).distinct()
 
     paginator = Paginator(user_entries, 6)
     page = request.GET.get('page')
@@ -33,23 +50,24 @@ def entryListView(request):
 
 
 @login_required
+@require_htmx
 def entryCreateView(request):
 
     entry = Entry.objects.create(
         owner = request.user
     )
-
     return redirect(reverse('entries_entry', kwargs={'pk': entry.id}))
 
 
 @login_required
+@require_htmx
 def entryView(request, pk):
     
     entry = get_object_or_404(Entry, id=pk, owner=request.user)
-    form = forms.EntryMessageCreateForm(entry=entry.pk)
+    form = forms.EntryMessageCreateForm()
 
     if request.method == 'POST':
-        form = forms.EntryMessageCreateForm(request.POST, entry=entry.pk)
+        form = forms.EntryMessageCreateForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
             message.save()
@@ -71,6 +89,7 @@ def entryView(request, pk):
 
 
 @login_required
+@require_htmx
 def entryMessageReplyView(request):
 
     if request.method == 'POST':
@@ -82,7 +101,7 @@ def entryMessageReplyView(request):
         except ObjectDoesNotExist:
             raise Http404
         
-        # Process the messages and send to calliopeAI function
+        # Process the messages and send to AI function
         messages = [
             {
                 "role": "assistant" if message.system_reply else "user",
@@ -106,4 +125,21 @@ def entryMessageReplyView(request):
     
     else:
         return PermissionDenied
+    
+
+@login_required
+@require_htmx
+def entryDeleteView(request, pk):
+
+    entry = get_object_or_404(Entry, pk=pk, owner=request.user)
+
+    if request.method == "POST":
+        entry.softDelete()
+        return redirect(reverse('entries_entry_list'))
+
+    context = {
+        'entry': entry,
+    }
+
+    return render(request, 'entries/delete-entry.html', context)
 

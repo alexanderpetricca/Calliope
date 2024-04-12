@@ -16,15 +16,13 @@ class EntryModelTests(TestCase):
         )
 
         self.entry = Entry.objects.create(
-            author = self.user,
-            body = 'This is some test content.',
+            owner = self.user,
         )
 
 
     # Tests entry creation
     def test_create_entry(self):
-        self.assertEqual(self.entry.author.email, 'testuser@email.com')
-        self.assertEqual(self.entry.body, 'This is some test content.')
+        self.assertEqual(self.entry.owner.email, 'testuser@email.com')
         self.assertEqual(self.entry.favourite, False)
         self.assertEqual(self.entry.deleted, False)
         self.assertEqual(self.entry.deleted_datetime, None)
@@ -32,4 +30,4 @@ class EntryModelTests(TestCase):
 
     # Tests the string return method
     def test_string_representation(self):
-        self.assertEqual(str(self.entry), f'{self.entry.author.id}-{self.entry.created}')
+        self.assertEqual(str(self.entry), f'{self.entry.owner.id}-{self.entry.created}')

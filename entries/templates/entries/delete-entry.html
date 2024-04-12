@@ -1,0 +1,21 @@
+<section id="page-content">
+    <div class="row">
+        <div class="col-lg-6 mx-auto">
+
+            <form method="post" id="entry_msg_create_form" hx-post="{% url 'entries_delete' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml">
+                {% csrf_token %}
+                <div class="form-field-wrapper text-center">
+                    Are you sure you wish to delete this entry?
+                </div>
+                <div class="btn-group">
+                    <a hx-get="{% url 'entries_entry' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
+                        Back
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        Delete
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

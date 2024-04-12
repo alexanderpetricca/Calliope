@@ -1,12 +1,8 @@
-{% extends '_base.html' %}
-{% load static %}
-{% block title %}Home{% endblock %}
-{% block content %}
 <section id="page-content">
     <div class="row">
         <div class="col-lg-6 mx-auto">
 
-            <form method="get" id="entrySearchForm" href="{% url 'entries_entry_list' %}">
+            <form method="get" id="entrySearchForm" hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml">
                 <div class="form-group">
                     <div class="form-field-wrapper">
                         <input id="entriesSearch" type="search" placeholder="Search" name="search" value="{{ request.GET.search }}">
@@ -16,7 +12,7 @@
 
             <section id="entry-list">
                 {% for entry in entry_list %}  
-                <a href="{% url 'entries_entry' entry.pk %}">
+                <a hx-get="{% url 'entries_entry' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml">
                     <div class="entry" id="id_{{ entry.id }}">
                         <p class="entry-created">{{ entry.created }}</p>
                     </div>   
@@ -51,4 +47,3 @@
         </div>
     </div>
 </section>
-{% endblock content %}
