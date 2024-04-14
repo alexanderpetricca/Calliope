@@ -16,8 +16,6 @@ class Entry(models.Model):
         blank=True,
     )
 
-    messages = models.ManyToManyField('EntryMessage')
-
     favourite = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
     deleted_datetime = models.DateTimeField(null=True, blank=True)
@@ -58,6 +56,7 @@ class Entry(models.Model):
 class EntryMessage(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
+    entry = models.ForeignKey(Entry, on_delete=models.CASCADE, null=True, blank=True)
     body = models.TextField(max_length=1000)
     system_reply = models.BooleanField(default=False)
 
@@ -65,9 +64,6 @@ class EntryMessage(models.Model):
     class Meta:
         ordering = ['created',]
 
+
     def __str__(self):
         return str(self.id)
-    
-
-
-

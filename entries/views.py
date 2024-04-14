@@ -70,8 +70,8 @@ def entryView(request, pk):
         form = forms.EntryMessageCreateForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
+            message.entry = entry
             message.save()
-            entry.messages.add(message)
 
             context = {
                 'message': message,
@@ -107,15 +107,15 @@ def entryMessageReplyView(request):
                 "role": "assistant" if message.system_reply else "user",
                 "content": message.body
             }
-            for message in entry.messages.all()
+            for message in entry.entrymessage_set.all()
         ]
 
         response = calliopeAI(messages)
         message_reply = EntryMessage.objects.create(
             body = response,
+            entry = entry,
             system_reply = True,
         )
-        entry.messages.add(message_reply)
         
         context = {
             'message': message_reply
@@ -134,7 +134,7 @@ def entryDeleteView(request, pk):
     entry = get_object_or_404(Entry, pk=pk, owner=request.user)
 
     if request.method == "POST":
-        entry.softDelete()
+        entry.delete()
         return redirect(reverse('entries_entry_list'))
 
     context = {
