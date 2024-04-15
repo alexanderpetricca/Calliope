@@ -14,8 +14,8 @@ class CustomUser(AbstractUser):
     email = models.EmailField(gettext_lazy('email address'), unique=True)
 
     premium = models.BooleanField(default=False)
-    premium_monthly = models.BooleanField(default=False)
-    premium_paid_date = models.DateField(null=True, blank=True)
+    premium_start_date = models.DateField(null=True, blank=True)
+    premium_renewal_date = models.DateField(null=True, blank=True)
 
     tokens = models.IntegerField(default=4)
 
@@ -49,8 +49,12 @@ class CustomUser(AbstractUser):
         Deduct a single token from the user account.
         """
 
-        self.tokens -= 1
-        self.save()
+        if self.tokens > 0:
+            self.tokens -= 1
+            self.save()
+            return True
+        else:
+            return False
 
 
     def __str__(self):

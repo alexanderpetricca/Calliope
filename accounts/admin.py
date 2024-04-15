@@ -23,6 +23,14 @@ class CustomUserAdmin(UserAdmin):
                 'last_name',
                 )}),
 
+        (_('Account'), 
+            {'fields': (
+                'premium', 
+                'premium_monthly',
+                'premium_paid_date',
+                'tokens',
+                )}),
+
         (_('Permissions'), 
             {'fields': (
                 'is_active', 

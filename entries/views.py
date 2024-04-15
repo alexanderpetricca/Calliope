@@ -53,13 +53,24 @@ def entryListView(request):
 @login_required
 @require_htmx
 def entryCreateRedirectView(request):
-
+    
     today = timezone.now().date()
+    user = request.user
 
-    entry, created = Entry.objects.get_or_create(
-        owner = request.user,
-        created__date = today,
-    )
+    try:
+        entry = Entry.objects.get(
+            owner = user,
+            created__date = today,
+        )
+
+    except ObjectDoesNotExist:
+        
+        if user.useToken() == True:
+            entry = Entry.objects.create(
+                owner = user,
+            )
+        else:
+            return redirect(reverse('entries_entry_limit'))
 
     return redirect(reverse('entries_entry', kwargs={'pk': entry.id}))
 
@@ -148,3 +159,8 @@ def entryDeleteView(request, pk):
 
     return render(request, 'entries/delete-entry.html', context)
 
+
+@login_required
+def entryLimitReachedView(request):
+    
+    return render(request, 'entries/entry-limit-reached.html')
