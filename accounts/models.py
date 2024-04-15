@@ -36,12 +36,20 @@ class CustomUser(AbstractUser):
         premium accounts recieve 31 tokens per month.
         """
         
-        self.tokens = 0
         if self.premium:
             tokens = 31
         else:
             tokens = 4
-        self.tokens += tokens
+        self.tokens = tokens
+        self.save()
+
+
+    def useToken(self):
+        """
+        Deduct a single token from the user account.
+        """
+
+        self.tokens -= 1
         self.save()
 
 
