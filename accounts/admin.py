@@ -26,8 +26,8 @@ class CustomUserAdmin(UserAdmin):
         (_('Account'), 
             {'fields': (
                 'premium', 
-                'premium_monthly',
-                'premium_paid_date',
+                'premium_start_date',
+                'premium_renewal_date',
                 'tokens',
                 )}),
 
