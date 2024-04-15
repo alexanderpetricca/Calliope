@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.http import Http404
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.utils import timezone
 
 from .models import Entry, EntryMessage
 from . import forms
@@ -51,11 +52,15 @@ def entryListView(request):
 
 @login_required
 @require_htmx
-def entryCreateView(request):
+def entryCreateRedirectView(request):
 
-    entry = Entry.objects.create(
-        owner = request.user
+    today = timezone.now().date()
+
+    entry, created = Entry.objects.get_or_create(
+        owner = request.user,
+        created__date = today,
     )
+
     return redirect(reverse('entries_entry', kwargs={'pk': entry.id}))
 
 

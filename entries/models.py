@@ -63,6 +63,8 @@ class EntryMessage(models.Model):
 
     class Meta:
         ordering = ['created',]
+        verbose_name = 'Entry Message'
+        verbose_name_plural = 'Entry Messages'
 
 
     def __str__(self):
