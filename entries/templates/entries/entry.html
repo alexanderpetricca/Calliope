@@ -4,6 +4,7 @@
 
             {% include 'entries/partials/entry-messages.html' %}
 
+            {% if form %}
             <form method="post" id="entry_msg_create_form" hx-post="{% url 'entries_entry' entry.pk %}" hx-target="#entry-message-list" hx-swap="beforeend">
                 {% csrf_token %}
                 <div class="form-field-wrapper">
@@ -12,6 +13,7 @@
                 </div>
                 <input type="hidden" name="entry_id" value="{{ entry.id }}"/>
             </form>
+            {% endif %}
 
             <div class="btn-group">
                 <a hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">

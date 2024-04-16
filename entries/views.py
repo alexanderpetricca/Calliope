@@ -57,14 +57,15 @@ def entryCreateRedirectView(request):
     today = timezone.now().date()
     user = request.user
 
+    # Retrieve existing entry.
     try:
         entry = Entry.objects.get(
             owner = user,
             created__date = today,
         )
 
+    # Create entry and deduct a user token.
     except ObjectDoesNotExist:
-        
         if user.useToken() == True:
             entry = Entry.objects.create(
                 owner = user,
@@ -80,27 +81,32 @@ def entryCreateRedirectView(request):
 def entryView(request, pk):
     
     entry = get_object_or_404(Entry, id=pk, owner=request.user)
-    form = forms.EntryMessageCreateForm()
+    today = timezone.now().date()
 
-    if request.method == 'POST':
-        form = forms.EntryMessageCreateForm(request.POST)
-        if form.is_valid():
-            message = form.save(commit=False)
-            message.entry = entry
-            message.save()
+    # If entry was not created today, do not render form.
+    if entry.created.date() == today:
 
-            context = {
-                'message': message,
-            }
+        form = forms.EntryMessageCreateForm()
 
-            return render(request, 'entries/partials/entry-message.html', context)
+        if request.method == 'POST':
+            form = forms.EntryMessageCreateForm(request.POST)
+            if form.is_valid():
+                message = form.save(commit=False)
+                message.entry = entry
+                message.save()
 
+                context = {
+                    'message': message,
+                }
+                return render(request, 'entries/partials/entry-message.html', context)
+            
+    else:
+        form = None
 
     context = {
         'form': form,
         'entry': entry,
     }
-
     return render(request, 'entries/entry.html', context)
 
 
