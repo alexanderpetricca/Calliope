@@ -16,6 +16,12 @@ from core.decorators import require_htmx
 
 @login_required
 def appHomeView(request):
+    """
+    Landing page following login. Lists current users entries, paginated.
+
+    !! This could be a simply redirect to the entry list view.
+    """
+
     user_entries = Entry.objects.filter(owner=request.user, deleted=False)
 
     paginator = Paginator(user_entries, 6)
@@ -32,6 +38,9 @@ def appHomeView(request):
 @login_required
 @require_htmx
 def entryListView(request):
+    """
+    Lists the current users entries, paginated.
+    """
     
     user_entries = Entry.objects.filter(owner=request.user, deleted=False)
 
@@ -53,6 +62,10 @@ def entryListView(request):
 @login_required
 @require_htmx
 def entryCreateRedirectView(request):
+    """
+    If an entry has not been created today, deducts a token and creates one. If the user doesn't have any tokens, 
+    redirects them to the entry limit reached page. Otherwise redirects them to the entry for today.
+    """
     
     today = timezone.now().date()
     user = request.user
@@ -79,6 +92,10 @@ def entryCreateRedirectView(request):
 @login_required
 @require_htmx
 def entryView(request, pk):
+    """
+    Displays a users entry and it's associated messages. If the entry created date is the equal to today, allow users 
+    to add to the entry.
+    """
     
     entry = get_object_or_404(Entry, id=pk, owner=request.user)
     today = timezone.now().date()
@@ -113,6 +130,9 @@ def entryView(request, pk):
 @login_required
 @require_htmx
 def entryMessageReplyView(request):
+    """
+    Sends a request to the AI service, bundling the previous messages from the current entry.
+    """
 
     if request.method == 'POST':
 
@@ -168,5 +188,8 @@ def entryDeleteView(request, pk):
 
 @login_required
 def entryLimitReachedView(request):
+    """
+    Renders the entry limit reached template, that allows users to upgrade their accounts.
+    """
     
     return render(request, 'entries/entry-limit-reached.html')
