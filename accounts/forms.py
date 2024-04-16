@@ -35,22 +35,31 @@ class CustomLoginForm(auth_forms.AuthenticationForm):
 class CustomSignupForm(auth_forms.UserCreationForm):
 
     first_name = forms.CharField(
+        required=True,
         max_length=30, 
         label='First Name', 
         widget=forms.TextInput(attrs={'placeholder': 'First Name'}),
     )
     
     last_name = forms.CharField(
+        required=True,
         max_length=30, 
         label='Last Name',
         widget=forms.TextInput(attrs={'placeholder': 'Last Name'}),
+    )
+
+    signup_code = forms.CharField(
+        required=True,
+        max_length=12,
+        label='Signup Code',
+        widget=forms.TextInput(attrs={'placeholder': 'Signup Code'}),
     )
 
 
     class Meta:
         model = CustomUser
         fields = (
-            'username', 
+            'email', 
             'first_name', 
             'last_name'
         )
@@ -58,7 +67,7 @@ class CustomSignupForm(auth_forms.UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super(CustomSignupForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['placeholder'] = 'Email'
+        self.fields['email'].widget.attrs['placeholder'] = 'Email'
         self.fields['password1'].widget.attrs['placeholder'] = 'Password'
         self.fields['password2'].widget.attrs['placeholder'] = 'Password (again)'
 

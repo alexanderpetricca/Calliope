@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, update_session_auth_hash
+from django.core.exceptions import ObjectDoesNotExist
 
+from .models import SignUpcode
 from . import forms
 
 
@@ -48,9 +50,21 @@ def customSignupView(request):
         form = forms.CustomSignupForm(request.POST)
 
         if form.is_valid():
-            user = form.save(request)
-            login(request, user)
-            return redirect(reverse('login'))
+
+            code = form.cleaned_data.get('signup_code')
+
+            try:
+                signup_code = SignUpcode.objects.get(code=code)
+                if signup_code:
+                    user = form.save(commit=False)
+                    user.save()
+                    signup_code.delete()
+                    
+                    login(request, user)
+                    return redirect(reverse('entries_app_home'))
+                
+            except ObjectDoesNotExist:
+                form.add_error('signup_code', 'This code is not valid.')
         
     context = {
         'form': form

@@ -65,5 +65,10 @@ class CustomUserAdmin(UserAdmin):
     ordering = ('email',)
 
 
+class CustomSignUpCodeAdmin(admin.ModelAdmin):
+    model = CustomUser
+    list_display = ('code', 'created',)
+
+
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(SignUpcode)
+admin.site.register(SignUpcode, CustomSignUpCodeAdmin)

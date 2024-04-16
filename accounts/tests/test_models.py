@@ -2,6 +2,8 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 
+from accounts.models import SignUpcode
+
 
 class CustomUserModelTests(TestCase):
 
@@ -16,10 +18,10 @@ class CustomUserModelTests(TestCase):
         )
 
         self.admin_user = get_user_model().objects.create_superuser(
-            username = 'superadmin',
-            first_name = 'Super',
-            last_name = 'Admin',
-            email = 'superadmin@email.com',
+            username = 'adminuser',
+            first_name = 'Admin',
+            last_name = 'User',
+            email = 'adminuser@email.com',
             password = 'testpass123'
         )
 
@@ -27,25 +29,66 @@ class CustomUserModelTests(TestCase):
         self.view_customuser = Permission.objects.get(codename='view_customuser')
 
 
-    # Tests user creation
     def test_create_user(self):
+        """
+        Test user object creation.
+        """        
+
         self.assertEqual(self.user.username, 'TestUser')
         self.assertEqual(self.user.email, 'testuser@email.com')
+        self.assertEqual(self.user.first_name, 'Test')
+        self.assertEqual(self.user.last_name, 'User')
+        self.assertEqual(self.user.tokens, 4)
         self.assertTrue(self.user.is_active)
         self.assertFalse(self.user.is_staff)
         self.assertFalse(self.user.is_superuser)
 
 
-    # Tests super user creation
     def test_create_superuser(self):
-        self.assertEqual(self.admin_user.username, 'superadmin')
-        self.assertEqual(self.admin_user.email, 'superadmin@email.com')
+        """
+        Test user object superuser creation.
+        """
+
+        self.assertEqual(self.admin_user.username, 'adminuser')
+        self.assertEqual(self.admin_user.email, 'adminuser@email.com')
+        self.assertEqual(self.admin_user.first_name, 'Admin')
+        self.assertEqual(self.admin_user.last_name, 'User')
+        self.assertEqual(self.admin_user.tokens, 4)
         self.assertTrue(self.admin_user.is_active)
         self.assertTrue(self.admin_user.is_staff)
         self.assertTrue(self.admin_user.is_superuser)
 
 
-    #Tests the string return method
+    
     def test_string_representation(self):
+        """
+        Test user model string method.
+        """
+
         self.assertEqual(str(self.user), str(self.user.id))
         self.assertEqual(str(self.admin_user), str(self.admin_user.id))
+
+
+class SignUpCodeTests(TestCase):
+
+    def setUp(self):
+
+        self.signup_code = SignUpcode.objects.create()
+
+
+    def test_create_signup_code(self):
+        """
+        Test signup code object creation.
+        """
+        
+        self.assertIsNotNone(self.signup_code.created)
+        self.assertIsNotNone(self.signup_code.code)
+        self.assertTrue(len(self.signup_code.code)==12)
+
+
+    def test_string_representation(self):
+        """
+        Test user signup code string method.
+        """
+
+        self.assertEqual(str(self.signup_code), self.signup_code.code)
