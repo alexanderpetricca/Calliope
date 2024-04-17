@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, update_session_auth_hash
 from django.core.exceptions import ObjectDoesNotExist
 
-from .models import SignUpcode
+from .models import SignUpCode
 from . import forms
 
 
@@ -54,7 +54,7 @@ def customSignupView(request):
             code = form.cleaned_data.get('signup_code')
 
             try:
-                signup_code = SignUpcode.objects.get(code=code)
+                signup_code = SignUpCode.objects.get(code=code)
                 if signup_code:
                     user = form.save(commit=False)
                     user.save()

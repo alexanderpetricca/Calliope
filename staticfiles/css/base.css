@@ -82,7 +82,7 @@ p {
 .pagination-control {
     font-size: 13px;
     color: #737373;
-    padding: 0 20px;
+    padding: 0 30px;
 }
 
 .pagination-control.disabled {
@@ -176,7 +176,6 @@ h1#main-header {
 }
 
 .btn {
-    width: 120px;
     height: 40px;
     display: flex;
     flex-direction: row;
@@ -191,7 +190,7 @@ h1#main-header {
     font-weight: 300;
     font-style: normal;
     white-space: nowrap;
-    margin: 10px 20px;
+    margin: 10px 30px;
     padding: 0;
     color: #dedede;
     transition: 1000ms;

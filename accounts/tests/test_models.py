@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 
-from accounts.models import SignUpcode
+from accounts.models import SignUpCode
 
 
 class CustomUserModelTests(TestCase):
@@ -73,7 +73,7 @@ class SignUpCodeTests(TestCase):
 
     def setUp(self):
 
-        self.signup_code = SignUpcode.objects.create()
+        self.signup_code = SignUpCode.objects.create()
 
 
     def test_create_signup_code(self):

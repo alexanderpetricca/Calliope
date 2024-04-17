@@ -3,7 +3,6 @@ import uuid, string, random
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy
-from django.utils import timezone
 
 
 class CustomUser(AbstractUser):
@@ -62,7 +61,7 @@ class CustomUser(AbstractUser):
         return str(self.id)
     
 
-class SignUpcode(models.Model):
+class SignUpCode(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
     code = models.CharField(max_length=12, unique=True, editable=False, null=True, blank=True)
@@ -81,7 +80,7 @@ class SignUpcode(models.Model):
         
         while True:
             code = ''.join(random.choices(string.ascii_letters + string.digits, k=length))
-            if not SignUpcode.objects.filter(code=code).exists():
+            if not SignUpCode.objects.filter(code=code).exists():
                 return code
             
 
@@ -90,7 +89,7 @@ class SignUpcode(models.Model):
         if self._state.adding and not self.code:
             self.code = self.generate_code()
         
-        super(SignUpcode, self).save(*args, **kwargs)
+        super(SignUpCode, self).save(*args, **kwargs)
 
 
     def __str__(self):

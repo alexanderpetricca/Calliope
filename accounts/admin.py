@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CustomUser, SignUpcode
+from .models import CustomUser, SignUpCode
 
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.admin import UserAdmin
@@ -71,4 +71,4 @@ class CustomSignUpCodeAdmin(admin.ModelAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(SignUpcode, CustomSignUpCodeAdmin)
+admin.site.register(SignUpCode, CustomSignUpCodeAdmin)
