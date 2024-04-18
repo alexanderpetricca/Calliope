@@ -10,6 +10,7 @@ from django.utils import timezone
 
 from .models import Entry, EntryMessage
 from . import forms
+from . import utils
 from .ai import calliopeAI
 from core.decorators import require_htmx
 
@@ -82,6 +83,12 @@ def entryCreateRedirectView(request):
         if user.useToken() == True:
             entry = Entry.objects.create(
                 owner = user,
+            )
+
+            EntryMessage.objects.create(
+                entry = entry,
+                body = utils.randomInitialMessage(),
+                system_reply=True,
             )
         else:
             return redirect(reverse('entries_entry_limit'))
