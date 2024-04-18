@@ -42,6 +42,9 @@ def customLogoutPageView(request):
 
 
 def customSignupView(request):
+
+    if request.user.is_authenticated:
+        return redirect('entries_app_home')
     
     form = forms.CustomSignupForm()
 

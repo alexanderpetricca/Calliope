@@ -1,27 +1,30 @@
 <section id="page-content">
     <div class="row">
         <div class="col-lg-6 mx-auto">
+            <div id="entry-message-wrapper">
+                {% include 'entries/partials/entry-messages.html' %}
+            </div>
 
-            {% include 'entries/partials/entry-messages.html' %}
+            <div id="entry-controls-wrapper">
+                {% if form %}
+                <form method="post" id="entry_msg_create_form" hx-post="{% url 'entries_entry' entry.pk %}" hx-target="#entry-message-list" hx-swap="beforeend">
+                    {% csrf_token %}
+                    <div class="form-field-wrapper">
+                        {{ form.body }}
+                        {{ form.body.errors }}
+                    </div>
+                    <input type="hidden" name="entry_id" value="{{ entry.id }}"/>
+                </form>
+                {% endif %}
 
-            {% if form %}
-            <form method="post" id="entry_msg_create_form" hx-post="{% url 'entries_entry' entry.pk %}" hx-target="#entry-message-list" hx-swap="beforeend">
-                {% csrf_token %}
-                <div class="form-field-wrapper">
-                    {{ form.body }}
-                    {{ form.body.errors }}
+                <div class="btn-group">
+                    <a hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
+                        Back
+                    </a>
+                    <a hx-get="{% url 'entries_delete' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
+                        Delete
+                    </a>
                 </div>
-                <input type="hidden" name="entry_id" value="{{ entry.id }}"/>
-            </form>
-            {% endif %}
-
-            <div class="btn-group">
-                <a hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
-                    Back
-                </a>
-                <a hx-get="{% url 'entries_delete' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
-                    Delete
-                </a>
             </div>
         </div>
     </div>

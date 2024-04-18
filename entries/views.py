@@ -149,7 +149,7 @@ def entryMessageReplyView(request):
                 "role": "assistant" if message.system_reply else "user",
                 "content": message.body
             }
-            for message in entry.entrymessage_set.all()
+            for message in entry.entry_messages.all()
         ]
 
         response = calliopeAI(messages)

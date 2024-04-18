@@ -34,20 +34,6 @@ class CustomLoginForm(auth_forms.AuthenticationForm):
 
 class CustomSignupForm(auth_forms.UserCreationForm):
 
-    first_name = forms.CharField(
-        required=True,
-        max_length=30, 
-        label='First Name', 
-        widget=forms.TextInput(attrs={'placeholder': 'First Name'}),
-    )
-    
-    last_name = forms.CharField(
-        required=True,
-        max_length=30, 
-        label='Last Name',
-        widget=forms.TextInput(attrs={'placeholder': 'Last Name'}),
-    )
-
     signup_code = forms.CharField(
         required=True,
         max_length=12,
@@ -59,9 +45,7 @@ class CustomSignupForm(auth_forms.UserCreationForm):
     class Meta:
         model = CustomUser
         fields = (
-            'email', 
-            'first_name', 
-            'last_name'
+            'email',
         )
 
 
