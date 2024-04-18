@@ -104,7 +104,11 @@ def entryView(request, pk):
     to add to the entry.
     """
     
-    entry = get_object_or_404(Entry, id=pk, owner=request.user)
+    try:
+        entry = Entry.objects.prefetch_related('entry_messages').get(id=pk, owner=request.user)
+    except ObjectDoesNotExist:
+        raise Http404
+    
     today = timezone.now().date()
 
     # If entry was not created today, do not render form.
