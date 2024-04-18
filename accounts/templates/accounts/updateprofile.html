@@ -1,33 +1,29 @@
 <section id="page-content">
-    <div class="row">
-        <div class="col-lg-6 mx-auto">
-            <form method="post" id="profile-update-form">
-                {% csrf_token %}
+    <form method="post" id="profile-update-form">
+        {% csrf_token %}
 
-                <div class="form-field-wrapper">
-                    {{ form.email }}
-                    {{ form.email.errors }}
-                </div>
-                <div class="form-field-wrapper">
-                    {{ form.first_name }}
-                    {{ form.first_name.errors }}
-                </div>
-                <div class="form-field-wrapper">
-                    {{ form.last_name }}
-                    {{ form.last_name.errors }}
-                </div>
-
-                <div class="btn-group">
-                    <a hx-get="{% url 'view_profile' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
-                        Back
-                        
-                    </a>
-                    <button type="submit" hx-post="{% url 'update_profile' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
-                        Update
-                        
-                    </button>
-                </div>
-            </form>
+        <div class="form-field-wrapper">
+            {{ form.email }}
+            {{ form.email.errors }}
         </div>
-    </div>
+        <div class="form-field-wrapper">
+            {{ form.first_name }}
+            {{ form.first_name.errors }}
+        </div>
+        <div class="form-field-wrapper">
+            {{ form.last_name }}
+            {{ form.last_name.errors }}
+        </div>
+
+        <div class="btn-group">
+            <a hx-get="{% url 'view_profile' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
+                Back
+                
+            </a>
+            <button type="submit" hx-post="{% url 'update_profile' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
+                Update
+                
+            </button>
+        </div>
+    </form>
 </section>

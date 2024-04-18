@@ -3,40 +3,36 @@
 {% block title %}Login{% endblock title %}
 {% block content %}
 <section id="page-content">
-    <div class="row">
-        <div class="col-lg-6 mx-auto">
-            <form id="id-account-form" method="post">
-                {% csrf_token %}
+    <form id="id-account-form" method="post">
+        {% csrf_token %}
 
-                <div class="form-field-wrapper">
-                    {{ form.username }}
-                    {{ form.username.errors }}
-                </div>
-                <div class="form-field-wrapper">
-                    {{ form.password }}
-                    {{ form.password.errors }}
-                </div>
-                {% if form.errors %}
-                <div class="form-errors-list">
-                    {{ form.non_field_errors }}
-                </div>
-                {% endif %}
-                <div>
-                    <a hx-get="{% url 'password_reset' %}" class="text-small" hx-target="#page-content" hx-swap="outerhtml">
-                        Forgotten Password
-                    </a>
-                </div>
-                
-                <div class="btn-group">
-                    <a href="{% url 'signup' %}" class="btn btn-secondary">
-                        Register
-                    </a>
-                    <button type="submit" class="btn btn-primary">
-                        Login
-                    </button>
-                </div>
-            </form>
+        <div class="form-field-wrapper">
+            {{ form.username }}
+            {{ form.username.errors }}
         </div>
-    </div>
+        <div class="form-field-wrapper">
+            {{ form.password }}
+            {{ form.password.errors }}
+        </div>
+        {% if form.errors %}
+        <div class="form-errors-list">
+            {{ form.non_field_errors }}
+        </div>
+        {% endif %}
+        <div>
+            <a hx-get="{% url 'password_reset' %}" class="text-small" hx-target="#page-content" hx-swap="outerhtml">
+                Forgotten Password
+            </a>
+        </div>
+        
+        <div class="btn-group">
+            <a href="{% url 'signup' %}" class="btn btn-secondary">
+                Register
+            </a>
+            <button type="submit" class="btn btn-primary">
+                Login
+            </button>
+        </div>
+    </form>
 </section>
 {% endblock content %}

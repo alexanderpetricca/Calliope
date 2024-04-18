@@ -1,19 +1,13 @@
 <section id="page-content">
-    <div class="row">
-        <div class="col-lg-6 mx-auto">
-
-            <div class="form-field-wrapper text-center">
-                You have reached your entry limit for this month.
-            </div>
-            <div class="btn-group">
-                <a hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
-                    Back
-                </a>
-                <a hx-get="" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
-                    Upgrade
-                </a>
-            </div>
-
-        </div>
+    <div class="form-field-wrapper text-center">
+        You have reached your entry limit for this month.
+    </div>
+    <div class="btn-group">
+        <a hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
+            Back
+        </a>
+        <a hx-get="" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
+            Upgrade
+        </a>
     </div>
 </section>

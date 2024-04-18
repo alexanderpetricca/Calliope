@@ -3,15 +3,13 @@
 {% block title %}Verification Sent{% endblock %}
 {% block content %}
 <section id="page-content">
-    <div class="row">
-        <div class="col-lg-6 mx-auto">
-            <p class="text-center">Please check inbox for email confirmation.</p>
-            <div class="btn-group">
-                <a href="{% url 'account_login' %}" class="btn btn-secondary">
-                    Back
-                </a>
-            </div>
-        </div>
+    <div class="form-field-wrapper text-center">
+        Please check inbox for email confirmation.
+    </div>
+    <div class="btn-group">
+        <a href="{% url 'account_login' %}" class="btn btn-secondary">
+            Back
+        </a>
     </div>
 </section>
 {% endblock content %}

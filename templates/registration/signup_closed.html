@@ -3,17 +3,13 @@
 {% block title %}Signup Closed{% endblock title %}
 {% block content %}
 <section id="page-content">
-    <div class="row">
-        <div class="col-lg-6 mx-auto">
-            <div class="col-lg-6 mx-auto">
-                <p class="text-center">Signup for this site is currently closed.</p>
-            </div>
-            <div class="btn-group">
-                <a href="{% url 'account_login' %}" class="btn btn-secondary">
-                    Login
-                </a>
-            </div>
-        </div>
+    <div class="form-field-wrapper text-center">
+        Signup for this site is currently closed.
+    </div>
+    <div class="btn-group">
+        <a href="{% url 'account_login' %}" class="btn btn-secondary">
+            Login
+        </a>
     </div>
 </section>
 {% endblock content %}

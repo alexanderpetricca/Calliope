@@ -1,7 +1,9 @@
 # Calliope
 ### Description
 
-Calliope is a personal AI powered journalling platform built using Django, HTMX, OpenAI and the Bootstrap5 grid. The platform uses AI to talk users through completing a daily personal journal. The intent of this project is to experiment with Django and HTMX to create a modern application without a utilising a front end framework, and also to dispel some of the Django 'magic' and develop a deeper understanding of the framework. This project has also allowed me to experiment with OpenAI's API functionality.
+Calliope is a personal AI powered journalling platform built using Django, HTMX, and OpenAI. The platform uses AI to talk users through completing a daily personal journal. 
+
+The intent of this project is to experiment with Django and HTMX to create a modern application without utilising a front end framework, and to also dispel some of the Django 'magic' and develop a deeper understanding of the framework. This project has also allowed me to experiment with OpenAI's API functionality.
 
 This project is currently in development as a side project.
 
