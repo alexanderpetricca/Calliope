@@ -56,7 +56,13 @@ class Entry(models.Model):
 class EntryMessage(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
-    entry = models.ForeignKey(Entry, on_delete=models.CASCADE, null=True, blank=True)
+    entry = models.ForeignKey(
+        Entry,
+        on_delete=models.CASCADE, 
+        null=True, 
+        blank=True,
+        related_name='entry_messages',
+    )
     body = models.TextField(max_length=1000)
     system_reply = models.BooleanField(default=False)
 

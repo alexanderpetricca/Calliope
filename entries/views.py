@@ -47,7 +47,7 @@ def entryListView(request):
     search_term = request.GET.get('search')
     
     if search_term:
-        user_entries = user_entries.filter(messages__body__icontains=search_term).distinct()
+        user_entries = user_entries.filter(entry_messages__body__icontains=search_term).distinct()
 
     paginator = Paginator(user_entries, 6)
     page = request.GET.get('page')
