@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
-from entries.models import Entry
+from entries.models import Entry, EntryMessage
 
 
 class EntryViewTests(TestCase):
@@ -24,8 +24,16 @@ class EntryViewTests(TestCase):
             owner = cls.user,
         )
 
+        # Create Entry Message
+        cls.entry_message = EntryMessage.objects.create(
+            entry = cls.entry,
+            body = 'This is a test message.',
+            system_reply = False,
+        )
 
-    # App Home
+
+    # App Home ----
+
     def testEntryListViewLoggedOut(self):
         """
         Tests if user is redirected to login when signed out, whilst trying to access the entry list view.
@@ -55,7 +63,7 @@ class EntryViewTests(TestCase):
         self.assertContains(response, 'Calliope | Home')
 
 
-    # HTMX Entry List
+    # HTMX Entry List ----
 
     def testHTMXEntryListViewLoggedOut(self):
         """
@@ -97,7 +105,7 @@ class EntryViewTests(TestCase):
         }
 
         response = self.client.get(
-            reverse('entries_entry_list'), 
+            reverse('entries_entry_list'),
             **{'HTTP_' + k.replace('-', '_').upper(): v for k, v in headers.items()}
         )
         
@@ -105,6 +113,52 @@ class EntryViewTests(TestCase):
         self.assertTemplateUsed(response, 'entries/entry-list.html')
 
 
-    # HTMX Search View
-    # HTMX Entry View
-    # HTMX Delete View
+    def testEntryListViewSearchLoggedIn(self):
+        """
+        Tests the entry list view page is returned when user is logged in, with HTMX, with a search query that SHOULD 
+        return results.
+        """
+
+        self.client.login(email="testuser@email.com", password="testpass123")
+        
+        headers = {
+            'HX-Request': 'true',
+            'Content-Type': 'text/html',
+        }
+
+        response = self.client.get(
+            reverse('entries_entry_list') + '?search=test',
+            **{'HTTP_' + k.replace('-', '_').upper(): v for k, v in headers.items()}
+        )
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'entries/entry-list.html')
+        self.assertContains(response, self.entry.created.date().strftime('%B %d, %Y'))
+
+
+    def testEntryListViewSearchNoResultsLoggedIn(self):
+        """
+        Tests the entry list view page is returned when user is logged in, with HTMX, with a search query that SHOULD 
+        NOT return results.
+        """
+
+        self.client.login(email="testuser@email.com", password="testpass123")
+        
+        headers = {
+            'HX-Request': 'true',
+            'Content-Type': 'text/html',
+        }
+
+        response = self.client.get(
+            reverse('entries_entry_list')  + '?search=No%20Results',
+            **{'HTTP_' + k.replace('-', '_').upper(): v for k, v in headers.items()}
+        )
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'entries/entry-list.html')
+        self.assertNotContains(response, self.entry.created.date().strftime('%B %d, %Y'))
+
+
+    # HTMX Create Redirect ----
+    # HTMX Entry View ----
+    # HTMX Delete View ----
