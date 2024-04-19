@@ -13,6 +13,8 @@ class CustomUser(AbstractUser):
     username = models.CharField(max_length=50, blank=True, null=True, unique=True)
     email = models.EmailField(gettext_lazy('email address'), unique=True)
 
+    email_confirmed = models.BooleanField(default=False)
+
     premium = models.BooleanField(default=False)
     premium_start_date = models.DateField(null=True, blank=True)
     premium_renewal_date = models.DateField(null=True, blank=True)

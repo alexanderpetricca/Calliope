@@ -38,6 +38,7 @@ class CustomUserModelTests(TestCase):
         self.assertEqual(self.user.email, 'testuser@email.com')
         self.assertEqual(self.user.first_name, 'Test')
         self.assertEqual(self.user.last_name, 'User')
+        self.assertFalse(self.user.email_confirmed)
         self.assertEqual(self.user.tokens, 4)
         self.assertTrue(self.user.is_active)
         self.assertFalse(self.user.is_staff)
