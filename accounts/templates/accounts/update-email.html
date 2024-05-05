@@ -1,0 +1,23 @@
+<section id="page-content">
+    <form method="post" id="profile-email-form">
+        {% csrf_token %}
+
+        <div class="form-field-wrapper">
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+        <div class="form-field-wrapper">
+            {{ form.email2 }}
+            {{ form.email2.errors }}
+        </div>
+
+        <div class="btn-group">
+            <a hx-get="{% url 'view_profile' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
+                Back
+            </a>
+            <button type="submit" hx-post="{% url 'update_email' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
+                Update
+            </button>
+        </div>
+    </form>
+</section>

@@ -80,14 +80,14 @@ def entryCreateRedirectView(request):
 
     # Create entry and deduct a user token.
     except ObjectDoesNotExist:
-        if user.useToken() == True:
+        if user.use_entry_token() == True:
             entry = Entry.objects.create(
                 owner = user,
             )
 
             EntryMessage.objects.create(
                 entry = entry,
-                body = utils.randomInitialMessage(),
+                body = utils.random_initial_message(),
                 system_reply=True,
             )
         else:

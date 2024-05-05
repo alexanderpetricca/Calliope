@@ -1,7 +1,7 @@
 import random
 
 
-def randomInitialMessage():
+def random_initial_message():
 
     messages = (
         """

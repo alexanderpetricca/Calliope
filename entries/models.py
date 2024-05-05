@@ -31,19 +31,19 @@ class Entry(models.Model):
         return f'{self.owner}-{self.created}'
 
 
-    def softDelete(self):
+    def soft_delete(self):
         self.deleted = True
         self.deleted_datetime = timezone.now()
         self.save()
 
 
-    def restoreSoftDelete(self):
+    def restore_soft_delete(self):
         self.deleted = False
         self.deleted_datetime = None
         self.save()
 
     
-    def toggleFavourite(self):
+    def toggle_favourite(self):
         self.bookmarked = not self.bookmarked
         self.save()
 

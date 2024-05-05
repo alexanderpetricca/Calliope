@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout, update_session_auth_hash
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
+from django.utils import timezone
+from django.contrib.sites.models import Site
 
-from .models import SignUpCode
+from .models import SignUpCode, EmailConfirmationToken
 from . import forms
+from core.utils import genericSendEmail
 
 
 def customLoginPageView(request):
@@ -35,7 +38,9 @@ def customLoginPageView(request):
 
 @login_required
 def customLogoutPageView(request):
-    """Logs the user out."""
+    """
+    Logs the user out.
+    """
 
     logout(request)
     return redirect(reverse('login'))
@@ -75,25 +80,6 @@ def customSignupView(request):
     return render(request, 'registration/signup.html', context)
 
 
-# def customPasswordResetView(request):
-#     form = forms.CustomPasswordResetForm()
-
-#     if request.method == 'POST':
-
-#         form = forms.CustomPasswordResetForm(request.POST)
-
-#         if form.is_valid():
-#             # Send confirm email
-#             return redirect(reverse('login'))
-        
-#     context = {
-#         'form': form,
-#     }
-
-#     return render(request, 'registration/password-reset.html', context)
-
-
-
 @login_required
 def customPasswordChangeView(request):
     
@@ -112,23 +98,27 @@ def customPasswordChangeView(request):
     return render(request, 'registration/password_change.html', context)
 
 
+@login_required
 def customPasswordChangeDoneView(request):
     return render(request, "registration/password_change_done.html")
 
 
 @login_required
 def userProfileView(request):
-    """Renders the profile management page."""
+    """
+    Renders the profile management page.
+    """
+
     return render(request, 'accounts/profile.html')
 
 
 @login_required
 def updateUserProfileView(request):
 
-    form = forms.CustomUserChangeForm(instance=request.user)
+    form = forms.CustomUserProfileChangeForm(instance=request.user)
 
     if request.method == 'POST':
-        form = forms.CustomUserChangeForm(request.POST)
+        form = forms.CustomUserProfileChangeForm(request.POST)
 
         if form.is_valid():
             form.save()
@@ -136,4 +126,88 @@ def updateUserProfileView(request):
     context = {
         'form': form,
     }
-    return render(request, 'accounts/updateprofile.html', context)
+    return render(request, 'accounts/update-profile.html', context)
+
+
+@login_required
+def updateUserEmailView(request):
+
+    form = forms.CustomUserEmailChangeForm()
+
+    if request.method == 'POST':
+        form = forms.CustomUserEmailChangeForm(request.POST)
+
+        if form.is_valid():
+
+            new_email = form.cleaned_data['email']
+
+            token, created = EmailConfirmationToken.objects.get_or_create(
+                user = request.user,
+                email = new_email,
+            )
+
+            email_data = {
+                'confirm_url': str(Site.objects.get_current()) + reverse('update_email_confirm', args=[token.id])
+            }
+
+            genericSendEmail(
+                'registration/email/confirm-email-change.html',
+                'Confirm Email Change',
+                [new_email,],
+                email_data,
+                f'Send user email change confirmation: {str(request.user.id)}'
+            )
+
+            return redirect(reverse('update_email_sent'))
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'accounts/update-email.html', context)
+
+
+@login_required
+def updateUserEmailSentView(request):
+    
+    return render(request, 'registration/email-token-sent.html')
+
+
+@login_required
+def updateUserEmailConfirmView(request, pk):
+    
+    try:
+        token = EmailConfirmationToken.objects.get(id=pk)
+        if timezone.now() - token.created > timezone.timedelta(days=1):            
+            token.delete()
+            context = {
+                'error_message': 'Confirmation Link Expired.',
+            }
+            return render(request, 'registration/email-confirmation-error.html', context)
+        
+        else:        
+            user = token.user
+            user.email = token.email
+            user.email_confirmed = True
+            user.save()
+            token.delete()
+            return redirect(reverse('update_email_success'))
+    
+    except (ObjectDoesNotExist, ValidationError):
+        context = {
+            'error_message': 'Invalid Confirmation Link'
+        }
+        return render(request, 'registration/email-confirmation-error.html', context)    
+
+
+@login_required
+def updateUserEmailConfirmError(request):
+    
+    return render(request, 'registration/email-confirm-error.html') 
+
+
+@login_required
+def updateUserEmailConfirmSuccess(request):
+    
+    return render(request, 'registration/email-confirm-success.html')    
+

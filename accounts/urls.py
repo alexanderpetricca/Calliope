@@ -22,4 +22,8 @@ urlpatterns = [
     
     path('profile/', views.userProfileView, name='view_profile'),
     path('update-profile/',views.updateUserProfileView, name='update_profile'),
+    path('update-email/',views.updateUserEmailView, name='update_email'),
+    path('update-email-sent/',views.updateUserEmailSentView, name='update_email_sent'),
+    path('update-email-confirm/<str:pk>/',views.updateUserEmailConfirmView, name='update_email_confirm'),
+    path('update-email-success/',views.updateUserEmailConfirmSuccess, name='update_email_success'),
 ]

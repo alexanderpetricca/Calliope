@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CustomUser, SignUpCode
+from .models import CustomUser, SignUpCode, EmailConfirmationToken
 
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.admin import UserAdmin
@@ -28,7 +28,7 @@ class CustomUserAdmin(UserAdmin):
                 'premium', 
                 'premium_start_date',
                 'premium_renewal_date',
-                'tokens',
+                'entry_tokens',
                 )}),
 
         (_('Permissions'), 
@@ -72,3 +72,4 @@ class CustomSignUpCodeAdmin(admin.ModelAdmin):
 
 admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(SignUpCode, CustomSignUpCodeAdmin)
+admin.site.register(EmailConfirmationToken)

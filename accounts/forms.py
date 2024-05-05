@@ -7,7 +7,9 @@ from .models import CustomUser
 # Admin Forms
 
 class CustomUserAdminCreateForm(auth_forms.UserCreationForm):
-    """Form used to create a user in the admin backend"""
+    """
+    Form used to create a user in the admin backend.
+    """
 
     class Meta:
         model = CustomUser
@@ -15,7 +17,9 @@ class CustomUserAdminCreateForm(auth_forms.UserCreationForm):
 
 
 class CustomUserAdminChangeForm(auth_forms.UserChangeForm):
-    """Form used to update a user in the admin backend"""
+    """
+    Form used to update a user in the admin backend.
+    """
 
     class Meta:
         model = CustomUser
@@ -78,23 +82,41 @@ class CustomPasswordChangeForm(auth_forms.PasswordChangeForm):
         self.fields['new_password2'].widget.attrs['placeholder'] = 'New Password (again)'
 
 
-class CustomUserChangeForm(forms.ModelForm):
-    """Form used to allow user to update their details in the frontend"""
+class CustomUserProfileChangeForm(forms.ModelForm):
+    """
+    Form used to allow user to update their details in the frontend.
+    """
 
-    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Email Address'}))
     first_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'First Name'}))
     last_name = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Last Name'}))
 
     class Meta:
         model = CustomUser
         fields = (
-            'email',
             'first_name', 
             'last_name',
         )
 
         labels = {
-            'Email': 'Email',
             'first_name': 'First Name',
             'last_name': 'Surname',
         }
+
+
+class CustomUserEmailChangeForm(forms.Form):
+    """
+    Form used to allow user to update their email address in the frontend.
+    """
+
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'New email address'}), label='Email')
+    email2 = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Confirm new email address'}), label='Email (confirm)')
+
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        email = cleaned_data.get('email')
+        email2 = cleaned_data.get('email2')
+
+        if not email == email2:
+            self.add_error('email2', 'Email addresses do not match')

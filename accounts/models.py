@@ -3,6 +3,7 @@ import uuid, string, random
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy
+from django.contrib.auth import get_user_model
 
 
 class CustomUser(AbstractUser):
@@ -19,7 +20,7 @@ class CustomUser(AbstractUser):
     premium_start_date = models.DateField(null=True, blank=True)
     premium_renewal_date = models.DateField(null=True, blank=True)
 
-    tokens = models.IntegerField(default=4)
+    entry_tokens = models.IntegerField(default=4)
 
 
     USERNAME_FIELD = 'email'
@@ -32,27 +33,27 @@ class CustomUser(AbstractUser):
         verbose_name_plural = "Users"
 
 
-    def replenishTokens(self):
+    def replenish_entry_tokens(self):
         """
         Replenishes users tokens - each journal entry costs one token. Trial accounts recieve 4 tokens per month, 
         premium accounts recieve 31 tokens per month.
         """
         
         if self.premium:
-            tokens = 31
+            entry_tokens = 31
         else:
-            tokens = 4
-        self.tokens = tokens
+            entry_tokens = 4
+        self.entry_tokens = entry_tokens
         self.save()
 
 
-    def useToken(self):
+    def use_entry_token(self):
         """
         Deduct a single token from the user account.
         """
 
-        if self.tokens > 0:
-            self.tokens -= 1
+        if self.entry_tokens > 0:
+            self.entry_tokens -= 1
             self.save()
             return True
         else:
@@ -96,6 +97,17 @@ class SignUpCode(models.Model):
 
     def __str__(self):
         return str(self.code)
+    
+
+class EmailConfirmationToken(models.Model):
+    id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, primary_key=True)
+    created = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+    )
+    email = models.EmailField(null=True, blank=True)
 
 
-
+    def __str__(self):
+        return self.user.email

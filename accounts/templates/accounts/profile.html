@@ -4,6 +4,11 @@
             <p class="entry-created">Update profile</p>
         </div> 
     </a>
+    <a hx-get="{% url 'update_email' %}" hx-target="#page-content" hx-swap="outerhtml">
+        <div class="entry" id="id_update_email">
+            <p class="entry-created">Update email address</p>
+        </div> 
+    </a>
     <a hx-get="{% url 'password_change' %}" hx-target="#page-content" hx-swap="outerhtml">
         <div class="entry" id="id_update_password">
             <p class="entry-created">Change password</p>

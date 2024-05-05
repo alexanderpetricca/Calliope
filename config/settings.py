@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
 
     # Third Party
@@ -50,6 +51,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'config.urls'
+
+SITE_ID = 1
 
 TEMPLATES = [
     {
@@ -167,9 +170,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Email Config
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+
 if DEBUG == False:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
     EMAIL_HOST = env('EMAIL_HOST')
     EMAIL_HOST_USER = env('EMAIL_HOST_USER')
     EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
@@ -181,6 +185,32 @@ if DEBUG == False:
 #Debug Toolbar
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
 INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
+
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'task_console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'detailed',
+        },
+    },
+    'formatters': {
+        'detailed': {
+            'format': '%(asctime)s %(levelname)s %(message)s'
+        },
+    },
+    'loggers': {
+        'utility_tasks': {
+            'handlers': ['task_console'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    }
+}
 
 
 # Open AI Key

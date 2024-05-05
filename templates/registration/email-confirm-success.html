@@ -1,0 +1,12 @@
+{% extends '_base.html' %}
+{% block title %}Email Confirmation Successful{% endblock title %}
+{% block content %}
+<section id="page-content">
+    <p class="text-center">Your email has been confirmed</p>
+    <div class="btn-group">
+        <a hx-get="{% url 'entries_app_home' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
+            Back 
+        </a>
+    </div>
+</section>
+{% endblock content %}

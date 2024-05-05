@@ -61,7 +61,7 @@ a.disabled:hover {
 
 @media (min-width: 992px) {
     #main-container {
-        max-width: 700px;
+        max-width: 600px;
         margin: 0 auto;
     }
 }
