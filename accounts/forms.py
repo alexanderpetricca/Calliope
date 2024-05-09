@@ -109,7 +109,7 @@ class CustomUserEmailChangeForm(forms.Form):
     """
 
     email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'New email address'}), label='Email')
-    email2 = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'Confirm new email address'}), label='Email (confirm)')
+    email2 = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'New email address (again)'}), label='Email (confirm)')
 
 
     def clean(self):
