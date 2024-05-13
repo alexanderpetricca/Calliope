@@ -100,7 +100,7 @@ def entryCreateRedirectView(request):
 @require_htmx
 def entryView(request, pk):
     """
-    Displays a users entry and it's associated messages. If the entry created date is the equal to today, allow users 
+    Displays a users entry and it's associated messages. If the entry created date is equal to today, allow users 
     to add to the entry.
     """
     
@@ -111,9 +111,8 @@ def entryView(request, pk):
     
     today = timezone.now().date()
 
-    # If entry was not created today, do not render form.
+    # Render form if entry was created today
     if entry.created.date() == today:
-
         form = forms.EntryMessageCreateForm()
 
         if request.method == 'POST':
@@ -127,7 +126,12 @@ def entryView(request, pk):
                     'message': message,
                 }
                 return render(request, 'entries/partials/entry-message.html', context)
-            
+            else:
+                error = next(iter(form.errors.values()))[0]
+                context = {
+                    'error': error,
+                }
+                return render(request, 'entries/partials/entry-message-error.html', context)
     else:
         form = None
 
