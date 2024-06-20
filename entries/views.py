@@ -16,14 +16,15 @@ from core.decorators import require_htmx
 
 
 @login_required
-def appHomeView(request):
+def app_home_view(request):
     """
     Landing page following login. Lists current users entries, paginated.
 
     !! This could be a simply redirect to the entry list view.
     """
 
-    user_entries = Entry.objects.filter(owner=request.user, deleted=False)
+    user_entries = Entry.objects.filter(created_by=request.user, deleted=False,
+        ).order_by('-created_at')
 
     paginator = Paginator(user_entries, 6)
     page = request.GET.get('page')
@@ -38,17 +39,18 @@ def appHomeView(request):
 
 @login_required
 @require_htmx
-def entryListView(request):
+def entry_list_view(request):
     """
     Lists the current users entries, paginated.
     """
     
-    user_entries = Entry.objects.filter(owner=request.user, deleted=False)
+    user_entries = Entry.objects.filter(created_by=request.user, deleted=False
+        ).order_by('-created_at')
 
     search_term = request.GET.get('search')
     
     if search_term:
-        user_entries = user_entries.filter(entry_messages__body__icontains=search_term).distinct()
+        user_entries = user_entries.filter(messages__body__icontains=search_term).distinct()
 
     paginator = Paginator(user_entries, 6)
     page = request.GET.get('page')
@@ -62,10 +64,11 @@ def entryListView(request):
 
 @login_required
 @require_htmx
-def entryCreateRedirectView(request):
+def entry_create_redirect_view(request):
     """
-    If an entry has not been created today, deducts a token and creates one. If the user doesn't have any tokens, 
-    redirects them to the entry limit reached page. Otherwise redirects them to the entry for today.
+    If an entry has not been created today, deducts a token and creates one. 
+    If the user doesn't have any tokens, redirects them to the entry limit 
+    reached page. Otherwise redirects them to the entry for today.
     """
     
     today = timezone.now().date()
@@ -74,15 +77,15 @@ def entryCreateRedirectView(request):
     # Retrieve existing entry.
     try:
         entry = Entry.objects.get(
-            owner = user,
-            created__date = today,
+            created_by = user,
+            created_at__date = today,
         )
 
     # Create entry and deduct a user token.
     except ObjectDoesNotExist:
         if user.use_entry_token() == True:
             entry = Entry.objects.create(
-                owner = user,
+                created_by = user,
             )
 
             EntryMessage.objects.create(
@@ -98,21 +101,21 @@ def entryCreateRedirectView(request):
 
 @login_required
 @require_htmx
-def entryView(request, pk):
+def entry_view(request, pk):
     """
-    Displays a users entry and it's associated messages. If the entry created date is the equal to today, allow users 
-    to add to the entry.
+    Displays a users entry and it's associated messages. If the entry created 
+    date is the equal to today, allow users to add to the entry.
     """
     
     try:
-        entry = Entry.objects.prefetch_related('entry_messages').get(id=pk, owner=request.user)
+        entry = Entry.objects.prefetch_related('messages').get(id=pk, created_by=request.user)
     except ObjectDoesNotExist:
         raise Http404
     
     today = timezone.now().date()
 
     # If entry was not created today, do not render form.
-    if entry.created.date() == today:
+    if entry.created_at.date() == today:
 
         form = forms.EntryMessageCreateForm()
 
@@ -140,9 +143,10 @@ def entryView(request, pk):
 
 @login_required
 @require_htmx
-def entryMessageReplyView(request):
+def entry_message_reply_view(request):
     """
-    Sends a request to the AI service, bundling the previous messages from the current entry.
+    Sends a request to the AI service, bundling the previous messages from 
+    the current entry.
     """
 
     if request.method == 'POST':
@@ -150,7 +154,7 @@ def entryMessageReplyView(request):
         entry_id = request.POST.get('entry_id')
 
         try:
-            entry = Entry.objects.get(id=entry_id, owner=request.user)
+            entry = Entry.objects.get(id=entry_id, created_by=request.user)
         except ObjectDoesNotExist:
             raise Http404
         
@@ -160,7 +164,7 @@ def entryMessageReplyView(request):
                 "role": "assistant" if message.system_reply else "user",
                 "content": message.body
             }
-            for message in entry.entry_messages.all()
+            for message in entry.messages.all()
         ]
 
         response = calliopeAI(messages)
@@ -182,9 +186,9 @@ def entryMessageReplyView(request):
 
 @login_required
 @require_htmx
-def entryDeleteView(request, pk):
+def entry_delete_view(request, pk):
 
-    entry = get_object_or_404(Entry, pk=pk, owner=request.user)
+    entry = get_object_or_404(Entry, pk=pk, created_by=request.user)
 
     if request.method == "POST":
         entry.delete()
@@ -198,9 +202,10 @@ def entryDeleteView(request, pk):
 
 
 @login_required
-def entryLimitReachedView(request):
+def entry_limit_reached_view(request):
     """
-    Renders the entry limit reached template, that allows users to upgrade their accounts.
+    Renders the entry limit reached template, that allows users to upgrade 
+    their accounts.
     """
     
     return render(request, 'entries/entry-limit-reached.html')

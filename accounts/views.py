@@ -11,7 +11,7 @@ from . import forms
 from core.utils import genericSendEmail
 
 
-def customLoginPageView(request):
+def custom_login_page_view(request):
     """
     Uses a custom login form that inherits the default Authentication form to give more creative control. Renders
     the login form on GET, and on POST processes the form and attempts to log the user in.
@@ -37,7 +37,7 @@ def customLoginPageView(request):
 
 
 @login_required
-def customLogoutPageView(request):
+def custom_logout_page_view(request):
     """
     Logs the user out.
     """
@@ -46,7 +46,7 @@ def customLogoutPageView(request):
     return redirect(reverse('login'))
 
 
-def customSignupView(request):
+def custom_signup_view(request):
 
     if request.user.is_authenticated:
         return redirect('entries_app_home')
@@ -81,7 +81,7 @@ def customSignupView(request):
 
 
 @login_required
-def customPasswordChangeView(request):
+def custom_password_change_view(request):
     
     form = forms.CustomPasswordChangeForm(request.user)
 
@@ -99,12 +99,12 @@ def customPasswordChangeView(request):
 
 
 @login_required
-def customPasswordChangeDoneView(request):
+def custom_password_change_done_view(request):
     return render(request, "registration/password_change_done.html")
 
 
 @login_required
-def userProfileView(request):
+def user_profile_view(request):
     """
     Renders the profile management page.
     """
@@ -113,7 +113,7 @@ def userProfileView(request):
 
 
 @login_required
-def updateUserProfileView(request):
+def update_user_profile_view(request):
 
     form = forms.CustomUserProfileChangeForm(instance=request.user)
 
@@ -130,7 +130,7 @@ def updateUserProfileView(request):
 
 
 @login_required
-def updateUserEmailView(request):
+def update_user_email_view(request):
 
     form = forms.CustomUserEmailChangeForm()
 
@@ -168,13 +168,13 @@ def updateUserEmailView(request):
 
 
 @login_required
-def updateUserEmailSentView(request):
+def update_user_email_sent_view(request):
     
     return render(request, 'registration/email-token-sent.html')
 
 
 @login_required
-def updateUserEmailConfirmView(request, pk):
+def update_user_email_confirm_view(request, pk):
     
     try:
         token = EmailConfirmationToken.objects.get(id=pk)
@@ -201,13 +201,13 @@ def updateUserEmailConfirmView(request, pk):
 
 
 @login_required
-def updateUserEmailConfirmError(request):
+def update_user_email_confirm_error(request):
     
     return render(request, 'registration/email-confirm-error.html') 
 
 
 @login_required
-def updateUserEmailConfirmSuccess(request):
+def update_user_email_confirm_success(request):
     
-    return render(request, 'registration/email-confirm-success.html')    
+    return render(request, 'registration/email-confirm-success.html')  
 

@@ -1,5 +1,5 @@
 <ul id="entry-message-list">
-    {% for message in entry.entry_messages.all %}
+    {% for message in entry.messages.all %}
     <li class="entry-message message-fade-in {% if message.system_reply %}calliope-response{% endif %}">
         {{ message.body }}
     </li>

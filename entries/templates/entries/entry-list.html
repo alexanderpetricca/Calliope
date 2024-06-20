@@ -11,7 +11,7 @@
         {% for entry in entry_list %}  
         <a hx-get="{% url 'entries_entry' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml">
             <div class="entry" id="id_{{ entry.id }}">
-                <p class="entry-created">{{ entry.created|date:"F d, Y" }}</p>
+                <p class="entry-created">{{ entry.created_at|date:"F d, Y" }}</p>
             </div>   
         </a>
         {% endfor %}
