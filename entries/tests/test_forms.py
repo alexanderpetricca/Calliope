@@ -17,7 +17,7 @@ class EntryFormTests(TestCase):
         )
 
 
-    def testEntryMessageCreateForm(self):
+    def test_entry_message_create_form(self):
         """
         Tests entry message create form functionality.
         """

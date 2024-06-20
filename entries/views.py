@@ -103,8 +103,13 @@ def entry_create_redirect_view(request):
 @require_htmx
 def entry_view(request, pk):
     """
+<<<<<<< HEAD
     Displays a users entry and it's associated messages. If the entry created 
     date is the equal to today, allow users to add to the entry.
+=======
+    Displays a users entry and it's associated messages. If the entry created date is equal to today, allow users 
+    to add to the entry.
+>>>>>>> ee3d9782c012fb4688fc7221ad44a4577c6ef9f4
     """
     
     try:
@@ -130,7 +135,12 @@ def entry_view(request, pk):
                     'message': message,
                 }
                 return render(request, 'entries/partials/entry-message.html', context)
-            
+            else:
+                error = next(iter(form.errors.values()))[0]
+                context = {
+                    'error': error,
+                }
+                return render(request, 'entries/partials/entry-message-error.html', context)
     else:
         form = None
 
