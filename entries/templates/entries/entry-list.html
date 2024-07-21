@@ -2,45 +2,60 @@
 {% block title %}Entries{% endblock title %}
 {% block content %}
 <section id="page-content">
-    <form method="get" action="{% url 'entries_entry_list' %}" id="entry-search-form">
-        <div class="form-group">
-            <div class="form-field-wrapper">
-                <input id="entries-search" type="search" placeholder="Search" name="search" value="{{ request.GET.search }}">
+    <!-- Search -->
+    <div class="row">
+        <div class="col-lg-5 col-xl-4 header-col">
+            <form method="get" action="{% url 'entries_entry_list' %}" id="entry-search-form">
+                <div class="form-group">
+                    <div class="form-field-wrapper">
+                        <input id="entries-search" type="search" placeholder="search" name="search" value="{{ request.GET.search }}">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Entries -->
+    
+    {% for year_month, entries in page_obj %}
+    <div class="row">
+        <div class="col-lg-5 col-xl-4 header-col">
+            <div class="listed-content accented">
+                {{ year_month.1 }}
             </div>
         </div>
-    </form>
-
-    <section id="entry-list">
-        {% for entry in entry_list %}  
-        <a href="{% url 'entry_detail' entry.pk %}">
-            <div class="listed-content" id="id_{{ entry.id }}">
-                <p class="entry-created">{{ entry.created_at|date:"F d, Y" }}</p>
-            </div>   
-        </a>
-        {% endfor %}
-
-        <!-- Pagination -->
-        <div class="pagination-wrapper">
-            {% if entry_list.has_previous %}
-            <a href="?page={{ entry_list.previous_page_number }}" class="pagination-control">
-                Prev
+        <div class="col-lg-5 col-xl-4">
+            {% for entry in entries %}
+            <a href="{% url 'entry_detail' entry.pk %}">
+                <div class="listed-content faded" id="entry-{{ entry.id }}">
+                    {{ entry.created_at|date:"d" }}
+                </div>
             </a>
-            {% else %}
-            <a class="pagination-control disabled" aria-disabled="true">
-                Prev
-            </a>
-            {% endif %}
-
-            {% if entry_list.has_next %}
-            <a href="?page={{ entry_list.next_page_number }}" class="pagination-control">
-                Next
-            </a>
-            {% else %}
-            <a class="pagination-control disabled" aria-disabled="true">
-                Next
-            </a>
-            {% endif %}
+            {% endfor %}
         </div>
-    </section>
+    </div>
+    {% endfor %}
 </section>
+
+<!-- Pagination -->
+<div class="pagination-wrapper">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" class="pagination-control">
+        Prev
+    </a>
+    {% else %}
+    <a class="pagination-control disabled" aria-disabled="true">
+        Prev
+    </a>
+    {% endif %}
+
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="pagination-control">
+        Next
+    </a>
+    {% else %}
+    <a class="pagination-control disabled" aria-disabled="true">
+        Next
+    </a>
+    {% endif %}
+</div>
 {% endblock content %}

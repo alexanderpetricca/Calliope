@@ -1,41 +1,60 @@
+import calendar
+
 from django.shortcuts import render, redirect, get_object_or_404
 
 from django.contrib.auth.decorators import login_required
 
 from django.urls import reverse
-from django.http import Http404
+from django.db.models import Count
+from django.db.models.functions import ExtractYear, ExtractMonth
 from django.core.paginator import Paginator
-from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 
 from .models import Entry
 from . import forms
-from . import utils
-from .ai import calliopeAI
-from core.decorators import require_htmx
 
 
 @login_required
 def entry_list_view(request):
     """
-    Lists the current users entries, paginated.
+    Lists the current user's entries, paginated and optionally filtered by a 
+    search term. Entries are grouped by year and full month name, including 
+    detailed entry data.
     """
-    
-    user_entries = Entry.objects.filter(created_by=request.user, deleted=False
-        ).order_by('-created_at')
 
     search_term = request.GET.get('search')
     
+    # Initial query to fetch entries
+    base_query = Entry.objects.filter(created_by=request.user, deleted=False).values('pk', 'created_at')
+    
     if search_term:
-        user_entries = user_entries.filter(messages__body__icontains=search_term).distinct()
+        base_query = base_query.filter(content__icontains=search_term).distinct()
 
-    paginator = Paginator(user_entries, 6)
-    page = request.GET.get('page')
-    user_entries = paginator.get_page(page)
+    # Annotate entries with year and month number
+    annotated_entries = base_query.annotate(
+        year=ExtractYear('created_at'),
+        month=ExtractMonth('created_at')
+    ).order_by('-year', '-month', '-created_at')
+
+    # Convert month number to month name and group entries by year and month name
+    grouped_entries = {}
+    for entry in annotated_entries:
+        month_name = calendar.month_name[entry['month']]
+        year_month = (entry['year'], month_name)
+        if year_month not in grouped_entries:
+            grouped_entries[year_month] = []
+        grouped_entries[year_month].append(entry)
+
+    # Paginate the results based on the filtered and grouped query
+    paginator = Paginator(list(grouped_entries.items()), 3)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     context = {
-        'entry_list': user_entries,
+        'page_obj': page_obj,
     }
+
     return render(request, 'entries/entry-list.html', context)
 
 
@@ -63,7 +82,7 @@ def entry_create_redirect_view(request):
             entry = Entry.objects.create(
                 created_by = user,
             )
-            return redirect(reverse('entry_write'))
+            return redirect('entry_write', pk=entry.id)
         else:
             return redirect(reverse('entries_entry_limit'))
 

@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.utils import timezone
 
-from entries.models import Entry, EntryMessage
+from entries.models import Entry
 
 
 class entryViewTests(TestCase):
@@ -22,21 +22,10 @@ class entryViewTests(TestCase):
             password = "testpass123",
         )
         
-        # Create entry
-        cls.entry = Entry.objects.create(
-            created_by = cls.user,
-        )
-
-        # Create entry Message
-        cls.entry_message = EntryMessage.objects.create(
-            entry = cls.entry,
-            body = 'This is a test message.',
-            system_reply = False,
-        )
-
         # Create 'yesterday' entry
         cls.yesterdayentry = Entry.objects.create(
             created_by = cls.user,
+            content = 'Test Entry',
         )
         cls.yesterdayentry.created_at = timezone.now() - timedelta(1)
         cls.yesterdayentry.save()
@@ -46,7 +35,8 @@ class entryViewTests(TestCase):
 
     def test_entry_list_view_logged_out(self):
         """
-        Tests if user is redirected to login when signed out, whilst trying to access the entry list view.
+        Tests if user is redirected to login when signed out, whilst trying to 
+        access the entry list view.
         """
         
         self.client.logout()
@@ -69,13 +59,13 @@ class entryViewTests(TestCase):
         
         response = self.client.get(reverse('entries_entry_list'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'entries/home.html')
-        self.assertContains(response, 'Calliope | Home')
+        self.assertTemplateUsed(response, 'entries/entry-list.html')
+        self.assertContains(response, 'Calliope | Entries')
 
 
     # Entries List Search ----
 
-    def test_entry_list_view_search_logged_In(self):
+    def test_entry_list_view_search_results_logged_in(self):
         """
         Tests the entry list view page is returned when user is logged in, 
         with a search query that SHOULD return results.
@@ -83,13 +73,14 @@ class entryViewTests(TestCase):
 
         self.client.login(email="testuser@email.com", password="testpass123")
         
-        response = self.client.get(reverse('entries_entry_list') + '?search=test%20message')
+        response = self.client.get(reverse('entries_entry_list') + '?search=test')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'entries/entry-list.html')
-        self.assertContains(response, self.entry.created_at.date().strftime('%B %d, %Y'))
+        self.assertContains(response, 'Calliope | Entries')
+        self.assertContains(response, self.yesterdayentry.created_at.date().strftime('%d'))
 
 
-    def test_entry_List_view_search_no_results_loggedIn(self):
+    def test_entry_list_view_search_no_results_logged_in(self):
         """
         Tests the entry list view page is returned when user is logged in, 
         with a search query that SHOULD NOT return results.
@@ -97,15 +88,16 @@ class entryViewTests(TestCase):
 
         self.client.login(email="testuser@email.com", password="testpass123")
         
-        response = self.client.get(reverse('entries_entry_list') + '?search=Something%20Random')        
+        response = self.client.get(reverse('entries_entry_list') + '?search=something')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'entries/entry-list.html')
-        self.assertNotContains(response, self.entry.created_at.date().strftime('%B %d, %Y'))
+        self.assertContains(response, 'Calliope | Entries')
+        self.assertNotContains(response, self.yesterdayentry.created_at.date().strftime('%d'))
 
 
     # Create Entry / Redirect ----
 
-    def test_entry_create_view_logged_Out(self):
+    def test_entry_create_view_logged_out(self):
         """
         Tests user is redirected to login when signed out, whilst trying to 
         access the new entry page.
@@ -130,9 +122,19 @@ class entryViewTests(TestCase):
 
         self.client.login(email="testuser@email.com", password="testpass123")
         
+        # Test todays entry is created, and redirected to write view, if entry 
+        # todays does not exist.
         response = self.client.get(reverse('entries_create'))        
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('entry_detail', kwargs={'pk': f'{self.entry.id}'}))
+
+        todays_entry = Entry.objects.get(created_at__date=timezone.now().date())
+        self.assertIsNotNone(todays_entry.id)
+        self.assertRedirects(response, reverse('entry_write', kwargs={'pk': f'{todays_entry.id}'}))
+
+        # Test redirected to detail view, if todays entry does already exist.
+        response = self.client.get(reverse('entries_create'))        
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('entry_detail', kwargs={'pk': f'{todays_entry.id}'}))
 
 
     # htmx entry view ----

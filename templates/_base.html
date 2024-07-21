@@ -5,6 +5,8 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap Grid CSS -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">
         <!-- Custom CSS -->
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
         <!-- Fonts -->
@@ -14,39 +16,38 @@
         <title>Calliope | {% block title %}{% endblock %}</title>
     </head>
     <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-        <div id="main-container">
+        <div id="main-container" class="container">
 
             <!-- Main Brand & Nav -->
             <nav id=main-nav>
-                <div id="brand-wrapper">
+                <div id="main-header">
                     <a href="{% url 'entries_entry_list' %}">
-                        <h1 id="main-header">Calliope</h1>
+                        <h1>
+                            calliope
+                        </h1>
                     </a>
-                    <div id="brand-logo"></div>
-                    <ul id="header-menu">
-                        <li>
-                            <a href="{% url 'entries_entry_list' %}">
-                                Read
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'entries_create' %}">
-                                Write
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'view_profile' %}">
-                                Profile
-                            </a>
-                        </li>
-                    </ul>
                 </div>
+                <ul id="nav-links">
+                    <li class="nav-link active">
+                        <a href="{% url 'entries_entry_list' %}">
+                            read
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{% url 'entries_create' %}">
+                            write
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{% url 'view_profile' %}">
+                            profile
+                        </a>
+                    </li>
+                </ul>
             </nav>
 
-            <section id="page-content">
-                {% block content %}
-                {% endblock content %}
-            </section>
+            {% block content %}
+            {% endblock content %}
         </div>
         <script src="{% static 'js/htmx.min.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>

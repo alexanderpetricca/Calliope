@@ -2,26 +2,35 @@
 {% block title %}Update Email{% endblock title %}
 {% block content %}
 <section id="page-content">
-    <form method="post" action="{% url 'update_email' %}" id="update-email-form">
-        {% csrf_token %}
+    <div class="row">
+        <div class="col-lg-5 col-xl-4 header-col">
+            <div class="listed-content accented">
+                Update Profile
+            </div>
+        </div>
+        <div class="col-lg-5 col-xl-4">
+            <form method="post" action="{% url 'update_email' %}" id="update-email-form">
+                {% csrf_token %}
 
-        <div class="form-field-wrapper">
-            {{ form.email }}
-            {{ form.email.errors }}
-        </div>
-        <div class="form-field-wrapper">
-            {{ form.email2 }}
-            {{ form.email2.errors }}
-        </div>
+                <div class="form-field-wrapper">
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+                <div class="form-field-wrapper">
+                    {{ form.email2 }}
+                    {{ form.email2.errors }}
+                </div>
 
-        <div class="btn-group">
-            <a href="{% url 'view_profile' %}" class="btn btn-secondary">
-                Back
-            </a>
-            <button type="submit" class="btn btn-primary">
-                Update
-            </button>
+                <div class="btn-group">
+                    <a href="{% url 'view_profile' %}" class="btn btn-secondary">
+                        Back
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        Update
+                    </button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </section>
 {% endblock content %}

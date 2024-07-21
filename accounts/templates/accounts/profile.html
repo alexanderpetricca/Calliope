@@ -2,25 +2,34 @@
 {% block title %}Profile{% endblock title %}
 {% block content %}
 <section id="page-content">
-    <a href="{% url 'update_profile' %}">
-        <div class="listed-content">
-            <p class="listed-content-created">Update profile</p>
-        </div> 
-    </a>
-    <a href="{% url 'update_email' %}">
-        <div class="listed-content">
-            <p class="entry-created">Update email address</p>
-        </div> 
-    </a>
-    <a href="{% url 'password_change' %}">
-        <div class="listed-content">
-            <p class="entry-created">Change password</p>
-        </div> 
-    </a>
-    <a href="{% url 'logout' %}">
-        <div class="listed-content">
-            <p class="entry-created">Logout</p>
-        </div> 
-    </a>
+    <div class="row">
+        <div class="col-lg-5 col-xl-4 header-col">
+            <div class="listed-content accented">
+                Profile
+            </div>
+        </div>
+        <div class="col-lg-5 col-xl-4">
+            <a href="{% url 'update_profile' %}">
+                <div class="listed-content faded">
+                    Update profile
+                </div> 
+            </a>
+            <a href="{% url 'update_email' %}">
+                <div class="listed-content faded">
+                    Update email address
+                </div> 
+            </a>
+            <a href="{% url 'password_change' %}">
+                <div class="listed-content faded">
+                    Change password
+                </div> 
+            </a>
+            <a href="{% url 'logout' %}">
+                <div class="listed-content faded">
+                    Logout
+                </div> 
+            </a>
+        </div>
+    </div>
 </section>
 {% endblock content %}

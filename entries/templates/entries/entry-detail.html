@@ -2,25 +2,17 @@
 {% block title %}View Entry: {{ entry.created_at|date:"F d, Y" }}{% endblock title %}
 {% block content %}
 <section id="page-content">
-
-    <div id="entry-controls-wrapper">
-
-        <div class="entry-message">
-            {{ entry.content|linebreaks }}
+    <!-- Entries -->
+    <div class="row">
+        <div class="col-lg-5 col-xl-4 header-col">
+            <div class="listed-content accented">
+                {{ entry.created_at|date:"F d" }}
+            </div>
         </div>
-
-        <div class="btn-group">
-            <a href="{% url 'entries_entry_list' %}" class="btn btn-secondary">
-                Back
-            </a>
-            <a href="{% url 'entries_delete' entry.pk %}" class="btn btn-secondary">
-                Delete
-            </a>
-            {% if entry.created_today %}
-            <a href="{% url 'entry_write' entry.pk %}" class="btn btn-primary">
-                Update
-            </a>
-            {% endif %}
+        <div class="col">
+            <div class="listed-content">
+                {{ entry.content|linebreaks }}
+            </div>
         </div>
     </div>
 </section>

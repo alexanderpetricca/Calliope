@@ -61,7 +61,7 @@ class CustomUser(AbstractUser):
 
 
     def __str__(self):
-        return str(self.id)
+        return f'{self.first_name} {self.last_name}'
     
 
 class SignUpCode(models.Model):
