@@ -109,5 +109,11 @@ class EmailConfirmationToken(models.Model):
     email = models.EmailField(null=True, blank=True)
 
 
+    class Meta:
+        ordering = ['created',]
+        verbose_name = 'Email Confirmation Token'
+        verbose_name_plural = 'Email Confirmation Tokens'
+
+
     def __str__(self):
         return self.user.email

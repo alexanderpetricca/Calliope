@@ -39,6 +39,7 @@ class CustomUserModelTests(TestCase):
         self.assertEqual(self.user.first_name, 'Test')
         self.assertEqual(self.user.last_name, 'User')
         self.assertFalse(self.user.email_confirmed)
+        self.assertFalse(self.user.premium)
         self.assertEqual(self.user.entry_tokens, 4)
         self.assertTrue(self.user.is_active)
         self.assertFalse(self.user.is_staff)
@@ -55,12 +56,12 @@ class CustomUserModelTests(TestCase):
         self.assertEqual(self.admin_user.first_name, 'Admin')
         self.assertEqual(self.admin_user.last_name, 'User')
         self.assertEqual(self.admin_user.entry_tokens, 4)
+        self.assertFalse(self.user.premium)
         self.assertTrue(self.admin_user.is_active)
         self.assertTrue(self.admin_user.is_staff)
         self.assertTrue(self.admin_user.is_superuser)
 
 
-    
     def test_string_representation(self):
         """
         Test user model string method.
@@ -68,6 +69,33 @@ class CustomUserModelTests(TestCase):
 
         self.assertEqual(str(self.user), 'Test User')
         self.assertEqual(str(self.admin_user), 'Admin User')
+
+
+    def test_replenish_entry_tokens_method(self):
+        """
+        Tests the replenish_entry_tokens method on the user model.
+        """
+
+        self.user.entry_tokens = 0
+        self.user.save()
+        self.user.replenish_entry_tokens()   
+        self.assertEqual(self.user.entry_tokens, 4)
+
+        self.user.premium = True
+        self.user.save()
+        self.user.replenish_entry_tokens()
+        self.assertEqual(self.user.entry_tokens, 31)
+
+
+    def test_use_entry_token_method(self):
+        """
+        Tests the use_entry_token method on the user model.
+        """
+
+        self.user.entry_tokens = 4
+        self.user.save()
+        self.user.use_entry_token()
+        self.assertEqual(self.user.entry_tokens, 3)
 
 
 class SignUpCodeTests(TestCase):
