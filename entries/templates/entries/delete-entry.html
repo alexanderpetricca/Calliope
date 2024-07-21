@@ -1,11 +1,14 @@
+{% extends '_base.html' %}
+{% block title %}Delete Entry{% endblock title %}
+{% block content %}
 <section id="page-content">
-    <form method="post" id="entry_msg_create_form" hx-post="{% url 'entries_delete' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml">
+    <form method="post" action="{% url 'entries_delete' entry.pk %}" id="delete-entry-form">
         {% csrf_token %}
         <div class="form-field-wrapper text-center">
             Are you sure you wish to delete this entry?
         </div>
         <div class="btn-group">
-            <a hx-get="{% url 'entries_entry' entry.pk %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
+            <a href="{% url 'entry_detail' entry.pk %}" class="btn btn-secondary">
                 Back
             </a>
             <button type="submit" class="btn btn-primary">
@@ -14,3 +17,4 @@
         </div>
     </form>
 </section>
+{% endblock content %}

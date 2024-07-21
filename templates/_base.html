@@ -15,32 +15,34 @@
     </head>
     <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
         <div id="main-container">
+
             <!-- Main Brand & Nav -->
             <nav id=main-nav>
                 <div id="brand-wrapper">
-                    <a hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml">
+                    <a href="{% url 'entries_entry_list' %}">
                         <h1 id="main-header">Calliope</h1>
                     </a>
                     <div id="brand-logo"></div>
                     <ul id="header-menu">
                         <li>
-                            <a hx-get="{% url 'entries_create' %}" hx-target="#page-content" hx-swap="outerhtml">
-                                Write
-                            </a>
-                        </li>
-                        <li>
-                            <a hx-get="{% url 'entries_entry_list' %}" hx-target="#page-content" hx-swap="outerhtml">
+                            <a href="{% url 'entries_entry_list' %}">
                                 Read
                             </a>
                         </li>
                         <li>
-                            <a hx-get="{% url 'view_profile' %}" hx-target="#page-content" hx-swap="outerhtml">
+                            <a href="{% url 'entries_create' %}">
+                                Write
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'view_profile' %}">
                                 Profile
                             </a>
                         </li>
                     </ul>
                 </div>
             </nav>
+
             <section id="page-content">
                 {% block content %}
                 {% endblock content %}

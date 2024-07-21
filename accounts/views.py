@@ -28,7 +28,7 @@ def custom_login_page_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect(request.GET['next'] if 'next' in request.GET else reverse('entries_app_home'))
+            return redirect(request.GET['next'] if 'next' in request.GET else reverse('entries_entry_list'))
         
     context = {
         'form': form,

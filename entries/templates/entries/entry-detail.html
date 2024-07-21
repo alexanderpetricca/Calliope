@@ -1,0 +1,27 @@
+{% extends '_base.html' %}
+{% block title %}View Entry: {{ entry.created_at|date:"F d, Y" }}{% endblock title %}
+{% block content %}
+<section id="page-content">
+
+    <div id="entry-controls-wrapper">
+
+        <div class="entry-message">
+            {{ entry.content|linebreaks }}
+        </div>
+
+        <div class="btn-group">
+            <a href="{% url 'entries_entry_list' %}" class="btn btn-secondary">
+                Back
+            </a>
+            <a href="{% url 'entries_delete' entry.pk %}" class="btn btn-secondary">
+                Delete
+            </a>
+            {% if entry.created_today %}
+            <a href="{% url 'entry_write' entry.pk %}" class="btn btn-primary">
+                Update
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock content %}

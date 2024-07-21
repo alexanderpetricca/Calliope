@@ -1,22 +1,26 @@
+{% extends '_base.html' %}
+{% block title %}Profile{% endblock title %}
+{% block content %}
 <section id="page-content">
-    <a hx-get="{% url 'update_profile' %}" hx-target="#page-content" hx-swap="outerhtml">
-        <div class="entry" id="id_update_password">
-            <p class="entry-created">Update profile</p>
+    <a href="{% url 'update_profile' %}">
+        <div class="listed-content">
+            <p class="listed-content-created">Update profile</p>
         </div> 
     </a>
-    <a hx-get="{% url 'update_email' %}" hx-target="#page-content" hx-swap="outerhtml">
-        <div class="entry" id="id_update_email">
+    <a href="{% url 'update_email' %}">
+        <div class="listed-content">
             <p class="entry-created">Update email address</p>
         </div> 
     </a>
-    <a hx-get="{% url 'password_change' %}" hx-target="#page-content" hx-swap="outerhtml">
-        <div class="entry" id="id_update_password">
+    <a href="{% url 'password_change' %}">
+        <div class="listed-content">
             <p class="entry-created">Change password</p>
         </div> 
     </a>
     <a href="{% url 'logout' %}">
-        <div class="entry" id="id_update_password">
+        <div class="listed-content">
             <p class="entry-created">Logout</p>
         </div> 
     </a>
 </section>
+{% endblock content %}

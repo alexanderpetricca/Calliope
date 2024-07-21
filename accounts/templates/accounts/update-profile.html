@@ -1,5 +1,8 @@
+{% extends '_base.html' %}
+{% block title %}Update Profile{% endblock title %}
+{% block content %}
 <section id="page-content">
-    <form method="post" id="profile-update-form">
+    <form method="post" action="{% url 'update_profile' %}" id="update-profile-form">
         {% csrf_token %}
 
         <div class="form-field-wrapper">
@@ -16,14 +19,13 @@
         </div>
 
         <div class="btn-group">
-            <a hx-get="{% url 'view_profile' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-secondary">
+            <a href="{% url 'view_profile' %}" class="btn btn-secondary">
                 Back
-                
             </a>
-            <button type="submit" hx-post="{% url 'update_profile' %}" hx-target="#page-content" hx-swap="outerhtml" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary">
                 Update
-                
             </button>
         </div>
     </form>
 </section>
+{% endblock content %}
