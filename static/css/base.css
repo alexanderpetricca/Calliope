@@ -45,6 +45,10 @@ p {
     color: #ffd900;
 }
 
+.text-faded {
+    color: #535353;
+}
+
 .text-center {
     text-align: center;
 }
@@ -102,7 +106,7 @@ a.disabled:hover {
     display: flex;
     justify-content: start;
     align-items: start;
-    margin: 70px 0;
+    margin: 70px 0 100px 0;
 }
 
 #main-header {
@@ -142,8 +146,7 @@ a.disabled:hover {
 }
 
 .btn {
-    width: 60px;
-    /* height: 30px; */
+    width: auto;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -153,12 +156,13 @@ a.disabled:hover {
     white-space: nowrap;
     color: #dedede;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     line-height: 22px;
     letter-spacing: 0.8px;
     font-weight: 300;
     transition: 750ms;
-    margin-right: 20px;
+    margin-right: 30px;
+    text-transform: lowercase;
 }
 
 .btn .stroke {
@@ -190,7 +194,14 @@ a.disabled:hover {
 
 .form-group, .form-field-wrapper {
     width: 100%;
+}
+
+.form-group {
     margin-bottom: 35px;
+}
+
+.form-group.no-margin {
+    margin-bottom: 0;
 }
 
 input, textarea {
@@ -256,6 +267,20 @@ ul.errorlist li {
     list-style: none;
 }
 
+::-webkit-input-placeholder { /* Edge */
+    text-transform: lowercase;
+}
+
+:-ms-input-placeholder { /* Internet Explorer */
+    text-transform: lowercase;
+}
+
+::placeholder {
+    text-transform: lowercase;
+}
+
+/* General Layout */
+
 .header-col {
     padding-right: 50px;
 }
@@ -263,7 +288,7 @@ ul.errorlist li {
 .listed-content {
     padding-bottom: 20px;
     margin-bottom: 50px;
-    border-bottom: 1px solid #dedede;
+    border-bottom: 1px solid #535353;
 }
 
 a > .listed-content {

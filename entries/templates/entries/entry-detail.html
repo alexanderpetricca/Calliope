@@ -2,14 +2,13 @@
 {% block title %}View Entry: {{ entry.created_at|date:"F d, Y" }}{% endblock title %}
 {% block content %}
 <section id="page-content">
-    <!-- Entries -->
     <div class="row">
         <div class="col-lg-5 col-xl-4 header-col">
             <div class="listed-content accented">
-                {{ entry.created_at|date:"F d" }}
+                {{ entry.created_at|date:"F d, Y"|lower }}
             </div>
         </div>
-        <div class="col">
+        <div class="col-lg-6">
             <div class="listed-content">
                 {{ entry.content|linebreaks }}
             </div>

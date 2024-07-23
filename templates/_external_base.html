@@ -5,6 +5,8 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap Grid CSS -->
+        <link rel="stylesheet" href="{% static 'css/bootstrap-grid.min.css' %}">        
         <!-- Custom CSS -->
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
         <!-- Fonts -->
@@ -14,10 +16,41 @@
 
         <title>Calliope | {% block title %}{% endblock %}</title>
     </head>
-    <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-        <div id="main-container">
+    <body>
+        <div id="main-container" class="container">
 
-            {% include 'partials/_external-nav.html' %}
+            <!-- Main Brand & Nav -->
+            <nav id=main-nav>
+                <div id="main-header">
+                    <a href="{% url 'entries_entry_list' %}">
+                        <h1>
+                            calliope
+                        </h1>
+                    </a>
+                </div>
+                <ul id="nav-links">
+                    <li class="nav-link active">
+                        <a href="{% url 'login' %}">
+                            login
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="{% url 'signup' %}">
+                            register
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#" class="disabled">
+                            features
+                        </a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="#" class="disabled">
+                            pricing
+                        </a>
+                    </li>
+                </ul>
+            </nav>
 
             {% block content %}
             {% endblock content %}

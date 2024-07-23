@@ -3,29 +3,47 @@
 {% block title %}Signup{% endblock title %}
 {% block content %}
 <section id="page-content">
-    <form method="post" id="signup-form">
-        {% csrf_token %}
 
-        <div class="form-group">
-            {{ form.email }}
-            {{ form.email.errors }}
-            {{ form.password1 }}
-            {{ form.password1.errors }}
-            {{ form.password2 }}
-            {{ form.password2.errors }}
+    <div class="row">
+        <div class="col-lg-5 col-xl-4 header-col">
+            <div class="listed-content accented">
+                register
+            </div>
         </div>
-        <div class="form-group">
-            {{ form.signup_code }}
-            {{ form.signup_code.errors }}
+        <div class="col-lg-5 col-xl-4">
+            <form method="post" id="signup-form">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <div class="form-field-wrapper">
+                        {{ form.email }}
+                        {{ form.email.errors }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.signup_code }}
+                    {{ form.signup_code.errors }}
+                </div>
+        
+                <div class="form-group">
+                    <div class="form-field-wrapper">
+                        {{ form.password1 }}
+                        {{ form.password1.errors }}
+                    </div>
+                    <div class="form-field-wrapper">
+                        {{ form.password2 }}
+                        {{ form.password2.errors }}
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">
+                        register
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="btn-group">
-            <a href="{% url 'login' %}" class="btn btn-secondary">
-                Back  
-            </a>
-            <button type="submit" class="btn btn-primary">
-                Signup
-            </button>
-        </div>
-    </form>
+    </div>
 </section>
 {% endblock content %}
