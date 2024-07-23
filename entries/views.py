@@ -82,11 +82,10 @@ def entry_create_redirect_view(request):
             entry = Entry.objects.create(
                 created_by = user,
             )
-            return redirect('entry_write', pk=entry.id)
         else:
             return redirect(reverse('entries_entry_limit'))
 
-    return redirect(reverse('entry_detail', kwargs={'pk': entry.id}))
+    return redirect('entry_write', pk=entry.id)
 
 
 @login_required

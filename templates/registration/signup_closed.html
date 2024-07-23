@@ -2,14 +2,22 @@
 {% load static %}
 {% block title %}Signup Closed{% endblock title %}
 {% block content %}
+
 <section id="page-content">
-    <div class="form-field-wrapper text-center">
-        Signup for this site is currently closed.
-    </div>
-    <div class="btn-group">
-        <a href="{% url 'account_login' %}" class="btn btn-secondary">
-            Login
-        </a>
+    <div class="row">
+        <div class="col-lg-5 col-xl-4 header-col">
+            <div class="listed-content accented">
+                signup closed
+            </div>
+        </div>
+        <div class="col-lg-5 col-xl-4">
+            <div class="listed-content">
+                signup for this site is currently closed
+            </div>
+            <a href="{% url 'login' %}" class="btn btn-secondary">
+                Back
+            </a>
+        </div>
     </div>
 </section>
 {% endblock content %}

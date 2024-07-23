@@ -131,10 +131,10 @@ class entryViewTests(TestCase):
         self.assertIsNotNone(todays_entry.id)
         self.assertRedirects(response, reverse('entry_write', kwargs={'pk': f'{todays_entry.id}'}))
 
-        # Test redirected to detail view, if todays entry does already exist.
+        # Test redirected to write view for todays existing entry
         response = self.client.get(reverse('entries_create'))        
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('entry_detail', kwargs={'pk': f'{todays_entry.id}'}))
+        self.assertRedirects(response, reverse('entry_write', kwargs={'pk': f'{todays_entry.id}'}))
 
 
     # htmx entry view ----

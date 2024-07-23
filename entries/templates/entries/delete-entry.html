@@ -2,19 +2,31 @@
 {% block title %}Delete Entry{% endblock title %}
 {% block content %}
 <section id="page-content">
-    <form method="post" action="{% url 'entries_delete' entry.pk %}" id="delete-entry-form">
-        {% csrf_token %}
-        <div class="form-field-wrapper text-center">
-            Are you sure you wish to delete this entry?
+
+    <div class="row">
+        <div class="col-lg-5 col-xl-4 header-col">
+            <div class="listed-content accented">
+                {{ entry.created_at|date:"F d"|lower }}
+            </div>
         </div>
-        <div class="btn-group">
-            <a href="{% url 'entry_detail' entry.pk %}" class="btn btn-secondary">
-                Back
-            </a>
-            <button type="submit" class="btn btn-primary">
-                Delete
-            </button>
+        <div class="col-lg-5 col-xl-4">
+            <form method="post" action="{% url 'entries_delete' entry.pk %}" id="delete-entry-form">
+                {% csrf_token %}
+                <div class="listed-content">
+                    Are you sure you wish to delete this entry?
+                </div>
+                <div class="btn-group">
+                    <a href="{% url 'entry_detail' entry.pk %}" class="btn btn-secondary">
+                        back
+                    </a>
+                    <button type="submit" class="btn btn-primary text-danger">
+                        delete
+                    </button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
+
+
 </section>
 {% endblock content %}

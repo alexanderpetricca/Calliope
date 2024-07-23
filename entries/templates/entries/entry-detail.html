@@ -5,12 +5,23 @@
     <div class="row">
         <div class="col-lg-5 col-xl-4 header-col">
             <div class="listed-content accented">
-                {{ entry.created_at|date:"F d, Y"|lower }}
+                {{ entry.created_at|date:"F d"|lower }}
             </div>
         </div>
         <div class="col-lg-6">
             <div class="listed-content">
                 {{ entry.content|linebreaks }}
+            </div>
+            <div class="btn-group">
+                <a href="{% url 'entries_entry_list' %}" class="btn btn-secondary">
+                    back
+                </a>
+                <a href="{% url 'entry_write' entry.pk %}" class="btn btn-secondary">
+                    update
+                </a>
+                <a href="{% url 'entries_delete' entry.pk %}" class="btn btn-secondary text-danger">
+                    delete
+                </a>
             </div>
         </div>
     </div>
