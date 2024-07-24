@@ -26,7 +26,8 @@ def entry_list_view(request):
     search_term = request.GET.get('search')
     
     # Initial query to fetch entries
-    base_query = Entry.objects.filter(created_by=request.user, deleted=False).values('pk', 'created_at')
+    base_query = Entry.objects.filter(created_by=request.user, deleted=False
+        ).values('pk', 'created_at')
     
     if search_term:
         base_query = base_query.filter(content__icontains=search_term).distinct()
@@ -53,6 +54,7 @@ def entry_list_view(request):
 
     context = {
         'page_obj': page_obj,
+        'nav_section': 'read',
     }
 
     return render(request, 'entries/entry-list.html', context)
@@ -100,6 +102,7 @@ def entry_detail_view(request, pk):
 
     context = {
         'entry': entry,
+        'nav_section': 'read',
     }
 
     return render(request, 'entries/entry-detail.html', context)
@@ -108,28 +111,23 @@ def entry_detail_view(request, pk):
 def entry_write_view(request, pk):
 
     entry = get_object_or_404(Entry, id=pk)
+    form = forms.EntryCreateUpdateForm(instance=entry)
 
-    if entry.created_at.date() == timezone.now().date():
+    if request.method == 'POST':
+        
+        form = forms.EntryCreateUpdateForm(request.POST, instance=entry)
+        
+        if form.is_valid():
+            form.save()
+            return redirect('entry_detail', pk=entry.id)
+        
+    context = {
+        'form': form,
+        'entry': entry,
+        'nav_section': 'write',
+    }
 
-        form = forms.EntryCreateUpdateForm(instance=entry)
-
-        if request.method == 'POST':
-            
-            form = forms.EntryCreateUpdateForm(request.POST, instance=entry)
-            
-            if form.is_valid():
-                form.save()
-                return redirect('entry_detail', pk=entry.id)
-            
-        context = {
-            'form': form,
-            'entry': entry,
-        }
-
-        return render(request, 'entries/entry-write.html', context)
-    
-    else:
-        return redirect(reverse('entry_detail', kwargs={'pk': entry.id}))
+    return render(request, 'entries/entry-write.html', context)
     
 
 @login_required
@@ -138,8 +136,12 @@ def entry_limit_reached_view(request):
     Renders the entry limit reached template, that allows users to upgrade 
     their accounts.
     """
+
+    context = {
+        'nav_section': 'write',
+    }
     
-    return render(request, 'entries/entry-limit-reached.html')
+    return render(request, 'entries/entry-limit-reached.html', context)
 
 
 @login_required
@@ -153,6 +155,7 @@ def entry_delete_view(request, pk):
 
     context = {
         'entry': entry,
+        'nav_section': 'read',
     }
 
     return render(request, 'entries/delete-entry.html', context)

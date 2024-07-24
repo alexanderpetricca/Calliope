@@ -28,6 +28,19 @@ body {
     line-height: 22px;
     letter-spacing: 0.8px;
     font-weight: 300;
+    animation: bodyFadeInAnimation ease 750ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes bodyFadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
 
 
@@ -169,25 +182,17 @@ a.disabled:hover {
     text-transform: lowercase;
 }
 
-.btn .stroke {
-    border-top: 1px solid #dedede;
-    height: 1px;
-    width: 100%;
-    transition: 1000ms;
-}
-
 .btn:hover {
     color: #ffd900;
-    transition: 1000ms;
-}
-
-.btn:hover .stroke {
-    border-top: 1px solid #ffd900;
-    transition: 1000ms;
+    transition: 750ms;
 }
 
 .btn-secondary {
     color: #737373;
+}
+
+.btn-danger {
+    color: #c44343;
 }
 
 .btn-hidden {
@@ -300,7 +305,7 @@ ul.errorlist li {
 }
 
 a > .listed-content {
-    transition: 750ms;
+    transition: border 750ms;
 }
 
 a > .listed-content:hover {

@@ -26,7 +26,7 @@
         <div class="col-lg-5 col-xl-4">
             {% for entry in entries %}
             <a href="{% url 'entry_detail' entry.pk %}">
-                <div class="listed-content faded" id="entry-{{ entry.id }}">
+                <div class="listed-content" id="entry-{{ entry.id }}">
                     {{ entry.created_at|date:"d" }}
                 </div>
             </a>

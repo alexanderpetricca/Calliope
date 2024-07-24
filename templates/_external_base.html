@@ -29,22 +29,22 @@
                     </a>
                 </div>
                 <ul id="nav-links">
-                    <li class="nav-link active">
+                    <li class="nav-link {% if nav_section == 'login' %}active{% endif %}">
                         <a href="{% url 'login' %}">
                             login
                         </a>
                     </li>
-                    <li class="nav-link">
+                    <li class="nav-link {% if nav_section == 'register' %}active{% endif %}">
                         <a href="{% url 'signup' %}">
                             register
                         </a>
                     </li>
-                    <li class="nav-link">
+                    <li class="nav-link {% if nav_section == 'features' %}active{% endif %}">
                         <a href="#" class="disabled">
                             features
                         </a>
                     </li>
-                    <li class="nav-link">
+                    <li class="nav-link {% if nav_section == 'pricing' %}active{% endif %}">
                         <a href="#" class="disabled">
                             pricing
                         </a>

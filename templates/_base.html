@@ -28,17 +28,17 @@
                     </a>
                 </div>
                 <ul id="nav-links">
-                    <li class="nav-link active">
+                    <li class="nav-link {% if nav_section == 'read' %}active{% endif %}">
                         <a href="{% url 'entries_entry_list' %}">
                             read
                         </a>
                     </li>
-                    <li class="nav-link">
+                    <li class="nav-link {% if nav_section == 'write' %}active{% endif %}">
                         <a href="{% url 'entries_create' %}">
                             write
                         </a>
                     </li>
-                    <li class="nav-link">
+                    <li class="nav-link {% if nav_section == 'profile' %}active{% endif %}">
                         <a href="{% url 'view_profile' %}">
                             profile
                         </a>

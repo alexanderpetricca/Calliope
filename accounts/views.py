@@ -32,6 +32,7 @@ def custom_login_page_view(request):
         
     context = {
         'form': form,
+        'nav_section': 'login',
     }
     return render(request, 'registration/login.html', context)
 
@@ -75,7 +76,8 @@ def custom_signup_view(request):
                 form.add_error('signup_code', 'This code is not valid.')
         
     context = {
-        'form': form
+        'form': form,
+        'nav_section': 'register',
     }
     return render(request, 'registration/signup.html', context)
 
@@ -94,6 +96,7 @@ def custom_password_change_view(request):
         
     context = {
         'form': form,
+        'nav_section': 'profile',
     }
     return render(request, 'registration/password_change.html', context)
 
@@ -109,7 +112,11 @@ def user_profile_view(request):
     Renders the profile management page.
     """
 
-    return render(request, 'accounts/profile.html')
+    context = {
+        'nav_section': 'profile',
+    }    
+
+    return render(request, 'accounts/profile.html', context)
 
 
 @login_required
@@ -125,6 +132,7 @@ def update_user_profile_view(request):
 
     context = {
         'form': form,
+        'nav_section': 'profile',
     }
     return render(request, 'accounts/update-profile.html', context)
 
@@ -162,6 +170,7 @@ def update_user_email_view(request):
 
     context = {
         'form': form,
+        'nav_section': 'profile',
     }
 
     return render(request, 'accounts/update-email.html', context)
@@ -170,7 +179,11 @@ def update_user_email_view(request):
 @login_required
 def update_user_email_sent_view(request):
     
-    return render(request, 'registration/email-token-sent.html')
+    context = {
+        'nav_section': 'profile',
+    }
+
+    return render(request, 'registration/email-token-sent.html', context)
 
 
 @login_required
@@ -195,7 +208,8 @@ def update_user_email_confirm_view(request, pk):
     
     except (ObjectDoesNotExist, ValidationError):
         context = {
-            'error_message': 'Invalid Confirmation Link'
+            'error_message': 'Invalid Confirmation Link',
+            'nav_section': 'profile',
         }
         return render(request, 'registration/email-confirmation-error.html', context)    
 
@@ -203,11 +217,21 @@ def update_user_email_confirm_view(request, pk):
 @login_required
 def update_user_email_confirm_error(request):
     
-    return render(request, 'registration/email-confirm-error.html') 
+    context = {
+        'error_message': 'Invalid Confirmation Link',
+        'nav_section': 'profile',
+    }
+
+    return render(request, 'registration/email-confirm-error.html', context) 
 
 
 @login_required
 def update_user_email_confirm_success(request):
-    
-    return render(request, 'registration/email-confirm-success.html')  
+
+    context = {
+        'error_message': 'Invalid Confirmation Link',
+        'nav_section': 'profile',
+    }
+
+    return render(request, 'registration/email-confirm-success.html', context)
 
