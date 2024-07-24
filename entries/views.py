@@ -71,41 +71,12 @@ def entry_create_redirect_view(request):
     today = timezone.now().date()
     user = request.user
 
-    # Retrieve existing entry.
-    try:
-        entry = Entry.objects.get(
-            created_by = user,
-            created_at__date = today,
-        )
-
-    # Create entry and deduct a user token.
-    except ObjectDoesNotExist:
-        if user.use_entry_token() == True:
-            entry = Entry.objects.create(
-                created_by = user,
-            )
-        else:
-            return redirect(reverse('entries_entry_limit'))
+    entry, created = Entry.objects.get_or_create(
+        created_by = user,
+        created_at__date = today,
+    )
 
     return redirect('entry_write', pk=entry.id)
-
-
-@login_required
-def entry_detail_view(request, pk):
-    """
-    Displays a users entry. If the entry created date is equal to today, 
-    allow users to add to the entry, otherwise simply show the content.
-    """
-    
-    entry = get_object_or_404(Entry, id=pk)
-    entry.created_today = entry.created_at.date() == timezone.now().date()
-
-    context = {
-        'entry': entry,
-        'nav_section': 'read',
-    }
-
-    return render(request, 'entries/entry-detail.html', context)
 
 
 def entry_write_view(request, pk):
@@ -128,7 +99,25 @@ def entry_write_view(request, pk):
     }
 
     return render(request, 'entries/entry-write.html', context)
+
+
+@login_required
+def entry_detail_view(request, pk):
+    """
+    Displays a users entry. If the entry created date is equal to today, 
+    allow users to add to the entry, otherwise simply show the content.
+    """
     
+    entry = get_object_or_404(Entry, id=pk)
+    entry.created_today = entry.created_at.date() == timezone.now().date()
+
+    context = {
+        'entry': entry,
+        'nav_section': 'read',
+    }
+
+    return render(request, 'entries/entry-detail.html', context)
+
 
 @login_required
 def entry_limit_reached_view(request):

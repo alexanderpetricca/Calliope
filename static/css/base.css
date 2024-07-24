@@ -47,7 +47,7 @@ body {
 /* Typography */
 
 p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
 }
 
 .text-small {
@@ -182,16 +182,20 @@ a.disabled:hover {
     text-transform: lowercase;
 }
 
+.btn-primary {
+    color: #dedede;
+}
+
+.btn-secondary, .btn-danger {
+    color: #737373;
+}
+
 .btn:hover {
     color: #ffd900;
     transition: 750ms;
 }
 
-.btn-secondary {
-    color: #737373;
-}
-
-.btn-danger {
+.btn-danger:hover {
     color: #c44343;
 }
 
@@ -302,6 +306,10 @@ ul.errorlist li {
     padding-bottom: 20px;
     margin-bottom: 50px;
     border-bottom: 1px solid #535353;
+}
+
+.listed-content.no-padding {
+    padding: 0;
 }
 
 a > .listed-content {
