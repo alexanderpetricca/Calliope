@@ -8,7 +8,7 @@ from django.utils import timezone
 from entries.models import Entry
 
 
-class entryViewTests(TestCase):
+class EntryViewTests(TestCase):
     
     @classmethod
     def setUp(cls):
@@ -137,35 +137,39 @@ class entryViewTests(TestCase):
         self.assertRedirects(response, reverse('entry_write', kwargs={'pk': f'{todays_entry.id}'}))
 
 
-    # htmx entry view ----
+    # Entry Detail ----
 
-    # def test_htmx_entry_view_logged_out(self):
-    #     """
-    #     Tests if user is redirected to login when signed out, whilst trying to access the entry htmx endpoint.
-    #     """
+    def test_entry_detail_view_logged_out(self):
+        """
+        Tests if user is redirected to login when signed out, whilst trying to 
+        access the entry detail view.
+        """
+
+        response = self.client.get(reverse('entry_detail', kwargs={'pk': self.yesterdayentry.id}))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, f"{reverse('login')}?next=/entry/{self.yesterdayentry.id}/")
         
-    #     self.client.logout()
+        response = self.client.get(f"{reverse('login')}?next=/entry/{self.yesterdayentry.id}/")
+        self.assertTemplateUsed(response, 'registration/login.html')
+        self.assertContains(response, 'Calliope | Login')
+
+
+    def test_entry_detail_view_logged_in(self):
+        """
+        Tests the entry detail view page is returned when user is logged in.
+        """ 
+
+        self.client.login(email="testuser@email.com", password="testpass123")
         
-    #     response = self.client.get(reverse('entry_detail', kwargs={'pk': f'{self.entry.id}'}))
-    #     self.assertEqual(response.status_code, 302)
-    #     self.assertRedirects(response, f"{reverse('login')}?next=/entry/{self.entry.id}/")
-        
-    #     response = self.client.get(f"{reverse('login')}?next=/entry/{self.entry.id}/")
-    #     self.assertTemplateUsed(response, 'registration/login.html')
-    #     self.assertContains(response, 'Calliope | Login')
+        response = self.client.get(reverse('entry_detail', kwargs={'pk': self.yesterdayentry.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'entries/entry-detail.html')
+        self.assertContains(response, f'Calliope | View Entry: {self.yesterdayentry.created_at.strftime("%B %d, %Y")}')
 
 
-    # def test_htmx_entry_view_logged_In_non_htmx(self):
-    #     """
-    #     Tests a 403 is returned when trying to access the entry htmx endpoint, when logged in.
-    #     """
+    # Delete Entry
 
-    #     self.client.login(email="testuser@email.com", password="testpass123")  
-        
-    #     response = self.client.get(reverse('entry_detail', kwargs={'pk': f'{self.entry.id}'}))
-    #     self.assertEqual(response.status_code, 403)
-
-
+    
     # def test_entry_view_logged_In(self):
     #     """
     #     Tests the entry view page returns the requested entry when user is logged in (with htmx).
@@ -189,54 +193,7 @@ class entryViewTests(TestCase):
     #     self.assertContains(response, 'This is a test message.')
 
 
-    # def test_entry_view_logged_In_previous_entry(self):
-    #     """
-    #     Tests the entry view page does NOT render message form, when showing an entry that was not created today 
-    #     (with htmx).
-    #     """
-
-    #     self.client.login(email="testuser@email.com", password="testpass123")
-        
-    #     headers = {
-    #         'HX-Request': 'true',
-    #         'Content-Type': 'text/html',
-    #     }
-
-    #     response = self.client.get(
-    #         reverse('entry_detail', kwargs={'pk': f'{self.yesterdayentry.id}'}),
-    #         **{'HTTP_' + k.replace('-', '_').upper(): v for k, v in headers.items()}
-    #     )
-        
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'entries/entry.html')
-    #     self.assertNotContains(response, 'id="entry_msg_create_form"')
-
-
-    # def test_entry_view_logged_in_post(self):
-    #     """
-    #     Tests the entry view page renders a new message when a POST request is sent via htmx.
-    #     """
-
-    #     self.client.login(email="testuser@email.com", password="testpass123")
-        
-    #     headers = {
-    #         'HX-Request': 'true',
-    #         'Content-Type': 'text/html',
-    #     }
-
-    #     data = {
-    #         'body': 'Hello Calliope'
-    #     }
-
-    #     response = self.client.post(
-    #         reverse('entry_detail', kwargs={'pk': f'{self.entry.id}'},),
-    #         data,
-    #         **{'HTTP_' + k.replace('-', '_').upper(): v for k, v in headers.items()},
-    #     )
-        
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'entries/partials/entry-message.html')
-    #     self.assertContains(response, 'Hello Calliope')
+    
     
 
 # Delete Entry

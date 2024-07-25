@@ -79,9 +79,10 @@ def entry_create_redirect_view(request):
     return redirect('entry_write', pk=entry.id)
 
 
+@login_required
 def entry_write_view(request, pk):
 
-    entry = get_object_or_404(Entry, id=pk)
+    entry = get_object_or_404(Entry, id=pk, created_by=request.user)
     form = forms.EntryCreateUpdateForm(instance=entry)
 
     if request.method == 'POST':
@@ -104,12 +105,10 @@ def entry_write_view(request, pk):
 @login_required
 def entry_detail_view(request, pk):
     """
-    Displays a users entry. If the entry created date is equal to today, 
-    allow users to add to the entry, otherwise simply show the content.
+    Displays a users entry.
     """
     
-    entry = get_object_or_404(Entry, id=pk)
-    entry.created_today = entry.created_at.date() == timezone.now().date()
+    entry = get_object_or_404(Entry, id=pk, created_by=request.user)
 
     context = {
         'entry': entry,
