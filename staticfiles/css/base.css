@@ -28,13 +28,13 @@ body {
     line-height: 22px;
     letter-spacing: 0.8px;
     font-weight: 300;
-    animation: bodyFadeInAnimation ease 750ms;
+    animation: elementFadeInAnimation ease 750ms;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
     margin-bottom: 50px;
 }
 
-@keyframes bodyFadeInAnimation {
+@keyframes elementFadeInAnimation {
     0% {
         opacity: 0;
     }
@@ -164,9 +164,9 @@ a.disabled:hover {
 }
 
 .btn {
-    width: auto;
+    width: 45px;
     display: flex;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     background: none;
     border: none;
@@ -180,7 +180,7 @@ a.disabled:hover {
     font-weight: 300;
     transition: 750ms;
     margin-right: 30px;
-    text-transform: lowercase;
+    text-transform: lowercase;  
 }
 
 .btn-primary {
@@ -329,4 +329,11 @@ a > .listed-content:hover {
 .listed-content.faded {
     border-bottom: 1px solid #535353;
     color: #535353;
+}
+
+.listed-content.ai-prompt {
+    font-size: 12px;
+    animation: elementFadeInAnimation ease 750ms;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;    
 }

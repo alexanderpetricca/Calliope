@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.db.models.functions import ExtractYear, ExtractMonth
 from django.core.paginator import Paginator
 from django.utils import timezone
+from django.core.exceptions import PermissionDenied
 
 from .models import Entry
 from . import forms
@@ -150,44 +151,31 @@ def entry_delete_view(request, pk):
     return render(request, 'entries/entry-delete.html', context)
 
 
-# @login_required
-# @require_htmx
-# def entry_ai_prompt_view(request):
-#     """
-#     Sends a request to the AI service, bundling the previous messages from 
-#     the current entry.
-#     """
+@login_required
+@require_htmx
+def entry_ai_prompt_view(request, pk):
+    """
+    Sends a request to the AI service, for a new entry prompt.
+    """
 
-#     if request.method == 'POST':
+    if request.method == 'POST':
 
-#         entry_id = request.POST.get('entry_id')
-
-#         try:
-#             entry = Entry.objects.get(id=entry_id, created_by=request.user)
-#         except ObjectDoesNotExist:
-#             raise Http404
+        entry = get_object_or_404(Entry, id=pk, created_by=request.user)
+        form = forms.EntryCreateUpdateForm(request.POST, instance=entry)
         
-#         # Process the messages and send to AI function
-#         messages = [
-#             {
-#                 "role": "assistant" if message.system_reply else "user",
-#                 "content": message.body
-#             }
-#             for message in entry.messages.all()
-#         ]
+        if form.is_valid():
+            entry = form.save(commit=False)
 
-#         response = request_ai_prompt(messages)
-#         message_reply = EntryMessage.objects.create(
-#             body = response,
-#             entry = entry,
-#             system_reply = True,
-#         )
-        
-#         context = {
-#             'message': message_reply
-#         }
-
-#         return render(request, 'entries/partials/reply-message.html', context)
+            # Pass current entries content to the AI
+            current_entry_content = entry.content
+            entry.prompt = request_ai_prompt(current_entry_content)     
+            entry.save()
     
-#     else:
-#         return PermissionDenied
+        context = {
+            'entry': entry,
+        }
+
+        return render(request, 'entries/partials/entry-prompt.html', context)
+
+    else:
+        return PermissionDenied

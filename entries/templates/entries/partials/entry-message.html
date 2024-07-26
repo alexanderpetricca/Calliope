@@ -1,3 +1,0 @@
-<li class="entry-message" hx-post="{% url 'entries_message_reply' %}" hx-trigger="load from:body" hx-include="[name='entry_id'], #message-{{ message.id }}" hx-target="#entry-message-list" hx-swap="beforeend">
-    {{ message.body }}
-</li>

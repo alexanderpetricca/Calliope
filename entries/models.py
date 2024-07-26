@@ -18,6 +18,7 @@ class Entry(models.Model):
     )
 
     content = models.TextField()
+    prompt = models.CharField(max_length=500, null=True, blank=True)
 
     favourite = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
@@ -53,26 +54,3 @@ class Entry(models.Model):
 
     def get_absolute_url(self):
         return reverse('entries_entry_detail', args=[str(self.id)])
-    
-
-# class EntryMessage(models.Model):
-#     id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, primary_key=True)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     entry = models.ForeignKey(
-#         Entry,
-#         on_delete=models.CASCADE, 
-#         null=True, 
-#         blank=True,
-#         related_name='messages',
-#     )
-#     body = models.TextField(max_length=1000)
-#     system_reply = models.BooleanField(default=False)
-
-
-#     class Meta:
-#         verbose_name = 'Entry Message'
-#         verbose_name_plural = 'Entry Messages'
-
-
-#     def __str__(self):
-#         return str(self.id)
