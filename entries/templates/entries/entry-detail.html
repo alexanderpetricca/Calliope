@@ -10,7 +10,15 @@
         </div>
         <div class="col-lg-6">
             <div class="listed-content no-padding">
+                {% if entry.content %}
                 {{ entry.content|linebreaks }}
+                {% else %}
+                <p>
+                    <a href="{% url 'entry_write' entry.pk %}">
+                        write entry
+                    </a>
+                </p>
+                {% endif %}
             </div>
             <div class="btn-group">
                 <a href="{% url 'entries_entry_list' %}" class="btn btn-secondary">

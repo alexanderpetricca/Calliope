@@ -167,7 +167,42 @@ class EntryViewTests(TestCase):
         self.assertContains(response, f'Calliope | View Entry: {self.yesterdayentry.created_at.strftime("%B %d, %Y")}')
 
 
-    # Delete Entry
+    # Delete Entry ----
+
+    def test_entry_delete_view_logged_out(self):
+        """
+        Tests if user is redirected to login when signed out, whilst trying to 
+        access the entry delete view.
+        """
+
+        response = self.client.get(reverse('entries_delete', kwargs={'pk': self.yesterdayentry.id}))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, f"{reverse('login')}?next=/entry-delete/{self.yesterdayentry.id}/")
+        
+        response = self.client.get(f"{reverse('login')}?next=/entry-delete/{self.yesterdayentry.id}/")
+        self.assertTemplateUsed(response, 'registration/login.html')
+        self.assertContains(response, 'Calliope | Login')
+
+
+    def test_entry_delete_view_logged_in(self):
+        """
+        Tests the entry delete view page is returned when user is logged in.
+        """ 
+
+        self.client.login(email="testuser@email.com", password="testpass123")
+        
+        # Test confirmation page
+        response = self.client.get(reverse('entries_delete', kwargs={'pk': self.yesterdayentry.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'entries/entry-delete.html')
+        self.assertContains(response, f'Calliope | Delete Entry')
+
+        # Test deletion
+        response = self.client.post(reverse('entries_delete', kwargs={'pk': self.yesterdayentry.id}))
+        self.assertEqual(response.status_code, 302)
+
+        entries = Entry.objects.filter(deleted=True)
+        self.assertTrue(entries.count(), 1)
 
     
     # def test_entry_view_logged_In(self):

@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from django.urls import reverse
-from django.db.models import Count
 from django.db.models.functions import ExtractYear, ExtractMonth
 from django.core.paginator import Paginator
 from django.core.exceptions import ObjectDoesNotExist
@@ -13,6 +12,8 @@ from django.utils import timezone
 
 from .models import Entry
 from . import forms
+from .ai import request_ai_prompt
+from core.decorators import require_htmx
 
 
 @login_required
@@ -138,7 +139,7 @@ def entry_delete_view(request, pk):
     entry = get_object_or_404(Entry, pk=pk, created_by=request.user)
 
     if request.method == "POST":
-        entry.delete()
+        entry.soft_delete()
         return redirect(reverse('entries_entry_list'))
 
     context = {
@@ -146,12 +147,12 @@ def entry_delete_view(request, pk):
         'nav_section': 'read',
     }
 
-    return render(request, 'entries/delete-entry.html', context)
+    return render(request, 'entries/entry-delete.html', context)
 
 
 # @login_required
 # @require_htmx
-# def entry_message_reply_view(request):
+# def entry_ai_prompt_view(request):
 #     """
 #     Sends a request to the AI service, bundling the previous messages from 
 #     the current entry.
@@ -175,7 +176,7 @@ def entry_delete_view(request, pk):
 #             for message in entry.messages.all()
 #         ]
 
-#         response = calliopeAI(messages)
+#         response = request_ai_prompt(messages)
 #         message_reply = EntryMessage.objects.create(
 #             body = response,
 #             entry = entry,
@@ -190,5 +191,3 @@ def entry_delete_view(request, pk):
     
 #     else:
 #         return PermissionDenied
-    
-

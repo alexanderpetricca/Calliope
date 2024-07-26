@@ -13,7 +13,7 @@ urlpatterns = [
 ]
 
 htmx_patterns = [
-    # path('entry-message-reply/', views.entry_message_reply_view, name='entries_message_reply'),
+    # path('entry-ai-prompt/<str:pk>/', views.entry_ai_prompt_view, name='entries_ai_prompt'),
 ]
 
 urlpatterns += htmx_patterns

@@ -10,7 +10,7 @@ role = """
     must not exceed 500 characters.
 """
 
-def calliopeAI(current_messages) -> str:
+def request_ai_prompt(current_messages) -> str:
 
     api_key=settings.OPENAI_KEY
     client = OpenAI(api_key=api_key)
@@ -19,8 +19,8 @@ def calliopeAI(current_messages) -> str:
     messages += current_messages
 
     completion = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=messages,
+        model="gpt-4o-mini",
+        messages=messages,
     )
 
     return completion.choices[0].message.content
