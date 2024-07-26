@@ -31,6 +31,7 @@ body {
     animation: bodyFadeInAnimation ease 750ms;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
+    margin-bottom: 50px;
 }
 
 @keyframes bodyFadeInAnimation {
@@ -159,7 +160,7 @@ a.disabled:hover {
     flex-direction: row;
     justify-content: start;
     align-items: center;
-    padding: 40px 0;
+    padding: 20px 0;
 }
 
 .btn {
@@ -304,7 +305,7 @@ ul.errorlist li {
 
 .listed-content {
     padding-bottom: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     border-bottom: 1px solid #535353;
 }
 

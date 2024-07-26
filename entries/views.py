@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.db.models.functions import ExtractYear, ExtractMonth
 from django.core.paginator import Paginator
-from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 
 from .models import Entry
@@ -75,6 +74,7 @@ def entry_create_redirect_view(request):
     entry, created = Entry.objects.get_or_create(
         created_by = user,
         created_at__date = today,
+        deleted = False,
     )
 
     return redirect('entry_write', pk=entry.id)
