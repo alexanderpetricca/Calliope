@@ -5,7 +5,7 @@ from .models import Entry
 
 class EntryCreateUpdateForm(forms.ModelForm):
     
-    content = forms.CharField(required=True, widget=forms.Textarea(
+    content = forms.CharField(required=False, widget=forms.Textarea(
         attrs={
             'rows': '1',
             'autofocus': True,

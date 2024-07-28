@@ -166,8 +166,11 @@ def entry_ai_prompt_view(request, pk):
         if form.is_valid():
             entry = form.save(commit=False)
 
+            # !! Check tokens and deduct if the user has some. Otherwise return 
+            # no token partial.
+
             # Pass current entries content to the AI
-            current_entry_content = entry.content
+            current_entry_content = entry.content or 'Hello Calliope'
             entry.prompt = request_ai_prompt(current_entry_content)     
             entry.save()
     
