@@ -154,6 +154,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Security
+
 SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=False)
 SECURE_HSTS_SECONDS = env.int("DJANGO_SECURE_HSTS_SECONDS", default=2592000)
 SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
@@ -165,6 +166,7 @@ CSRF_TRUSTED_ORIGINS = [env('CSRF_TRUSTED_ORIGINS')]
 
 
 # User Authentication
+
 AUTH_USER_MODEL = 'accounts.CustomUser'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -174,6 +176,7 @@ OPEN_TO_SIGNUP = env.bool('OPEN_FOR_SIGNUP', default=False)
 
 
 # Email Config
+
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 if DEBUG == False:
@@ -186,12 +189,8 @@ if DEBUG == False:
     SERVER_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 
-#Debug Toolbar
-hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
-
-
 # Logging
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -217,9 +216,19 @@ LOGGING = {
 }
 
 
-# Open AI Key
+# Open AI
+
 OPENAI_KEY = env("OPENAI_KEY")
 
 
 # Administrators
+
 ADMINS = [(env('ADMIN_FIRST_NAME'), env("ADMIN_EMAIL"))]
+
+
+#Debug Toolbar
+
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+
+if DEBUG:
+    INTERNAL_IPS = type("c", (), {"__contains__": lambda *a: True})()
