@@ -14,6 +14,12 @@ p, h1, h2, h3, h4, h5, h6 {
 /* Global */
 :root {
     color-scheme: dark;
+    --background: #242424;
+    --color: #dedede;
+    --primary: #ffd900;
+    --secondary: #737373;
+    --faded: #535353;
+    --danger: #c44343;
 }
 
 html, body {
@@ -21,8 +27,8 @@ html, body {
 }
 
 body {
-    background: #242424;
-    color: #dedede;
+    background: var(--background);
+    color: var(--color);
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 14px;
     line-height: 22px;
@@ -56,11 +62,11 @@ p {
 }
 
 .text-accented {
-    color: #ffd900;
+    color: var(--primary);
 }
 
 .text-faded {
-    color: #535353;
+    color: var(--faded);
 }
 
 .text-center {
@@ -68,21 +74,21 @@ p {
 }
 
 .text-danger {
-    color: #c44343 !important;
+    color: var(--danger) !important;
 }
 
 
 /* Links */
 
 a {
-    color: #dedede;
+    color: var(--color);
     text-decoration: none;
     cursor: pointer;
     transition: 750ms;
 }
 
 a:hover {
-    color: #ffd900;
+    color: var(--primary);
 }
 
 a.disabled {
@@ -91,7 +97,7 @@ a.disabled {
 
 a.disabled:hover {
     opacity: 50%;
-    color: #dedede;
+    color: var(--color);
     cursor: default;
 }
 
@@ -105,7 +111,7 @@ a.disabled:hover {
 
 .pagination-control {
     font-size: 14px;
-    color: #737373;
+    color: var(--secondary);
     padding: 0 30px;
 }
 
@@ -114,7 +120,7 @@ a.disabled:hover {
 }
 
 .pagination-control.disabled:hover {
-    color: #737373;
+    color: var(--secondary);
     transition: none;
 }
 
@@ -149,7 +155,7 @@ a.disabled:hover {
 }
 
 #nav-links li.nav-link.active {
-    border-bottom: 1px solid #ffd900;
+    border-bottom: 1px solid var(--primary);
 }
 
 
@@ -172,7 +178,7 @@ a.disabled:hover {
     border: none;
     cursor: pointer;
     white-space: nowrap;
-    color: #dedede;
+    color: var(--color);
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 12px;
     line-height: 22px;
@@ -184,20 +190,20 @@ a.disabled:hover {
 }
 
 .btn-primary {
-    color: #dedede;
+    color: var(--color);
 }
 
 .btn-secondary, .btn-danger {
-    color: #737373;
+    color: var(--secondary);
 }
 
 .btn:hover {
-    color: #ffd900;
+    color: var(--primary);
     transition: 750ms;
 }
 
 .btn-danger:hover {
-    color: #c44343;
+    color: var(--danger);
 }
 
 .btn-hidden {
@@ -238,15 +244,15 @@ input {
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
-    color: #dedede;
+    color: var(--color);
     background: none;
     border: none;
-    border-bottom: 1px solid #535353;
+    border-bottom: 1px solid var(--faded);
     transition: 750ms;
 }
 
 input:focus {
-    border-bottom: 1px solid #ffd900;
+    border-bottom: 1px solid var(--primary);
     outline: none;
     box-shadow: none;
     transition: 750ms;
@@ -260,24 +266,24 @@ textarea {
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
-    color: #dedede;
+    color: var(--color);
     background: none;
     border: none;
-    border-bottom: 1px solid #535353;
+    border-bottom: 1px solid var(--faded);
     resize: none;
     overflow: hidden;
     transition: 750ms;    
 }
 
 textarea:focus {
-    border-bottom: 1px solid #ffd900;
+    border-bottom: 1px solid var(--primary);
     outline: none;
     box-shadow: none;
     transition: 750ms;
 }
 
 ul.errorlist {
-    color: #c44343;
+    color: var(--danger);
     padding: 0;
 }
 
@@ -306,7 +312,7 @@ ul.errorlist li {
 .listed-content {
     padding-bottom: 20px;
     margin-bottom: 40px;
-    border-bottom: 1px solid #535353;
+    border-bottom: 1px solid var(--faded);
 }
 
 .listed-content.no-padding {
@@ -318,17 +324,17 @@ a > .listed-content {
 }
 
 a > .listed-content:hover {
-    color: #ffd900;
-    border-bottom: 1px solid #ffd900;
+    color: var(--primary);
+    border-bottom: 1px solid var(--primary);
 }
 
 .listed-content.accented {
-    border-bottom: 1px solid #ffd900;
+    border-bottom: 1px solid var(--primary);
 }
 
 .listed-content.faded {
-    border-bottom: 1px solid #535353;
-    color: #535353;
+    border-bottom: 1px solid var(--faded);
+    color: var(--faded);
 }
 
 .listed-content.ai-prompt {

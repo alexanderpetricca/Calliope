@@ -34,11 +34,11 @@ This project is currently in development as a side project.
 
 Homepage
 
-![Listing Page](assets/images/listing-page.jpg)
+![Listing Page](docs/screenshots/listing-page-min.jpg)
 
 Journal Entry Page
 
-![Entry Page](assets/images/new-entry-page.jpg)
+![Entry Page](docs/screenshots/new-entry-page-min.jpg)
 
 
 ## License
