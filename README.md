@@ -14,7 +14,6 @@ This project is currently in development as a side project.
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Screenshots](#screenshots)
-  - [License](#license)
 
 ## Installation
 
@@ -39,8 +38,3 @@ Homepage
 Journal Entry Page
 
 ![Entry Page](docs/screenshots/new-entry-page-min.jpg)
-
-
-## License
-
-AGPL-3.0 license
