@@ -86,3 +86,34 @@ class AccountsViewTests(TestCase):
     # Update Email ----
     
     # Update Logout ----
+
+    def test_logout_view_logged_out(self):
+        """
+        Tests if user is redirected to login when signed out, whilst trying to 
+        access the logout page.
+        """
+        
+        self.client.logout()
+        
+        response = self.client.get(reverse('logout'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, f"{reverse('login')}?next=/accounts/logout/")
+        
+        response = self.client.get(f"{reverse('login')}?next=/accounts/logout/")
+        self.assertTemplateUsed(response, 'registration/login.html')
+        self.assertContains(response, 'Calliope | Login')
+
+
+    def test_logout_view_logged_in(self):
+        """
+        Tests user is logged out, when user accesses the logout page, whilst 
+        logged in.
+        """
+
+        self.client.login(email="testuser@email.com", password="testpass123")  
+        
+        response = self.client.get(reverse('logout'))
+        self.assertEqual(response.status_code, 302)
+        
+        session = self.client.session
+        self.assertNotIn('_auth_user_id', session)
