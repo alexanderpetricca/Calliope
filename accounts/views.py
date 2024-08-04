@@ -20,7 +20,7 @@ def custom_login_page_view(request):
     form = forms.CustomLoginForm(request)
 
     if request.user.is_authenticated:
-        return redirect(reverse('entries_app_home'))
+        return redirect(reverse('entries_entry_list'))
 
     if request.method == 'POST':
         form = forms.CustomLoginForm(request, data=request.POST)

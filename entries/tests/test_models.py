@@ -32,9 +32,10 @@ class EntriesModelTests(TestCase):
         self.assertIsNotNone(self.entry.created_at)
         self.assertEqual(self.entry.created_by.email, 'testuser@email.com')
         self.assertEqual(self.entry.content, 'Some test content.')
-        self.assertEqual(self.entry.favourite, False)
-        self.assertEqual(self.entry.deleted, False)
-        self.assertEqual(self.entry.deleted_at, None)
+        self.assertIsNone(self.entry.prompt)
+        self.assertFalse(self.entry.favourite)
+        self.assertFalse(self.entry.deleted)
+        self.assertIsNone(self.entry.deleted_at)
 
 
     def test_entry_model_str_method(self):

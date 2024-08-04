@@ -15,8 +15,8 @@
                 {{ entry.content|linebreaks }}
                 {% else %}
                 <p>
-                    <a href="{% url 'entry_write' entry.pk %}">
-                        write entry
+                    <a href="{% url 'entry_write' entry.pk %}" class="text-faded">
+                        nothing here yet
                     </a>
                 </p>
                 {% endif %}

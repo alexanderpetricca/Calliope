@@ -160,7 +160,7 @@ class EntryViewTests(TestCase):
         """ 
 
         self.client.login(email="testuser@email.com", password="testpass123")
-        
+
         response = self.client.get(reverse('entry_detail', kwargs={'pk': self.yesterdayentry.id}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'entries/entry-detail.html')
@@ -204,31 +204,5 @@ class EntryViewTests(TestCase):
         entries = Entry.objects.filter(deleted=True)
         self.assertTrue(entries.count(), 1)
 
-    
-    # def test_entry_view_logged_In(self):
-    #     """
-    #     Tests the entry view page returns the requested entry when user is logged in (with htmx).
-    #     """
 
-    #     self.client.login(email="testuser@email.com", password="testpass123")
-        
-    #     headers = {
-    #         'HX-Request': 'true',
-    #         'Content-Type': 'text/html',
-    #     }
-
-    #     response = self.client.get(
-    #         reverse('entry_detail', kwargs={'pk': f'{self.entry.id}'}),
-    #         **{'HTTP_' + k.replace('-', '_').upper(): v for k, v in headers.items()}
-    #     )
-        
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertTemplateUsed(response, 'entries/entry.html')
-    #     self.assertContains(response, 'id="entry_msg_create_form"')
-    #     self.assertContains(response, 'This is a test message.')
-
-
-    
-    
-
-# Delete Entry
+    # AI Prompt ----
