@@ -50,7 +50,7 @@ def custom_logout_page_view(request):
 def custom_signup_view(request):
 
     if request.user.is_authenticated:
-        return redirect('entries_app_home')
+        return redirect('entries_entry_list')
     
     form = forms.CustomSignupForm()
 
@@ -70,7 +70,7 @@ def custom_signup_view(request):
                     signup_code.delete()
                     
                     login(request, user)
-                    return redirect(reverse('entries_app_home'))
+                    return redirect(reverse('entries_entry_list'))
                 
             except ObjectDoesNotExist:
                 form.add_error('signup_code', 'This code is not valid.')

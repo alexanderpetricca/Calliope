@@ -32,6 +32,8 @@ class AccountsViewTests(TestCase):
         self.assertTemplateUsed(response, 'registration/login.html')
         self.assertContains(response, 'Calliope | Login')
 
+        # Test POST request with login credentials (correct / incorrect)
+
 
     def test_login_view_logged_in(self):
         """
@@ -46,6 +48,31 @@ class AccountsViewTests(TestCase):
       
 
     # Signup ----
+
+    def test_signup_view_logged_out(self):
+        """
+        Tests the signup page is returned when the user is logged out.
+        """
+
+        self.client.logout()
+        
+        response = self.client.get(reverse('signup'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/signup.html')
+        self.assertContains(response, 'Calliope | Signup')
+
+
+    def test_signup_view_logged_in(self):
+        """
+        Tests the user is redirected when the user accesses the signup page, 
+        when already logged in.
+        """
+
+        self.client.login(email="testuser@email.com", password="testpass123")  
+        
+        response = self.client.get(reverse('signup'))
+        self.assertEqual(response.status_code, 302)
+
 
     # Password Reset ----
 
@@ -85,7 +112,7 @@ class AccountsViewTests(TestCase):
     
     # Update Email ----
     
-    # Update Logout ----
+    # Logout ----
 
     def test_logout_view_logged_out(self):
         """
