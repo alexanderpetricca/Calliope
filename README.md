@@ -1,21 +1,26 @@
 # Calliope
-### Description
+## Description
 
-Calliope is a personal AI powered journalling platform built using Django, HTMX, and OpenAI. The platform uses AI to talk users through completing a daily personal journal. 
+Calliope is a personal journalling platform built using Django, HTMX and Open AI.
+It features:
 
-The intent of this project is to experiment with Django and HTMX to create a modern application without utilising a front end framework, and to also dispel some of the Django 'magic' and develop a deeper understanding of the framework. This project has also allowed me to experiment with OpenAI's API functionality.
+- Create, update view and delete daily journal entries.
+- Search functionality.
+- Request AI prompts based on what you have written already.
+- User authentication.
+- Change email with confirmation.
 
 This project is currently in development as a side project.
 
 ## Table of Contents
 
 - [Calliope](#calliope)
-    - [Description](#description)
+  - [Description](#description)
   - [Table of Contents](#table-of-contents)
-  - [Installation](#installation)
+  - [Local Installation](#local-installation)
   - [Screenshots](#screenshots)
 
-## Installation
+## Local Installation
 
 1. Ensure you have docker installed [Docker](https://www.docker.com/)
 2. Add .env to root directory containing the following environment variables:
